@@ -655,7 +655,6 @@ AutoTreeStage.BorderColor3 = Color3.fromRGB(0, 0, 0)
 AutoTreeStage.BorderSizePixel = 0
 AutoTreeStage.Position = UDim2.new(0.0159492623, 0, 0.211815357, 0)
 AutoTreeStage.Size = UDim2.new(0, 210, 0, 150)
-AutoTreeStage.RichText = true
 
 TextLabel_2.Parent = AutoTreeStage
 TextLabel_2.BackgroundColor3 = Color3.fromRGB(59, 62, 11)
