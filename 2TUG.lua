@@ -117,6 +117,7 @@ MainUI.BorderColor3 = Color3.fromRGB(0, 0, 0)
 MainUI.BorderSizePixel = 0
 MainUI.Position = UDim2.new(0.138602033, 0, 0.195551559, 0)
 MainUI.Size = UDim2.new(0, 935, 0, 577)
+MainUI.Draggable = true
 
 NameText.Name = "NameText"
 NameText.Parent = MainUI
@@ -134,6 +135,7 @@ NameText.TextScaled = true
 NameText.TextSize = 14.000
 NameText.TextStrokeTransparency = 0.500
 NameText.TextWrapped = true
+NameText.Draggable = true
 
 Frames.Name = "Frames"
 Frames.Parent = MainUI
