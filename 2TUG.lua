@@ -1,4 +1,7 @@
--- It was made with "Gui To Lua".
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
 
 local GUT2Script = Instance.new("ScreenGui")
 local MainUI = Instance.new("Frame")
@@ -74,24 +77,31 @@ local TextButton_5 = Instance.new("TextButton")
 local UIGradient_12 = Instance.new("UIGradient")
 local TextLabel_6 = Instance.new("TextLabel")
 local UIGradient_13 = Instance.new("UIGradient")
-local Supernova = Instance.new("Frame")
+local UIGridLayout = Instance.new("UIGridLayout")
+local AutoStarForm_2 = Instance.new("Frame")
+local TextButton_6 = Instance.new("TextButton")
 local UIGradient_14 = Instance.new("UIGradient")
-local NameText_7 = Instance.new("TextLabel")
 local TextLabel_7 = Instance.new("TextLabel")
+local UIGradient_15 = Instance.new("UIGradient")
+local UIPadding_3 = Instance.new("UIPadding")
+local Supernova = Instance.new("Frame")
+local UIGradient_16 = Instance.new("UIGradient")
+local NameText_7 = Instance.new("TextLabel")
+local TextLabel_8 = Instance.new("TextLabel")
 local CurrentMilestone = Instance.new("TextLabel")
 local Settings = Instance.new("Frame")
-local UIGradient_15 = Instance.new("UIGradient")
+local UIGradient_17 = Instance.new("UIGradient")
 local ExitButton = Instance.new("TextButton")
 local HighlightLinusCubes = Instance.new("Frame")
-local TextLabel_8 = Instance.new("TextLabel")
-local TextButton_6 = Instance.new("TextButton")
+local TextLabel_9 = Instance.new("TextLabel")
+local TextButton_7 = Instance.new("TextButton")
 local Buttons_2 = Instance.new("ScrollingFrame")
 local UIListLayout_3 = Instance.new("UIListLayout")
-local UIPadding_3 = Instance.new("UIPadding")
+local UIPadding_4 = Instance.new("UIPadding")
 local SettingsButton = Instance.new("TextButton")
-local UIGradient_16 = Instance.new("UIGradient")
+local UIGradient_18 = Instance.new("UIGradient")
 local AutomaticButton = Instance.new("TextButton")
-local UIGradient_17 = Instance.new("UIGradient")
+local UIGradient_19 = Instance.new("UIGradient")
 
 --Properties:
 
@@ -107,8 +117,6 @@ MainUI.BorderColor3 = Color3.fromRGB(0, 0, 0)
 MainUI.BorderSizePixel = 0
 MainUI.Position = UDim2.new(0.138602033, 0, 0.195551559, 0)
 MainUI.Size = UDim2.new(0, 935, 0, 577)
-MainUI.Draggable=true
-MainUI.Active=true
 
 NameText.Name = "NameText"
 NameText.Parent = MainUI
@@ -126,7 +134,6 @@ NameText.TextScaled = true
 NameText.TextSize = 14.000
 NameText.TextStrokeTransparency = 0.500
 NameText.TextWrapped = true
-NameText.Draggable=true
 
 Frames.Name = "Frames"
 Frames.Parent = MainUI
@@ -138,7 +145,6 @@ Automatizaion.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Automatizaion.BorderSizePixel = 0
 Automatizaion.Position = UDim2.new(0.0495867878, 0, 0.20229885, 0)
 Automatizaion.Size = UDim2.new(0, 261, 0, 428)
-Automatizaion.Visible = false
 
 UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(54, 41, 83)), ColorSequenceKeypoint.new(0.51, Color3.fromRGB(17, 27, 115)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(110, 25, 134))}
 UIGradient.Parent = Automatizaion
@@ -320,9 +326,8 @@ TextButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_2.BorderSizePixel = 0
 TextButton_2.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
 TextButton_2.Size = UDim2.new(0, 200, 0, 75)
-TextButton_2.ZIndex = 3
 TextButton_2.Font = Enum.Font.SourceSans
-TextButton_2.Text = "Disabled"
+TextButton_2.Text = "Enable"
 TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_2.TextScaled = true
 TextButton_2.TextSize = 14.000
@@ -441,7 +446,7 @@ TotalAmountOfGoldCubes.BorderSizePixel = 0
 TotalAmountOfGoldCubes.Position = UDim2.new(0, 0, 0.314237297, 0)
 TotalAmountOfGoldCubes.Size = UDim2.new(0, 324, 0, 50)
 TotalAmountOfGoldCubes.Font = Enum.Font.Cartoon
-TotalAmountOfGoldCubes.Text = "Gold ADHDs: 0/100"
+TotalAmountOfGoldCubes.Text = "Gold ADHDs: <x>/100"
 TotalAmountOfGoldCubes.TextColor3 = Color3.fromRGB(0, 0, 0)
 TotalAmountOfGoldCubes.TextScaled = true
 TotalAmountOfGoldCubes.TextSize = 14.000
@@ -489,7 +494,7 @@ MainSection.BorderColor3 = Color3.fromRGB(0, 0, 0)
 MainSection.BorderSizePixel = 0
 MainSection.Position = UDim2.new(1.04980838, 0, 0, 0)
 MainSection.Size = UDim2.new(0, 588, 0, 428)
-MainSection.Visible = false
+MainSection.CanvasPosition = Vector2.new(0, 284)
 MainSection.CanvasSize = UDim2.new(0, 0, 4, 0)
 
 CosmicDust.Name = "CosmicDust"
@@ -664,7 +669,7 @@ TextButton_4.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
 TextButton_4.Size = UDim2.new(0, 200, 0, 75)
 TextButton_4.AutoButtonColor = false
 TextButton_4.Font = Enum.Font.SourceSans
-TextButton_4.Text = "Disabled/Enabled"
+TextButton_4.Text = "Enable"
 TextButton_4.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_4.TextScaled = true
 TextButton_4.TextSize = 14.000
@@ -817,7 +822,7 @@ TextButton_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_5.BorderSizePixel = 0
 TextButton_5.Size = UDim2.new(0, 100, 0, 29)
 TextButton_5.Font = Enum.Font.SourceSans
-TextButton_5.Text = "Enabled/Disabled"
+TextButton_5.Text = "Enable"
 TextButton_5.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton_5.TextScaled = true
 TextButton_5.TextSize = 14.000
@@ -846,6 +851,57 @@ TextLabel_6.TextWrapped = true
 UIGradient_13.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 85, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 255))}
 UIGradient_13.Parent = AutoStarForm
 
+UIGridLayout.Parent = StarFormation
+UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIGridLayout.CellPadding = UDim2.new(0, 25, 0, 0)
+
+AutoStarForm_2.Name = "AutoStarForm"
+AutoStarForm_2.Parent = StarFormation
+AutoStarForm_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AutoStarForm_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AutoStarForm_2.BorderSizePixel = 0
+AutoStarForm_2.Position = UDim2.new(0.0090909088, 0, 0.0799999982, 0)
+AutoStarForm_2.Size = UDim2.new(0, 100, 0, 78)
+AutoStarForm_2.Visible = false
+
+TextButton_6.Parent = AutoStarForm_2
+TextButton_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_6.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_6.BorderSizePixel = 0
+TextButton_6.Size = UDim2.new(0, 100, 0, 29)
+TextButton_6.Font = Enum.Font.SourceSans
+TextButton_6.Text = "Enable"
+TextButton_6.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_6.TextScaled = true
+TextButton_6.TextSize = 14.000
+TextButton_6.TextStrokeTransparency = 0.100
+TextButton_6.TextWrapped = true
+
+UIGradient_14.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(243, 255, 10)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(151, 153, 7))}
+UIGradient_14.Rotation = -90
+UIGradient_14.Parent = TextButton_6
+
+TextLabel_7.Parent = AutoStarForm_2
+TextLabel_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_7.BackgroundTransparency = 1.000
+TextLabel_7.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_7.BorderSizePixel = 0
+TextLabel_7.Position = UDim2.new(0, 0, 0.371794879, 0)
+TextLabel_7.Size = UDim2.new(0, 100, 0, 50)
+TextLabel_7.Font = Enum.Font.Unknown
+TextLabel_7.Text = "Auto Star Formation"
+TextLabel_7.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_7.TextScaled = true
+TextLabel_7.TextSize = 14.000
+TextLabel_7.TextTransparency = 1.000
+TextLabel_7.TextWrapped = true
+
+UIGradient_15.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 85, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 255))}
+UIGradient_15.Parent = AutoStarForm_2
+
+UIPadding_3.Parent = StarFormation
+UIPadding_3.PaddingLeft = UDim.new(0, 10)
+
 Supernova.Name = "Supernova"
 Supernova.Parent = MainSection
 Supernova.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -855,9 +911,9 @@ Supernova.LayoutOrder = 5
 Supernova.Position = UDim2.new(0, 0, -0.0440658033, 0)
 Supernova.Size = UDim2.new(0, 550, 0, 550)
 
-UIGradient_14.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(232, 206, 5)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(48, 3, 4))}
-UIGradient_14.Rotation = 84
-UIGradient_14.Parent = Supernova
+UIGradient_16.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(232, 206, 5)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(48, 3, 4))}
+UIGradient_16.Rotation = 84
+UIGradient_16.Parent = Supernova
 
 NameText_7.Name = "NameText"
 NameText_7.Parent = Supernova
@@ -875,20 +931,20 @@ NameText_7.TextSize = 14.000
 NameText_7.TextStrokeTransparency = 0.500
 NameText_7.TextWrapped = true
 
-TextLabel_7.Parent = Supernova
-TextLabel_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_7.BackgroundTransparency = 1.000
-TextLabel_7.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_7.BorderSizePixel = 0
-TextLabel_7.Position = UDim2.new(0.398181826, 0, 0.589999974, 0)
-TextLabel_7.Size = UDim2.new(0, 123, 0, 24)
-TextLabel_7.Visible = false
-TextLabel_7.Font = Enum.Font.SourceSans
-TextLabel_7.Text = "nothing for now :("
-TextLabel_7.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_7.TextScaled = true
-TextLabel_7.TextSize = 14.000
-TextLabel_7.TextWrapped = true
+TextLabel_8.Parent = Supernova
+TextLabel_8.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_8.BackgroundTransparency = 1.000
+TextLabel_8.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_8.BorderSizePixel = 0
+TextLabel_8.Position = UDim2.new(0.398181826, 0, 0.589999974, 0)
+TextLabel_8.Size = UDim2.new(0, 123, 0, 24)
+TextLabel_8.Visible = false
+TextLabel_8.Font = Enum.Font.SourceSans
+TextLabel_8.Text = "nothing for now :("
+TextLabel_8.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_8.TextScaled = true
+TextLabel_8.TextSize = 14.000
+TextLabel_8.TextWrapped = true
 
 CurrentMilestone.Name = "CurrentMilestone"
 CurrentMilestone.Parent = Supernova
@@ -915,8 +971,8 @@ Settings.Position = UDim2.new(0.0213903747, 0, 0.197573662, 0)
 Settings.Size = UDim2.new(0, 896, 0, 430)
 Settings.Visible = false
 
-UIGradient_15.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(20, 20, 20)), ColorSequenceKeypoint.new(0.51, Color3.fromRGB(33, 21, 35)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(49, 49, 49))}
-UIGradient_15.Parent = Settings
+UIGradient_17.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(20, 20, 20)), ColorSequenceKeypoint.new(0.51, Color3.fromRGB(33, 21, 35)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(49, 49, 49))}
+UIGradient_17.Parent = Settings
 
 ExitButton.Name = "ExitButton"
 ExitButton.Parent = Settings
@@ -931,9 +987,6 @@ ExitButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 ExitButton.TextScaled = true
 ExitButton.TextSize = 14.000
 ExitButton.TextWrapped = true
-ExitButton.MouseButton1Down:Connect(function()
-	GUT2Script:Destroy()
-end)
 
 HighlightLinusCubes.Name = "HighlightLinusCubes"
 HighlightLinusCubes.Parent = Settings
@@ -944,33 +997,33 @@ HighlightLinusCubes.BorderSizePixel = 0
 HighlightLinusCubes.Position = UDim2.new(0.0323129259, 0, 0.0268691592, 0)
 HighlightLinusCubes.Size = UDim2.new(0, 210, 0, 150)
 
-TextLabel_8.Parent = HighlightLinusCubes
-TextLabel_8.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
-TextLabel_8.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_8.BorderSizePixel = 0
-TextLabel_8.Position = UDim2.new(0.0238095243, 0, 0.0466666669, 0)
-TextLabel_8.Size = UDim2.new(0, 200, 0, 50)
-TextLabel_8.Font = Enum.Font.SourceSans
-TextLabel_8.Text = "Highlight All Linus Cubes"
-TextLabel_8.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_8.TextScaled = true
-TextLabel_8.TextSize = 14.000
-TextLabel_8.TextStrokeTransparency = 0.500
-TextLabel_8.TextWrapped = true
+TextLabel_9.Parent = HighlightLinusCubes
+TextLabel_9.BackgroundColor3 = Color3.fromRGB(62, 62, 62)
+TextLabel_9.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel_9.BorderSizePixel = 0
+TextLabel_9.Position = UDim2.new(0.0238095243, 0, 0.0466666669, 0)
+TextLabel_9.Size = UDim2.new(0, 200, 0, 50)
+TextLabel_9.Font = Enum.Font.SourceSans
+TextLabel_9.Text = "Highlight All Linus Cubes"
+TextLabel_9.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel_9.TextScaled = true
+TextLabel_9.TextSize = 14.000
+TextLabel_9.TextStrokeTransparency = 0.500
+TextLabel_9.TextWrapped = true
 
-TextButton_6.Parent = HighlightLinusCubes
-TextButton_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextButton_6.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextButton_6.BorderSizePixel = 0
-TextButton_6.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
-TextButton_6.Size = UDim2.new(0, 200, 0, 75)
-TextButton_6.ZIndex = 3
-TextButton_6.Font = Enum.Font.SourceSans
-TextButton_6.Text = "Disabled"
-TextButton_6.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextButton_6.TextScaled = true
-TextButton_6.TextSize = 14.000
-TextButton_6.TextWrapped = true
+TextButton_7.Parent = HighlightLinusCubes
+TextButton_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_7.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_7.BorderSizePixel = 0
+TextButton_7.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
+TextButton_7.Size = UDim2.new(0, 200, 0, 75)
+TextButton_7.ZIndex = 3
+TextButton_7.Font = Enum.Font.SourceSans
+TextButton_7.Text = "Disabled"
+TextButton_7.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_7.TextScaled = true
+TextButton_7.TextSize = 14.000
+TextButton_7.TextWrapped = true
 
 Buttons_2.Name = "Buttons"
 Buttons_2.Parent = MainUI
@@ -988,9 +1041,9 @@ UIListLayout_3.Parent = Buttons_2
 UIListLayout_3.FillDirection = Enum.FillDirection.Horizontal
 UIListLayout_3.Padding = UDim.new(0, 15)
 
-UIPadding_3.Parent = Buttons_2
-UIPadding_3.PaddingLeft = UDim.new(0, 15)
-UIPadding_3.PaddingTop = UDim.new(0, 5)
+UIPadding_4.Parent = Buttons_2
+UIPadding_4.PaddingLeft = UDim.new(0, 15)
+UIPadding_4.PaddingTop = UDim.new(0, 5)
 
 SettingsButton.Name = "SettingsButton"
 SettingsButton.Parent = Buttons_2
@@ -1005,8 +1058,8 @@ SettingsButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 SettingsButton.TextSize = 33.000
 SettingsButton.TextWrapped = true
 
-UIGradient_16.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(202, 202, 202)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
-UIGradient_16.Parent = SettingsButton
+UIGradient_18.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(202, 202, 202)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
+UIGradient_18.Parent = SettingsButton
 
 AutomaticButton.Name = "AutomaticButton"
 AutomaticButton.Parent = Buttons_2
@@ -1021,12 +1074,56 @@ AutomaticButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 AutomaticButton.TextSize = 33.000
 AutomaticButton.TextWrapped = true
 
-UIGradient_17.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(94, 94, 94)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
-UIGradient_17.Parent = AutomaticButton
+UIGradient_19.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(94, 94, 94)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
+UIGradient_19.Parent = AutomaticButton
 
 -- Scripts:
 
-local function FGVL_fake_script() -- Automatizaion.SortingThings 
+local function WKBQRS_fake_script() -- MainUI.SortingThings 
+	local script = Instance.new('LocalScript', MainUI)
+
+	local buttonsFolder = script.Parent:WaitForChild("Buttons")
+	local framesFolder = script.Parent:WaitForChild("Frames")
+	
+	--All Buttons
+	local AutoButton = buttonsFolder:WaitForChild("AutomaticButton")
+	local SettingsButton = buttonsFolder:WaitForChild("SettingsButton")
+	
+	--All Frames
+	local Automatization = framesFolder:WaitForChild("Automatizaion")
+	local Settings = framesFolder:WaitForChild("Settings")
+	
+	-- Hide all frames
+	local function hideAllFrames()
+		for _, frame in pairs(framesFolder:GetChildren()) do
+			if frame:IsA("Frame") then
+				frame.Visible = false
+			end
+		end
+	end
+	
+	-- Switch function
+	local function switchFrame(frame)
+		hideAllFrames()
+		frame.Visible = true
+	end
+	
+	-- 🔗 Mapping buttons to frames
+	local buttonToFrame = {
+		[AutoButton]=Automatization,
+		[SettingsButton]=Settings
+	}
+	
+	-- Connect buttons
+	for button, frame in pairs(buttonToFrame) do
+		print(button, frame)
+		button.MouseButton1Click:Connect(function()
+			switchFrame(frame)
+		end)
+	end
+end
+coroutine.wrap(WKBQRS_fake_script)()
+local function WFTUD_fake_script() -- Automatizaion.SortingThings 
 	local script = Instance.new('LocalScript', Automatizaion)
 
 	local buttonsFolder = script.Parent:WaitForChild("Buttons")
@@ -1075,44 +1172,25 @@ local function FGVL_fake_script() -- Automatizaion.SortingThings
 		end)
 	end
 end
-coroutine.wrap(FGVL_fake_script)()
-local function ZOPEH_fake_script() -- TextButton_2.AutoCollect 
+coroutine.wrap(WFTUD_fake_script)()
+local function LVDFSVI_fake_script() -- TextButton_2.AutoCollect 
 	local script = Instance.new('LocalScript', TextButton_2)
 
-	--local button = script.Parent
-	--local rootPart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-	
-	--local active = false
-	
-	--button.MouseButton1Click:Connect(function()
-	--	if active == false then
-	--		active = true
-	--		--button.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-	--		button.Text = "Activated"
-	--	else
-	--		active = false
-	--		--button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-	--		button.Text = "Disabled"
-	--	end
-	--end)
-	
-	--while active do
-	--	rootPart.CFrame = workspace.EventHorizon.spawned.Graviton.CFrame
-	--	wait(0.2)
-	--end
+	-- Place this in a LocalScript inside StarterGui
 	local button = script.Parent
 	local player = game.Players.LocalPlayer
 	
 	local active = false
 	
-	button.MouseButton1Click:Connect(function()
+	local function updateButtonText()
 		active = not active
 	
-		if active then
-			button.Text = "Activated"
-		else
-			button.Text = "Disabled"
-		end
+	
+		button.Text = active and "Enabled" or "Disabled"
+	end
+	
+	button.MouseButton1Click:Connect(function()
+		updateButtonText()
 	end)
 	
 	-- Loop that constantly checks
@@ -1132,8 +1210,8 @@ local function ZOPEH_fake_script() -- TextButton_2.AutoCollect
 	end)
 	
 end
-coroutine.wrap(ZOPEH_fake_script)()
-local function IDUHSK_fake_script() -- TextButton_3.AutoClick 
+coroutine.wrap(LVDFSVI_fake_script)()
+local function XONMO_fake_script() -- TextButton_3.AutoClick 
 	local script = Instance.new('LocalScript', TextButton_3)
 
 	--local button = script.Parent
@@ -1185,8 +1263,8 @@ local function IDUHSK_fake_script() -- TextButton_3.AutoClick
 	end)
 	
 end
-coroutine.wrap(IDUHSK_fake_script)()
-local function DHNWSY_fake_script() -- AmountOfClicks.TrackingStat 
+coroutine.wrap(XONMO_fake_script)()
+local function XWSOQZ_fake_script() -- AmountOfClicks.TrackingStat 
 	local script = Instance.new('LocalScript', AmountOfClicks)
 
 	local text = script.Parent
@@ -1196,134 +1274,19 @@ local function DHNWSY_fake_script() -- AmountOfClicks.TrackingStat
 		text.Text = "Total clicks: " .. amountValue.Value
 	end
 	
-	--while true do
-	--	updateChange()
-	--	task.wait(1)
-	--end
-	
-	-- Update whenever value changes
 	amountValue.Changed:Connect(updateChange)
 	
-	-- Initial update
 	updateChange()
 	
 	
 	
 	
 end
-coroutine.wrap(DHNWSY_fake_script)()
-local function SPDWU_fake_script() -- TotalAmountOfGoldCubes.TrackingStat 
-	local script = Instance.new('LocalScript', TotalAmountOfGoldCubes)
-
-	--local text = script.Parent
-	--local goldCube = workspace.Cube.curr.gcube
-	--local amount = 0
-	
-	--for i, v in pairs(goldCube:GetChildren()) do
-	--	amount += 1
-	--end
-	
-	--text.Text = "Total clicks: " .. amount .. "/100"
-	
-	local text = script.Parent
-	local goldCube = workspace.Cube.curr.gcube
-	
-	
-	
-	local function updateCount()
-		local amount = #goldCube:GetChildren()
-		text.Text = "Total clicks: " .. amount .. "/100"
-	end
-	
-	-- Initial update
-	updateCount()
-	
-	-- Update when objects change
-	goldCube.ChildAdded:Connect(updateCount)
-	goldCube.ChildRemoved:Connect(updateCount)
-	
-	for i, v in pairs(goldCube:GetChildren()) do
-		if v.Name == "gcube" then
-			amount += 1
-		end
-	end
-end
-coroutine.wrap(SPDWU_fake_script)()
-local function ZMYF_fake_script() -- TotalAmountOfDiamondCubes.TrackingStat 
-	local script = Instance.new('LocalScript', TotalAmountOfDiamondCubes)
-
-	--local text = script.Parent
-	--local goldCube = workspace.Cube.curr.gcube
-	--local amount = 0
-	
-	--for i, v in pairs(goldCube:GetChildren()) do
-	--	amount += 1
-	--end
-	
-	--text.Text = "Total clicks: " .. amount .. "/100"
-	
-	local text = script.Parent
-	local goldCube = workspace.Cube.curr.gcube
-	
-	
-	
-	local function updateCount()
-		local amount = #goldCube:GetChildren()
-		text.Text = "Total clicks: " .. amount ..
-	end
-	
-	-- Initial update
-	updateCount()
-	
-	-- Update when objects change
-	goldCube.ChildAdded:Connect(updateCount)
-	goldCube.ChildRemoved:Connect(updateCount)
-	
-	for i, v in pairs(goldCube:GetChildren()) do
-		if v.Name == "gcube" then
-			amount += 1
-		end
-	end
-end
-coroutine.wrap(ZMYF_fake_script)()
-local function YDBFUWH_fake_script() -- TotalAmountOfUnobtaniumCubes.TrackingStat 
-	local script = Instance.new('LocalScript', TotalAmountOfUnobtaniumCubes)
-
-	--local text = script.Parent
-	--local goldCube = workspace.Cube.curr.gcube
-	--local amount = 0
-	
-	--for i, v in pairs(goldCube:GetChildren()) do
-	--	amount += 1
-	--end
-	
-	--text.Text = "Total clicks: " .. amount .. "/100"
-	
-	local text = script.Parent
-	local goldCube = workspace.Cube.curr.gcube
-	
-	
-	
-	local function updateCount()
-		local amount = #goldCube:GetChildren()
-		text.Text = "Total clicks: " .. amount ..
-	end
-	
-	-- Initial update
-	updateCount()
-	
-	-- Update when objects change
-	goldCube.ChildAdded:Connect(updateCount)
-	goldCube.ChildRemoved:Connect(updateCount)
-	
-	for i, v in pairs(goldCube:GetChildren()) do
-		if v.Name == "gcube" then
-			amount += 1
-		end
-	end
-end
-coroutine.wrap(YDBFUWH_fake_script)()
-local function UASIH_fake_script() -- TextButton_4.ATS 
+coroutine.wrap(XWSOQZ_fake_script)()
+-- TotalAmountOfGoldCubes.TrackingStat is disabled.
+-- TotalAmountOfDiamondCubes.TrackingStat is disabled.
+-- TotalAmountOfUnobtaniumCubes.TrackingStat is disabled.
+local function WQCORU_fake_script() -- TextButton_4.ATS 
 	local script = Instance.new('LocalScript', TextButton_4)
 
 	local button = script.Parent
@@ -1333,14 +1296,16 @@ local function UASIH_fake_script() -- TextButton_4.ATS
 	
 	local active = false
 	
-	button.MouseButton1Click:Connect(function()
+	local function updateButtonText()
 		active = not active
 	
-		if active then
-			button.Text = "Activated"
-		else
-			button.Text = "Disabled"
-		end
+		print("Clicked! Active =", active) -- debug
+	
+		button.Text = active and "Enabled" or "Disabled"
+	end
+	
+	button.MouseButton1Click:Connect(function()
+		updateButtonText()
 	end)
 	
 	
@@ -1356,8 +1321,8 @@ local function UASIH_fake_script() -- TextButton_4.ATS
 	end)
 	
 end
-coroutine.wrap(UASIH_fake_script)()
-local function GIAGE_fake_script() -- currentTierText.LocalScript 
+coroutine.wrap(WQCORU_fake_script)()
+local function JJJXJY_fake_script() -- currentTierText.LocalScript 
 	local script = Instance.new('LocalScript', currentTierText)
 
 	local text = script.Parent
@@ -1372,8 +1337,8 @@ local function GIAGE_fake_script() -- currentTierText.LocalScript
 		changeText()
 	end)
 end
-coroutine.wrap(GIAGE_fake_script)()
-local function KKVEU_fake_script() -- amountText.LocalScript 
+coroutine.wrap(JJJXJY_fake_script)()
+local function WWMYT_fake_script() -- amountText.LocalScript 
 	local script = Instance.new('LocalScript', amountText)
 
 	local text = script.Parent
@@ -1387,35 +1352,38 @@ local function KKVEU_fake_script() -- amountText.LocalScript
 		changeText()
 	end)	
 end
-coroutine.wrap(KKVEU_fake_script)()
-local function PWYXVY_fake_script() -- TextButton_5.AutoStarForm 
+coroutine.wrap(WWMYT_fake_script)()
+local function KCAHJ_fake_script() -- TextButton_5.AutoStarForm 
 	local script = Instance.new('LocalScript', TextButton_5)
 
-	local OGbutton = script.Parent
+	local button = script.Parent
 	local player = game:GetService("Players").LocalPlayer
 	local starFormation = player.PlayerGui:WaitForChild("Boards"):WaitForChild("StarFormation")
 	
 	local active = false
 	
-	OGbutton.MouseButton1Click:Connect(function()
+	local function updateButtonText()
 		active = not active
 	
-		if active then
-			button.Text = "Activated"
-		else
-			button.Text = "Disabled"
-		end
+	
+		button.Text = active and "Enabled" or "Disabled"
+	end
+	
+	button.MouseButton1Click:Connect(function()
+		updateButtonText()
 	end)
+	
 	
 	local function BuyStars()
 		for i, planet in pairs(starFormation:GetChildren()) do
-			local button = planet:FindFirstChild("BuyButton")
+			local fireButton = planet:FindFirstChild("BuyButton")
 	
-			if OGbutton and button:IsA("TextButton") then
-				button:Activate()
+			if fireButton and fireButton:IsA("TextButton") then
+				fireButton:Activate()
 			end
 		end
 	end
+	
 	task.spawn(function()
 		while true do
 			if active then
@@ -1426,8 +1394,50 @@ local function PWYXVY_fake_script() -- TextButton_5.AutoStarForm
 		end
 	end)
 end
-coroutine.wrap(PWYXVY_fake_script)()
-local function ZHGV_fake_script() -- CurrentMilestone.LocalScript 
+coroutine.wrap(KCAHJ_fake_script)()
+local function VVTKG_fake_script() -- TextButton_6.AutoStarForm 
+	local script = Instance.new('LocalScript', TextButton_6)
+
+	local button = script.Parent
+	local player = game:GetService("Players").LocalPlayer
+	local starFormation = player.PlayerGui:WaitForChild("Boards"):WaitForChild("StarFormation")
+	
+	local active = false
+	
+	local function updateButtonText()
+		active = not active
+	
+	
+		button.Text = active and "Enabled" or "Disabled"
+	end
+	
+	button.MouseButton1Click:Connect(function()
+		updateButtonText()
+	end)
+	
+	
+	local function BuyStars()
+		for i, planet in pairs(starFormation:GetChildren()) do
+			local fireButton = planet:FindFirstChild("BuyButton")
+	
+			if fireButton and fireButton:IsA("TextButton") then
+				fireButton:Activate()
+			end
+		end
+	end
+	
+	task.spawn(function()
+		while true do
+			if active then
+				BuyStars()
+			end
+	
+			task.wait(0.5)
+		end
+	end)
+end
+coroutine.wrap(VVTKG_fake_script)()
+local function TTRB_fake_script() -- CurrentMilestone.LocalScript 
 	local script = Instance.new('LocalScript', CurrentMilestone)
 
 	local text = script.Parent
@@ -1441,9 +1451,9 @@ local function ZHGV_fake_script() -- CurrentMilestone.LocalScript
 		changeText()
 	end)	
 end
-coroutine.wrap(ZHGV_fake_script)()
-local function KUFFCJ_fake_script() -- TextButton_6.HighlightLinus 
-	local script = Instance.new('LocalScript', TextButton_6)
+coroutine.wrap(TTRB_fake_script)()
+local function NNNSM_fake_script() -- TextButton_7.HighlightLinus 
+	local script = Instance.new('LocalScript', TextButton_7)
 
 	local button = script.Parent
 	local player = game.Players.LocalPlayer
@@ -1501,48 +1511,4 @@ local function KUFFCJ_fake_script() -- TextButton_6.HighlightLinus
 	--	end
 	--end
 end
-coroutine.wrap(KUFFCJ_fake_script)()
-local function LXHLCVB_fake_script() -- MainUI.SortingThings 
-	local script = Instance.new('LocalScript', MainUI)
-
-	local buttonsFolder = script.Parent:WaitForChild("Buttons")
-	local framesFolder = script.Parent:WaitForChild("Frames")
-	
-	--All Buttons
-	local AutoButton = buttonsFolder:WaitForChild("AutomaticButton")
-	local SettingsButton = buttonsFolder:WaitForChild("SettingsButton")
-	
-	--All Frames
-	local Automatization = framesFolder:WaitForChild("Automatizaion")
-	local Settings = framesFolder:WaitForChild("Settings")
-	
-	-- Hide all frames
-	local function hideAllFrames()
-		for _, frame in pairs(framesFolder:GetChildren()) do
-			if frame:IsA("Frame") then
-				frame.Visible = false
-			end
-		end
-	end
-	
-	-- Switch function
-	local function switchFrame(frame)
-		hideAllFrames()
-		frame.Visible = true
-	end
-	
-	-- 🔗 Mapping buttons to frames
-	local buttonToFrame = {
-		[AutoButton]=Automatization,
-		[SettingsButton]=Settings
-	}
-	
-	-- Connect buttons
-	for button, frame in pairs(buttonToFrame) do
-		print(button, frame)
-		button.MouseButton1Click:Connect(function()
-			switchFrame(frame)
-		end)
-	end
-end
-coroutine.wrap(LXHLCVB_fake_script)()
+coroutine.wrap(NNNSM_fake_script)()
