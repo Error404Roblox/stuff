@@ -3,7 +3,7 @@
 
 -- Instances:
 
-local GUT2Script = Instance.new("CoreGui")
+local GUT2Script = Instance.new("ScreenGui")
 local NameText = Instance.new("TextLabel")
 local MainUI = Instance.new("Frame")
 local Frames = Instance.new("Folder")
