@@ -3,8 +3,8 @@
 
 -- Instances:
 
-local GUT2Script = Instance.new("CoreGui")
-local NameText = Instance.new("TextLabel")
+local GUT2Script = Instance.new("ScreenGui")
+local ScriptNameText = Instance.new("TextLabel")
 local MainUI = Instance.new("Frame")
 local Frames = Instance.new("Folder")
 local Automatizaion = Instance.new("Frame")
@@ -28,15 +28,15 @@ local AutoCollectSGText = Instance.new("TextLabel")
 local AutoCollectSG = Instance.new("TextButton")
 local EventHorizon = Instance.new("ScrollingFrame")
 local AutoCollect_2 = Instance.new("Frame")
-local TextLabel = Instance.new("TextLabel")
-local TextButton = Instance.new("TextButton")
+local EHacText = Instance.new("TextLabel")
+local EHacButton = Instance.new("TextButton")
 local PostBigBang = Instance.new("ScrollingFrame")
 local ADHD = Instance.new("Frame")
 local AutoADHD = Instance.new("Frame")
 local AutoADHDText = Instance.new("TextLabel")
 local AutoADHDButton = Instance.new("TextButton")
-local warningText = Instance.new("TextLabel")
-local _1NameSection = Instance.new("TextLabel")
+local AutoADHDwarningText = Instance.new("TextLabel")
+local ADHDnameText = Instance.new("TextLabel")
 local Stats = Instance.new("Frame")
 local AmountOfClicks = Instance.new("TextLabel")
 local TotalAmountOfGoldCubes = Instance.new("TextLabel")
@@ -45,52 +45,48 @@ local TotalAmountOfUnobtaniumCubes = Instance.new("TextLabel")
 local MainSection = Instance.new("ScrollingFrame")
 local CosmicDust = Instance.new("Frame")
 local UIGradient_6 = Instance.new("UIGradient")
-local NameText_2 = Instance.new("TextLabel")
+local NameText = Instance.new("TextLabel")
 local awaitText = Instance.new("TextLabel")
 local Terraforium = Instance.new("Frame")
 local UIGradient_7 = Instance.new("UIGradient")
-local NameText_3 = Instance.new("TextLabel")
+local NameText_2 = Instance.new("TextLabel")
 local awaitText_2 = Instance.new("TextLabel")
 local UIPadding_2 = Instance.new("UIPadding")
 local UIListLayout_2 = Instance.new("UIListLayout")
 local TreeTiers = Instance.new("Frame")
 local UIGradient_8 = Instance.new("UIGradient")
-local NameText_4 = Instance.new("TextLabel")
-local awaitText_3 = Instance.new("TextLabel")
+local TTnameText = Instance.new("TextLabel")
+local _110 = Instance.new("TextLabel")
 local AutoTreeStage = Instance.new("Frame")
-local TextLabel_2 = Instance.new("TextLabel")
-local TextButton_2 = Instance.new("TextButton")
-local currentTierText = Instance.new("TextLabel")
+local ATStext = Instance.new("TextLabel")
+local ATSbutton = Instance.new("TextButton")
+local TTcurrentTiersText = Instance.new("TextLabel")
 local Astrofy = Instance.new("Frame")
 local UIGradient_9 = Instance.new("UIGradient")
-local NameText_5 = Instance.new("TextLabel")
-local TextLabel_3 = Instance.new("TextLabel")
+local NameText_3 = Instance.new("TextLabel")
+local TextLabel = Instance.new("TextLabel")
 local Stellarify = Instance.new("Frame")
 local UIGradient_10 = Instance.new("UIGradient")
-local NameText_6 = Instance.new("TextLabel")
+local SnameText = Instance.new("TextLabel")
 local UIGradient_11 = Instance.new("UIGradient")
-local SFtext = Instance.new("TextLabel")
-local amountText = Instance.new("TextLabel")
+local StarFormationText = Instance.new("TextLabel")
+local SamountText = Instance.new("TextLabel")
 local StarFormation = Instance.new("ScrollingFrame")
 local AutoStarForm = Instance.new("Frame")
-local TextButton_3 = Instance.new("TextButton")
+local ASFbutton = Instance.new("TextButton")
 local UIGradient_12 = Instance.new("UIGradient")
-local TextLabel_4 = Instance.new("TextLabel")
+local ASFtext = Instance.new("TextLabel")
+local UIStroke = Instance.new("UIStroke")
 local UIGradient_13 = Instance.new("UIGradient")
 local UIGridLayout = Instance.new("UIGridLayout")
-local AutoStarForm_2 = Instance.new("Frame")
-local TextButton_4 = Instance.new("TextButton")
-local UIGradient_14 = Instance.new("UIGradient")
-local TextLabel_5 = Instance.new("TextLabel")
-local UIGradient_15 = Instance.new("UIGradient")
 local UIPadding_3 = Instance.new("UIPadding")
 local Supernova = Instance.new("Frame")
-local UIGradient_16 = Instance.new("UIGradient")
-local NameText_7 = Instance.new("TextLabel")
-local TextLabel_6 = Instance.new("TextLabel")
-local CurrentMilestone = Instance.new("TextLabel")
+local UIGradient_14 = Instance.new("UIGradient")
+local SNnameText = Instance.new("TextLabel")
+local _111 = Instance.new("TextLabel")
+local SNcurrentMilestone = Instance.new("TextLabel")
 local Settings = Instance.new("Frame")
-local UIGradient_17 = Instance.new("UIGradient")
+local UIGradient_15 = Instance.new("UIGradient")
 local ExitButton = Instance.new("TextButton")
 local HighlightLinusCubes = Instance.new("Frame")
 local Textlinus = Instance.new("TextLabel")
@@ -99,9 +95,9 @@ local Buttons_2 = Instance.new("ScrollingFrame")
 local UIListLayout_3 = Instance.new("UIListLayout")
 local UIPadding_4 = Instance.new("UIPadding")
 local SettingsButton = Instance.new("TextButton")
-local UIGradient_18 = Instance.new("UIGradient")
-local AutomaticButton = Instance.new("TextButton")
-local UIGradient_19 = Instance.new("UIGradient")
+local UIGradient_16 = Instance.new("UIGradient")
+local AutomateButton = Instance.new("TextButton")
+local UIGradient_17 = Instance.new("UIGradient")
 
 --Properties:
 
@@ -110,29 +106,27 @@ GUT2Script.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 GUT2Script.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 GUT2Script.ResetOnSpawn = false
 
-NameText.Name = "NameText"
-NameText.Parent = GUT2Script
-NameText.Active = true
-NameText.BackgroundColor3 = Color3.fromRGB(70, 25, 98)
-NameText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameText.BorderSizePixel = 0
-NameText.Position = UDim2.new(0.118066564, 0, 0.166456491, 0)
-NameText.Size = UDim2.new(0, 935, 0, 66)
-NameText.ZIndex = 2
-NameText.Font = Enum.Font.Bodoni
-NameText.LineHeight = 3.000
-NameText.Text = "The Galaxy Upgrade Tree 2 Script"
-NameText.TextColor3 = Color3.fromRGB(255, 255, 255)
-NameText.TextScaled = true
-NameText.TextSize = 14.000
-NameText.TextStrokeTransparency = 0.500
-NameText.TextWrapped = true
-NameText.RichText = true
-NameText.Draggable = true
-
+ScriptNameText.Name = "ScriptNameText"
+ScriptNameText.Parent = GUT2Script
+ScriptNameText.Active = true
+ScriptNameText.BackgroundColor3 = Color3.fromRGB(70, 25, 98)
+ScriptNameText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ScriptNameText.BorderSizePixel = 0
+ScriptNameText.Position = UDim2.new(0.118066564, 0, 0.166456491, 0)
+ScriptNameText.Size = UDim2.new(0, 935, 0, 66)
+ScriptNameText.ZIndex = 2
+ScriptNameText.Font = Enum.Font.Bodoni
+ScriptNameText.LineHeight = 3.000
+ScriptNameText.Text = "The Galaxy Upgrade Tree 2 Script"
+ScriptNameText.TextColor3 = Color3.fromRGB(255, 255, 255)
+ScriptNameText.TextScaled = true
+ScriptNameText.TextSize = 14.000
+ScriptNameText.TextStrokeTransparency = 0.500
+ScriptNameText.TextWrapped = true
+ScriptNameText.Draggable = true
 
 MainUI.Name = "MainUI"
-MainUI.Parent = NameText
+MainUI.Parent = ScriptNameText
 MainUI.BackgroundColor3 = Color3.fromRGB(35, 26, 53)
 MainUI.BorderColor3 = Color3.fromRGB(0, 0, 0)
 MainUI.BorderSizePixel = 0
@@ -149,6 +143,7 @@ Automatizaion.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Automatizaion.BorderSizePixel = 0
 Automatizaion.Position = UDim2.new(0.0495867878, 0, 0.20229885, 0)
 Automatizaion.Size = UDim2.new(0, 261, 0, 428)
+Automatizaion.Visible = false
 
 UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(54, 41, 83)), ColorSequenceKeypoint.new(0.51, Color3.fromRGB(17, 27, 115)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(110, 25, 134))}
 UIGradient.Parent = Automatizaion
@@ -166,6 +161,7 @@ SGbutton.BorderSizePixel = 0
 SGbutton.LayoutOrder = 1
 SGbutton.Position = UDim2.new(0.114942528, 0, 0.18224299, 0)
 SGbutton.Size = UDim2.new(0, 200, 0, 50)
+SGbutton.Visible = false
 SGbutton.Font = Enum.Font.JosefinSans
 SGbutton.Text = "Starry Ground"
 SGbutton.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -277,7 +273,6 @@ AutoCollectSGText.TextSize = 14.000
 AutoCollectSGText.TextStrokeColor3 = Color3.fromRGB(255, 124, 255)
 AutoCollectSGText.TextStrokeTransparency = 0.500
 AutoCollectSGText.TextWrapped = true
-AutoCollectSGText.RichText = true
 
 AutoCollectSG.Name = "AutoCollectSG"
 AutoCollectSG.Parent = AutoCollect
@@ -313,33 +308,35 @@ AutoCollect_2.BorderSizePixel = 0
 AutoCollect_2.Position = UDim2.new(0.0323129259, 0, 0.0268691592, 0)
 AutoCollect_2.Size = UDim2.new(0, 210, 0, 150)
 
-TextLabel.Parent = AutoCollect_2
-TextLabel.BackgroundColor3 = Color3.fromRGB(28, 21, 62)
-TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel.BorderSizePixel = 0
-TextLabel.Position = UDim2.new(0.0238095243, 0, 0.0466666669, 0)
-TextLabel.Size = UDim2.new(0, 200, 0, 50)
-TextLabel.Font = Enum.Font.SourceSans
-TextLabel.Text = "Auto Collect Gravitons"
-TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.TextScaled = true
-TextLabel.TextSize = 14.000
-TextLabel.TextStrokeColor3 = Color3.fromRGB(0, 242, 255)
-TextLabel.TextStrokeTransparency = 0.500
-TextLabel.TextWrapped = true
+EHacText.Name = "EHacText"
+EHacText.Parent = AutoCollect_2
+EHacText.BackgroundColor3 = Color3.fromRGB(28, 21, 62)
+EHacText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+EHacText.BorderSizePixel = 0
+EHacText.Position = UDim2.new(0.0238095243, 0, 0.0466666669, 0)
+EHacText.Size = UDim2.new(0, 200, 0, 50)
+EHacText.Font = Enum.Font.SourceSans
+EHacText.Text = "Auto Collect Gravitons"
+EHacText.TextColor3 = Color3.fromRGB(255, 255, 255)
+EHacText.TextScaled = true
+EHacText.TextSize = 14.000
+EHacText.TextStrokeColor3 = Color3.fromRGB(0, 242, 255)
+EHacText.TextStrokeTransparency = 0.500
+EHacText.TextWrapped = true
 
-TextButton.Parent = AutoCollect_2
-TextButton.BackgroundColor3 = Color3.fromRGB(87, 205, 255)
-TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextButton.BorderSizePixel = 0
-TextButton.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
-TextButton.Size = UDim2.new(0, 200, 0, 75)
-TextButton.Font = Enum.Font.SourceSans
-TextButton.Text = "Enable"
-TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextButton.TextScaled = true
-TextButton.TextSize = 14.000
-TextButton.TextWrapped = true
+EHacButton.Name = "EHacButton"
+EHacButton.Parent = AutoCollect_2
+EHacButton.BackgroundColor3 = Color3.fromRGB(87, 205, 255)
+EHacButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+EHacButton.BorderSizePixel = 0
+EHacButton.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
+EHacButton.Size = UDim2.new(0, 200, 0, 75)
+EHacButton.Font = Enum.Font.SourceSans
+EHacButton.Text = "Enable"
+EHacButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+EHacButton.TextScaled = true
+EHacButton.TextSize = 14.000
+EHacButton.TextWrapped = true
 
 PostBigBang.Name = "PostBigBang"
 PostBigBang.Parent = Frames_2
@@ -398,33 +395,33 @@ AutoADHDButton.TextScaled = true
 AutoADHDButton.TextSize = 14.000
 AutoADHDButton.TextWrapped = true
 
-warningText.Name = "warningText"
-warningText.Parent = AutoADHD
-warningText.BackgroundColor3 = Color3.fromRGB(255, 204, 0)
-warningText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-warningText.BorderSizePixel = 0
-warningText.Position = UDim2.new(0.0238095243, 0, 0.65200001, 0)
-warningText.Size = UDim2.new(0, 200, 0, 77)
-warningText.Font = Enum.Font.Unknown
-warningText.Text = "Keep in mind, that it ONLY works within 32 studs from ADHD cube."
-warningText.TextColor3 = Color3.fromRGB(255, 0, 4)
-warningText.TextScaled = true
-warningText.TextSize = 14.000
-warningText.TextWrapped = true
+AutoADHDwarningText.Name = "AutoADHDwarningText"
+AutoADHDwarningText.Parent = AutoADHD
+AutoADHDwarningText.BackgroundColor3 = Color3.fromRGB(255, 204, 0)
+AutoADHDwarningText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AutoADHDwarningText.BorderSizePixel = 0
+AutoADHDwarningText.Position = UDim2.new(0.0238095243, 0, 0.65200001, 0)
+AutoADHDwarningText.Size = UDim2.new(0, 200, 0, 77)
+AutoADHDwarningText.Font = Enum.Font.Unknown
+AutoADHDwarningText.Text = "Keep in mind, that it ONLY works within 32 studs from ADHD cube."
+AutoADHDwarningText.TextColor3 = Color3.fromRGB(255, 0, 4)
+AutoADHDwarningText.TextScaled = true
+AutoADHDwarningText.TextSize = 14.000
+AutoADHDwarningText.TextWrapped = true
 
-_1NameSection.Name = "1NameSection"
-_1NameSection.Parent = ADHD
-_1NameSection.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-_1NameSection.BorderColor3 = Color3.fromRGB(0, 0, 0)
-_1NameSection.BorderSizePixel = 0
-_1NameSection.Position = UDim2.new(0, 0, -0.111351199, 0)
-_1NameSection.Size = UDim2.new(0, 588, 0, 50)
-_1NameSection.Font = Enum.Font.PermanentMarker
-_1NameSection.Text = "A D H D"
-_1NameSection.TextColor3 = Color3.fromRGB(0, 0, 0)
-_1NameSection.TextScaled = true
-_1NameSection.TextSize = 14.000
-_1NameSection.TextWrapped = true
+ADHDnameText.Name = "ADHDnameText"
+ADHDnameText.Parent = ADHD
+ADHDnameText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ADHDnameText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ADHDnameText.BorderSizePixel = 0
+ADHDnameText.Position = UDim2.new(0, 0, -0.111351199, 0)
+ADHDnameText.Size = UDim2.new(0, 588, 0, 50)
+ADHDnameText.Font = Enum.Font.PermanentMarker
+ADHDnameText.Text = "A D H D"
+ADHDnameText.TextColor3 = Color3.fromRGB(0, 0, 0)
+ADHDnameText.TextScaled = true
+ADHDnameText.TextSize = 14.000
+ADHDnameText.TextWrapped = true
 
 Stats.Name = "Stats"
 Stats.Parent = ADHD
@@ -504,7 +501,8 @@ MainSection.BorderColor3 = Color3.fromRGB(0, 0, 0)
 MainSection.BorderSizePixel = 0
 MainSection.Position = UDim2.new(1.04980838, 0, 0, 0)
 MainSection.Size = UDim2.new(0, 588, 0, 428)
-MainSection.CanvasPosition = Vector2.new(0, 284)
+MainSection.Visible = false
+MainSection.CanvasPosition = Vector2.new(0, 600)
 MainSection.CanvasSize = UDim2.new(0, 0, 4, 0)
 
 CosmicDust.Name = "CosmicDust"
@@ -518,22 +516,22 @@ CosmicDust.Size = UDim2.new(0, 550, 0, 100)
 UIGradient_6.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(174, 33, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(186, 35, 191))}
 UIGradient_6.Parent = CosmicDust
 
-NameText_2.Name = "NameText"
-NameText_2.Parent = CosmicDust
-NameText_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameText_2.BackgroundTransparency = 1.000
-NameText_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameText_2.BorderSizePixel = 0
-NameText_2.Position = UDim2.new(0.318181813, 0, 0, 0)
-NameText_2.Size = UDim2.new(0, 200, 0, 50)
-NameText_2.Font = Enum.Font.GothamBold
-NameText_2.Text = "Cosmic Dust"
-NameText_2.TextColor3 = Color3.fromRGB(0, 0, 0)
-NameText_2.TextScaled = true
-NameText_2.TextSize = 14.000
-NameText_2.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-NameText_2.TextStrokeTransparency = 0.500
-NameText_2.TextWrapped = true
+NameText.Name = "NameText"
+NameText.Parent = CosmicDust
+NameText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+NameText.BackgroundTransparency = 1.000
+NameText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+NameText.BorderSizePixel = 0
+NameText.Position = UDim2.new(0.318181813, 0, 0, 0)
+NameText.Size = UDim2.new(0, 200, 0, 50)
+NameText.Font = Enum.Font.GothamBold
+NameText.Text = "Cosmic Dust"
+NameText.TextColor3 = Color3.fromRGB(0, 0, 0)
+NameText.TextScaled = true
+NameText.TextSize = 14.000
+NameText.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+NameText.TextStrokeTransparency = 0.500
+NameText.TextWrapped = true
 
 awaitText.Name = "awaitText"
 awaitText.Parent = CosmicDust
@@ -562,21 +560,21 @@ Terraforium.Size = UDim2.new(0, 550, 0, 100)
 UIGradient_7.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 255, 17)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(78, 255, 78))}
 UIGradient_7.Parent = Terraforium
 
-NameText_3.Name = "NameText"
-NameText_3.Parent = Terraforium
-NameText_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameText_3.BackgroundTransparency = 1.000
-NameText_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameText_3.BorderSizePixel = 0
-NameText_3.Position = UDim2.new(0.318181813, 0, 0, 0)
-NameText_3.Size = UDim2.new(0, 200, 0, 50)
-NameText_3.Font = Enum.Font.GothamBold
-NameText_3.Text = "Terraforium"
-NameText_3.TextColor3 = Color3.fromRGB(103, 255, 121)
-NameText_3.TextScaled = true
-NameText_3.TextSize = 14.000
-NameText_3.TextStrokeTransparency = 0.500
-NameText_3.TextWrapped = true
+NameText_2.Name = "NameText"
+NameText_2.Parent = Terraforium
+NameText_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+NameText_2.BackgroundTransparency = 1.000
+NameText_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+NameText_2.BorderSizePixel = 0
+NameText_2.Position = UDim2.new(0.318181813, 0, 0, 0)
+NameText_2.Size = UDim2.new(0, 200, 0, 50)
+NameText_2.Font = Enum.Font.GothamBold
+NameText_2.Text = "Terraforium"
+NameText_2.TextColor3 = Color3.fromRGB(103, 255, 121)
+NameText_2.TextScaled = true
+NameText_2.TextSize = 14.000
+NameText_2.TextStrokeTransparency = 0.500
+NameText_2.TextWrapped = true
 
 awaitText_2.Name = "awaitText"
 awaitText_2.Parent = Terraforium
@@ -613,38 +611,38 @@ TreeTiers.Size = UDim2.new(0, 550, 0, 465)
 UIGradient_8.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(65, 32, 2)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(165, 103, 16))}
 UIGradient_8.Parent = TreeTiers
 
-NameText_4.Name = "NameText"
-NameText_4.Parent = TreeTiers
-NameText_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameText_4.BackgroundTransparency = 1.000
-NameText_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameText_4.BorderSizePixel = 0
-NameText_4.Position = UDim2.new(0.318181813, 0, 0, 0)
-NameText_4.Size = UDim2.new(0, 200, 0, 50)
-NameText_4.Font = Enum.Font.GothamBold
-NameText_4.Text = "Tree Tiers"
-NameText_4.TextColor3 = Color3.fromRGB(116, 71, 15)
-NameText_4.TextScaled = true
-NameText_4.TextSize = 14.000
-NameText_4.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-NameText_4.TextStrokeTransparency = 0.500
-NameText_4.TextWrapped = true
+TTnameText.Name = "TTnameText"
+TTnameText.Parent = TreeTiers
+TTnameText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TTnameText.BackgroundTransparency = 1.000
+TTnameText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TTnameText.BorderSizePixel = 0
+TTnameText.Position = UDim2.new(0.318181813, 0, 0, 0)
+TTnameText.Size = UDim2.new(0, 200, 0, 50)
+TTnameText.Font = Enum.Font.GothamBold
+TTnameText.Text = "Tree Tiers"
+TTnameText.TextColor3 = Color3.fromRGB(116, 71, 15)
+TTnameText.TextScaled = true
+TTnameText.TextSize = 14.000
+TTnameText.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+TTnameText.TextStrokeTransparency = 0.500
+TTnameText.TextWrapped = true
 
-awaitText_3.Name = "awaitText"
-awaitText_3.Parent = TreeTiers
-awaitText_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-awaitText_3.BackgroundTransparency = 1.000
-awaitText_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-awaitText_3.BorderSizePixel = 0
-awaitText_3.Position = UDim2.new(0.398181826, 0, 0.589999974, 0)
-awaitText_3.Size = UDim2.new(0, 123, 0, 24)
-awaitText_3.Visible = false
-awaitText_3.Font = Enum.Font.SourceSans
-awaitText_3.Text = "nothing for now :("
-awaitText_3.TextColor3 = Color3.fromRGB(0, 0, 0)
-awaitText_3.TextScaled = true
-awaitText_3.TextSize = 14.000
-awaitText_3.TextWrapped = true
+_110.Name = "110"
+_110.Parent = TreeTiers
+_110.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+_110.BackgroundTransparency = 1.000
+_110.BorderColor3 = Color3.fromRGB(0, 0, 0)
+_110.BorderSizePixel = 0
+_110.Position = UDim2.new(0.398181826, 0, 0.589999974, 0)
+_110.Size = UDim2.new(0, 123, 0, 24)
+_110.Visible = false
+_110.Font = Enum.Font.SourceSans
+_110.Text = "nothing for now :("
+_110.TextColor3 = Color3.fromRGB(0, 0, 0)
+_110.TextScaled = true
+_110.TextSize = 14.000
+_110.TextWrapped = true
 
 AutoTreeStage.Name = "AutoTreeStage"
 AutoTreeStage.Parent = TreeTiers
@@ -655,55 +653,55 @@ AutoTreeStage.BorderColor3 = Color3.fromRGB(0, 0, 0)
 AutoTreeStage.BorderSizePixel = 0
 AutoTreeStage.Position = UDim2.new(0.0159492623, 0, 0.211815357, 0)
 AutoTreeStage.Size = UDim2.new(0, 210, 0, 150)
-AutoTreeStage.RichText = true
 
-TextLabel_2.Parent = AutoTreeStage
-TextLabel_2.BackgroundColor3 = Color3.fromRGB(59, 62, 11)
-TextLabel_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_2.BorderSizePixel = 0
-TextLabel_2.Position = UDim2.new(0.0238095243, 0, 0.0466666669, 0)
-TextLabel_2.Size = UDim2.new(0, 200, 0, 50)
-TextLabel_2.Font = Enum.Font.SourceSans
-TextLabel_2.Text = "Auto Tree Stage"
-TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_2.TextScaled = true
-TextLabel_2.TextSize = 14.000
-TextLabel_2.TextStrokeColor3 = Color3.fromRGB(255, 157, 19)
-TextLabel_2.TextStrokeTransparency = 0.500
-TextLabel_2.TextWrapped = true
-TextLabel_2.RichText = true
+ATStext.Name = "ATStext"
+ATStext.Parent = AutoTreeStage
+ATStext.BackgroundColor3 = Color3.fromRGB(59, 62, 11)
+ATStext.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ATStext.BorderSizePixel = 0
+ATStext.Position = UDim2.new(0.0238095243, 0, 0.0466666669, 0)
+ATStext.Size = UDim2.new(0, 200, 0, 50)
+ATStext.Font = Enum.Font.SourceSans
+ATStext.Text = "Auto Tree Stage"
+ATStext.TextColor3 = Color3.fromRGB(255, 255, 255)
+ATStext.TextScaled = true
+ATStext.TextSize = 14.000
+ATStext.TextStrokeColor3 = Color3.fromRGB(255, 157, 19)
+ATStext.TextStrokeTransparency = 0.500
+ATStext.TextWrapped = true
 
-TextButton_2.Parent = AutoTreeStage
-TextButton_2.BackgroundColor3 = Color3.fromRGB(255, 219, 88)
-TextButton_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextButton_2.BorderSizePixel = 0
-TextButton_2.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
-TextButton_2.Size = UDim2.new(0, 200, 0, 75)
-TextButton_2.AutoButtonColor = false
-TextButton_2.Font = Enum.Font.SourceSans
-TextButton_2.Text = "Enable"
-TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextButton_2.TextScaled = true
-TextButton_2.TextSize = 14.000
-TextButton_2.TextWrapped = true
+ATSbutton.Name = "ATSbutton"
+ATSbutton.Parent = AutoTreeStage
+ATSbutton.BackgroundColor3 = Color3.fromRGB(255, 219, 88)
+ATSbutton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ATSbutton.BorderSizePixel = 0
+ATSbutton.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
+ATSbutton.Size = UDim2.new(0, 200, 0, 75)
+ATSbutton.AutoButtonColor = false
+ATSbutton.Font = Enum.Font.SourceSans
+ATSbutton.Text = "Enable"
+ATSbutton.TextColor3 = Color3.fromRGB(0, 0, 0)
+ATSbutton.TextScaled = true
+ATSbutton.TextSize = 14.000
+ATSbutton.TextWrapped = true
 
-currentTierText.Name = "currentTierText"
-currentTierText.Parent = TreeTiers
-currentTierText.Active = true
-currentTierText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-currentTierText.BackgroundTransparency = 1.000
-currentTierText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-currentTierText.BorderSizePixel = 0
-currentTierText.Position = UDim2.new(0, 0, 0.0946236551, 0)
-currentTierText.Size = UDim2.new(0, 550, 0, 50)
-currentTierText.ZIndex = 2
-currentTierText.Font = Enum.Font.Fantasy
-currentTierText.Text = "Current Tier: <x>"
-currentTierText.TextColor3 = Color3.fromRGB(255, 255, 255)
-currentTierText.TextScaled = true
-currentTierText.TextSize = 14.000
-currentTierText.TextWrapped = true
-currentTierText.RichText = true
+TTcurrentTiersText.Name = "TTcurrentTiersText"
+TTcurrentTiersText.Parent = TreeTiers
+TTcurrentTiersText.Active = true
+TTcurrentTiersText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TTcurrentTiersText.BackgroundTransparency = 1.000
+TTcurrentTiersText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TTcurrentTiersText.BorderSizePixel = 0
+TTcurrentTiersText.Position = UDim2.new(0, 0, 0.0946236551, 0)
+TTcurrentTiersText.Size = UDim2.new(0, 550, 0, 50)
+TTcurrentTiersText.ZIndex = 2
+TTcurrentTiersText.Font = Enum.Font.Fantasy
+TTcurrentTiersText.Text = "Current Tier: <x>"
+TTcurrentTiersText.TextColor3 = Color3.fromRGB(255, 255, 255)
+TTcurrentTiersText.TextScaled = true
+TTcurrentTiersText.TextSize = 14.000
+TTcurrentTiersText.TextWrapped = true
+TTcurrentTiersText.RichText = true
 
 Astrofy.Name = "Astrofy"
 Astrofy.Parent = MainSection
@@ -717,35 +715,35 @@ Astrofy.Size = UDim2.new(0, 550, 0, 100)
 UIGradient_9.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(116, 2, 6)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(48, 3, 4))}
 UIGradient_9.Parent = Astrofy
 
-NameText_5.Name = "NameText"
-NameText_5.Parent = Astrofy
-NameText_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameText_5.BackgroundTransparency = 1.000
-NameText_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameText_5.BorderSizePixel = 0
-NameText_5.Position = UDim2.new(0.318181813, 0, 0, 0)
-NameText_5.Size = UDim2.new(0, 200, 0, 50)
-NameText_5.Font = Enum.Font.GothamBold
-NameText_5.Text = "Astrofy"
-NameText_5.TextColor3 = Color3.fromRGB(255, 0, 4)
-NameText_5.TextScaled = true
-NameText_5.TextSize = 14.000
-NameText_5.TextStrokeTransparency = 0.500
-NameText_5.TextWrapped = true
+NameText_3.Name = "NameText"
+NameText_3.Parent = Astrofy
+NameText_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+NameText_3.BackgroundTransparency = 1.000
+NameText_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
+NameText_3.BorderSizePixel = 0
+NameText_3.Position = UDim2.new(0.318181813, 0, 0, 0)
+NameText_3.Size = UDim2.new(0, 200, 0, 50)
+NameText_3.Font = Enum.Font.GothamBold
+NameText_3.Text = "Astrofy"
+NameText_3.TextColor3 = Color3.fromRGB(255, 0, 4)
+NameText_3.TextScaled = true
+NameText_3.TextSize = 14.000
+NameText_3.TextStrokeTransparency = 0.500
+NameText_3.TextWrapped = true
 
-TextLabel_3.Parent = Astrofy
-TextLabel_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_3.BackgroundTransparency = 1.000
-TextLabel_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_3.BorderSizePixel = 0
-TextLabel_3.Position = UDim2.new(0.398181826, 0, 0.589999974, 0)
-TextLabel_3.Size = UDim2.new(0, 123, 0, 24)
-TextLabel_3.Font = Enum.Font.SourceSans
-TextLabel_3.Text = "nothing for now :("
-TextLabel_3.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_3.TextScaled = true
-TextLabel_3.TextSize = 14.000
-TextLabel_3.TextWrapped = true
+TextLabel.Parent = Astrofy
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 1.000
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 0
+TextLabel.Position = UDim2.new(0.398181826, 0, 0.589999974, 0)
+TextLabel.Size = UDim2.new(0, 123, 0, 24)
+TextLabel.Font = Enum.Font.SourceSans
+TextLabel.Text = "nothing for now :("
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextWrapped = true
 
 Stellarify.Name = "Stellarify"
 Stellarify.Parent = MainSection
@@ -759,57 +757,58 @@ Stellarify.Size = UDim2.new(0, 550, 0, 278)
 UIGradient_10.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(116, 2, 6)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(48, 3, 4))}
 UIGradient_10.Parent = Stellarify
 
-NameText_6.Name = "NameText"
-NameText_6.Parent = Stellarify
-NameText_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameText_6.BackgroundTransparency = 1.000
-NameText_6.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameText_6.BorderSizePixel = 0
-NameText_6.Position = UDim2.new(0.318181813, 0, 0, 0)
-NameText_6.Size = UDim2.new(0, 200, 0, 50)
-NameText_6.Font = Enum.Font.Unknown
-NameText_6.Text = "Stellarify"
-NameText_6.TextColor3 = Color3.fromRGB(213, 62, 255)
-NameText_6.TextScaled = true
-NameText_6.TextSize = 14.000
-NameText_6.TextStrokeTransparency = 0.500
-NameText_6.TextWrapped = true
+SnameText.Name = "SnameText"
+SnameText.Parent = Stellarify
+SnameText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SnameText.BackgroundTransparency = 1.000
+SnameText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SnameText.BorderSizePixel = 0
+SnameText.Position = UDim2.new(0.318181813, 0, 0, 0)
+SnameText.Size = UDim2.new(0, 200, 0, 50)
+SnameText.Font = Enum.Font.Unknown
+SnameText.Text = "Stellarify"
+SnameText.TextColor3 = Color3.fromRGB(213, 62, 255)
+SnameText.TextScaled = true
+SnameText.TextSize = 14.000
+SnameText.TextStrokeTransparency = 0.500
+SnameText.TextWrapped = true
 
 UIGradient_11.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(249, 37, 249)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(85, 3, 139))}
 UIGradient_11.Rotation = 90
-UIGradient_11.Parent = NameText_6
+UIGradient_11.Parent = SnameText
 
-SFtext.Name = "SFtext"
-SFtext.Parent = Stellarify
-SFtext.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-SFtext.BackgroundTransparency = 1.000
-SFtext.BorderColor3 = Color3.fromRGB(0, 0, 0)
-SFtext.BorderSizePixel = 0
-SFtext.Position = UDim2.new(0.25090909, 0, 0.273453206, 0)
-SFtext.Size = UDim2.new(0, 284, 0, 43)
-SFtext.Font = Enum.Font.Unknown
-SFtext.Text = "Star Formation"
-SFtext.TextColor3 = Color3.fromRGB(235, 225, 38)
-SFtext.TextScaled = true
-SFtext.TextSize = 14.000
-SFtext.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
-SFtext.TextStrokeTransparency = 0.500
-SFtext.TextWrapped = true
+StarFormationText.Name = "StarFormationText"
+StarFormationText.Parent = Stellarify
+StarFormationText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+StarFormationText.BackgroundTransparency = 1.000
+StarFormationText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+StarFormationText.BorderSizePixel = 0
+StarFormationText.Position = UDim2.new(0.25090909, 0, 0.273453206, 0)
+StarFormationText.Size = UDim2.new(0, 284, 0, 43)
+StarFormationText.Font = Enum.Font.Unknown
+StarFormationText.Text = "Star Formation"
+StarFormationText.TextColor3 = Color3.fromRGB(235, 225, 38)
+StarFormationText.TextScaled = true
+StarFormationText.TextSize = 14.000
+StarFormationText.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+StarFormationText.TextStrokeTransparency = 0.500
+StarFormationText.TextWrapped = true
 
-amountText.Name = "amountText"
-amountText.Parent = Stellarify
-amountText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-amountText.BackgroundTransparency = 1.000
-amountText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-amountText.BorderSizePixel = 0
-amountText.Position = UDim2.new(0.25090909, 0, 0.154676259, 0)
-amountText.Size = UDim2.new(0, 284, 0, 35)
-amountText.Font = Enum.Font.SourceSans
-amountText.Text = "You have Stellarified <x> times."
-amountText.TextColor3 = Color3.fromRGB(255, 255, 255)
-amountText.TextScaled = true
-amountText.TextSize = 14.000
-amountText.TextWrapped = true
+SamountText.Name = "SamountText"
+SamountText.Parent = Stellarify
+SamountText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SamountText.BackgroundTransparency = 1.000
+SamountText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SamountText.BorderSizePixel = 0
+SamountText.Position = UDim2.new(0.25090909, 0, 0.154676259, 0)
+SamountText.Size = UDim2.new(0, 284, 0, 35)
+SamountText.Font = Enum.Font.SourceSans
+SamountText.Text = "You have Stellarified <x> times."
+SamountText.TextColor3 = Color3.fromRGB(255, 255, 255)
+SamountText.TextScaled = true
+SamountText.TextSize = 14.000
+SamountText.TextWrapped = true
+SamountText.RichText = true
 
 StarFormation.Name = "StarFormation"
 StarFormation.Parent = Stellarify
@@ -828,41 +827,46 @@ AutoStarForm.BorderColor3 = Color3.fromRGB(0, 0, 0)
 AutoStarForm.BorderSizePixel = 0
 AutoStarForm.Position = UDim2.new(0.0090909088, 0, 0.0799999982, 0)
 AutoStarForm.Size = UDim2.new(0, 100, 0, 78)
-AutoStarForm.RichText = true
 
-TextButton_3.Parent = AutoStarForm
-TextButton_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextButton_3.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextButton_3.BorderSizePixel = 0
-TextButton_3.Size = UDim2.new(0, 100, 0, 29)
-TextButton_3.Font = Enum.Font.SourceSans
-TextButton_3.Text = "Enable"
-TextButton_3.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextButton_3.TextScaled = true
-TextButton_3.TextSize = 14.000
-TextButton_3.TextStrokeTransparency = 0.100
-TextButton_3.TextWrapped = true
-TextButton_3.RichText = true
+ASFbutton.Name = "ASFbutton"
+ASFbutton.Parent = AutoStarForm
+ASFbutton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ASFbutton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ASFbutton.BorderSizePixel = 0
+ASFbutton.Size = UDim2.new(0, 100, 0, 29)
+ASFbutton.Font = Enum.Font.SourceSans
+ASFbutton.Text = "Enable"
+ASFbutton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ASFbutton.TextScaled = true
+ASFbutton.TextSize = 14.000
+ASFbutton.TextStrokeTransparency = 0.100
+ASFbutton.TextWrapped = true
 
 UIGradient_12.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(243, 255, 10)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(151, 153, 7))}
 UIGradient_12.Rotation = -90
-UIGradient_12.Parent = TextButton_3
+UIGradient_12.Parent = ASFbutton
 
-TextLabel_4.Parent = AutoStarForm
-TextLabel_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_4.BackgroundTransparency = 1.000
-TextLabel_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_4.BorderSizePixel = 0
-TextLabel_4.Position = UDim2.new(0, 0, 0.371794879, 0)
-TextLabel_4.Size = UDim2.new(0, 100, 0, 50)
-TextLabel_4.Font = Enum.Font.Unknown
-TextLabel_4.Text = "Auto Star Formation"
-TextLabel_4.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_4.TextScaled = true
-TextLabel_4.TextSize = 14.000
-TextLabel_4.TextTransparency = 1.000
-TextLabel_4.TextWrapped = true
-TextLabel_4.RichText = true
+ASFtext.Name = "ASFtext"
+ASFtext.Parent = AutoStarForm
+ASFtext.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ASFtext.BackgroundTransparency = 1.000
+ASFtext.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ASFtext.BorderSizePixel = 0
+ASFtext.Position = UDim2.new(0, 0, 0.371794879, 0)
+ASFtext.Size = UDim2.new(0, 100, 0, 50)
+ASFtext.Font = Enum.Font.Unknown
+ASFtext.Text = "Auto Star Formation"
+ASFtext.TextColor3 = Color3.fromRGB(0, 0, 0)
+ASFtext.TextScaled = true
+ASFtext.TextSize = 14.000
+ASFtext.TextTransparency = 1.000
+ASFtext.TextWrapped = true
+ASFtext.RichText = true
+
+UIStroke.Name = "ASFtextStroke"
+UIStroke.Parent = ASFtext
+UIStroke.Thickness = 0.6
+UIStroke.Transparency = 0
 
 UIGradient_13.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 85, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 255))}
 UIGradient_13.Parent = AutoStarForm
@@ -870,52 +874,6 @@ UIGradient_13.Parent = AutoStarForm
 UIGridLayout.Parent = StarFormation
 UIGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIGridLayout.CellPadding = UDim2.new(0, 25, 0, 0)
-
-AutoStarForm_2.Name = "AutoStarForm"
-AutoStarForm_2.Parent = StarFormation
-AutoStarForm_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-AutoStarForm_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutoStarForm_2.BorderSizePixel = 0
-AutoStarForm_2.Position = UDim2.new(0.0090909088, 0, 0.0799999982, 0)
-AutoStarForm_2.Size = UDim2.new(0, 100, 0, 78)
-AutoStarForm_2.Visible = false
-
-TextButton_4.Parent = AutoStarForm_2
-TextButton_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextButton_4.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextButton_4.BorderSizePixel = 0
-TextButton_4.Size = UDim2.new(0, 100, 0, 29)
-TextButton_4.Font = Enum.Font.SourceSans
-TextButton_4.Text = "Enable"
-TextButton_4.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextButton_4.TextScaled = true
-TextButton_4.TextSize = 14.000
-TextButton_4.TextStrokeTransparency = 0.100
-TextButton_4.TextWrapped = true
-TextButton_4.RichText = true
-
-UIGradient_14.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(243, 255, 10)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(151, 153, 7))}
-UIGradient_14.Rotation = -90
-UIGradient_14.Parent = TextButton_4
-
-TextLabel_5.Parent = AutoStarForm_2
-TextLabel_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_5.BackgroundTransparency = 1.000
-TextLabel_5.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_5.BorderSizePixel = 0
-TextLabel_5.Position = UDim2.new(0, 0, 0.371794879, 0)
-TextLabel_5.Size = UDim2.new(0, 100, 0, 50)
-TextLabel_5.Font = Enum.Font.Unknown
-TextLabel_5.Text = "Auto Star Formation"
-TextLabel_5.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_5.TextScaled = true
-TextLabel_5.TextSize = 14.000
-TextLabel_5.TextTransparency = 1.000
-TextLabel_5.TextWrapped = true
-TextLabel_5.RichText = true
-
-UIGradient_15.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 85, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 255))}
-UIGradient_15.Parent = AutoStarForm_2
 
 UIPadding_3.Parent = StarFormation
 UIPadding_3.PaddingLeft = UDim.new(0, 10)
@@ -929,56 +887,58 @@ Supernova.LayoutOrder = 5
 Supernova.Position = UDim2.new(0, 0, -0.0440658033, 0)
 Supernova.Size = UDim2.new(0, 550, 0, 550)
 
-UIGradient_16.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(232, 206, 5)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(48, 3, 4))}
-UIGradient_16.Rotation = 84
-UIGradient_16.Parent = Supernova
+UIGradient_14.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(232, 206, 5)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(48, 3, 4))}
+UIGradient_14.Rotation = 84
+UIGradient_14.Parent = Supernova
 
-NameText_7.Name = "NameText"
-NameText_7.Parent = Supernova
-NameText_7.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-NameText_7.BackgroundTransparency = 1.000
-NameText_7.BorderColor3 = Color3.fromRGB(0, 0, 0)
-NameText_7.BorderSizePixel = 0
-NameText_7.Position = UDim2.new(0.318181813, 0, 0, 0)
-NameText_7.Size = UDim2.new(0, 200, 0, 50)
-NameText_7.Font = Enum.Font.Unknown
-NameText_7.Text = "Supernova"
-NameText_7.TextColor3 = Color3.fromRGB(255, 218, 5)
-NameText_7.TextScaled = true
-NameText_7.TextSize = 14.000
-NameText_7.TextStrokeTransparency = 0.500
-NameText_7.TextWrapped = true
+SNnameText.Name = "SNnameText"
+SNnameText.Parent = Supernova
+SNnameText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SNnameText.BackgroundTransparency = 1.000
+SNnameText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SNnameText.BorderSizePixel = 0
+SNnameText.Position = UDim2.new(0.318181813, 0, 0, 0)
+SNnameText.Size = UDim2.new(0, 200, 0, 50)
+SNnameText.Font = Enum.Font.Unknown
+SNnameText.Text = "Supernova"
+SNnameText.TextColor3 = Color3.fromRGB(255, 218, 5)
+SNnameText.TextScaled = true
+SNnameText.TextSize = 14.000
+SNnameText.TextStrokeTransparency = 0.500
+SNnameText.TextWrapped = true
 
-TextLabel_6.Parent = Supernova
-TextLabel_6.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel_6.BackgroundTransparency = 1.000
-TextLabel_6.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_6.BorderSizePixel = 0
-TextLabel_6.Position = UDim2.new(0.398181826, 0, 0.589999974, 0)
-TextLabel_6.Size = UDim2.new(0, 123, 0, 24)
-TextLabel_6.Visible = false
-TextLabel_6.Font = Enum.Font.SourceSans
-TextLabel_6.Text = "nothing for now :("
-TextLabel_6.TextColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel_6.TextScaled = true
-TextLabel_6.TextSize = 14.000
-TextLabel_6.TextWrapped = true
+_111.Name = "111"
+_111.Parent = Supernova
+_111.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+_111.BackgroundTransparency = 1.000
+_111.BorderColor3 = Color3.fromRGB(0, 0, 0)
+_111.BorderSizePixel = 0
+_111.Position = UDim2.new(0.398181826, 0, 0.589999974, 0)
+_111.Size = UDim2.new(0, 123, 0, 24)
+_111.Visible = false
+_111.Font = Enum.Font.SourceSans
+_111.Text = "nothing for now :("
+_111.TextColor3 = Color3.fromRGB(0, 0, 0)
+_111.TextScaled = true
+_111.TextSize = 14.000
+_111.TextWrapped = true
 
-CurrentMilestone.Name = "CurrentMilestone"
-CurrentMilestone.Parent = Supernova
-CurrentMilestone.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-CurrentMilestone.BackgroundTransparency = 1.000
-CurrentMilestone.BorderColor3 = Color3.fromRGB(0, 0, 0)
-CurrentMilestone.BorderSizePixel = 0
-CurrentMilestone.Position = UDim2.new(0.0781818181, 0, 0.0636363626, 0)
-CurrentMilestone.Size = UDim2.new(0, 468, 0, 31)
-CurrentMilestone.Font = Enum.Font.SourceSansSemibold
-CurrentMilestone.Text = "Current Milestone: <x>"
-CurrentMilestone.TextColor3 = Color3.fromRGB(255, 255, 255)
-CurrentMilestone.TextScaled = true
-CurrentMilestone.TextSize = 14.000
-CurrentMilestone.TextStrokeTransparency = 0.500
-CurrentMilestone.TextWrapped = true
+SNcurrentMilestone.Name = "SNcurrentMilestone"
+SNcurrentMilestone.Parent = Supernova
+SNcurrentMilestone.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SNcurrentMilestone.BackgroundTransparency = 1.000
+SNcurrentMilestone.BorderColor3 = Color3.fromRGB(0, 0, 0)
+SNcurrentMilestone.BorderSizePixel = 0
+SNcurrentMilestone.Position = UDim2.new(0.0781818181, 0, 0.0636363626, 0)
+SNcurrentMilestone.Size = UDim2.new(0, 468, 0, 31)
+SNcurrentMilestone.Font = Enum.Font.SourceSansSemibold
+SNcurrentMilestone.Text = "Current Milestone: <x>"
+SNcurrentMilestone.TextColor3 = Color3.fromRGB(255, 255, 255)
+SNcurrentMilestone.TextScaled = true
+SNcurrentMilestone.TextSize = 14.000
+SNcurrentMilestone.TextStrokeTransparency = 0.500
+SNcurrentMilestone.TextWrapped = true
+SNcurrentMilestone.RichText = true
 
 Settings.Name = "Settings"
 Settings.Parent = Frames
@@ -989,8 +949,8 @@ Settings.Position = UDim2.new(0.0213903747, 0, 0.197573662, 0)
 Settings.Size = UDim2.new(0, 896, 0, 430)
 Settings.Visible = false
 
-UIGradient_17.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(20, 20, 20)), ColorSequenceKeypoint.new(0.51, Color3.fromRGB(33, 21, 35)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(49, 49, 49))}
-UIGradient_17.Parent = Settings
+UIGradient_15.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(20, 20, 20)), ColorSequenceKeypoint.new(0.51, Color3.fromRGB(33, 21, 35)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(49, 49, 49))}
+UIGradient_15.Parent = Settings
 
 ExitButton.Name = "ExitButton"
 ExitButton.Parent = Settings
@@ -1005,8 +965,8 @@ ExitButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 ExitButton.TextScaled = true
 ExitButton.TextSize = 14.000
 ExitButton.TextWrapped = true
-ExitButton.MouseButton1Click:Connect(function()
-	NameText:Destroy()
+ExitButton.MouseButton1Down:Connect(function()
+	GUT2Script:Destroy()
 end)
 
 HighlightLinusCubes.Name = "HighlightLinusCubes"
@@ -1081,35 +1041,35 @@ SettingsButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 SettingsButton.TextSize = 33.000
 SettingsButton.TextWrapped = true
 
-UIGradient_18.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(202, 202, 202)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
-UIGradient_18.Parent = SettingsButton
+UIGradient_16.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(202, 202, 202)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
+UIGradient_16.Parent = SettingsButton
 
-AutomaticButton.Name = "AutomaticButton"
-AutomaticButton.Parent = Buttons_2
-AutomaticButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-AutomaticButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutomaticButton.BorderSizePixel = 0
-AutomaticButton.Position = UDim2.new(0.00246490631, 0, 0.114290275, 0)
-AutomaticButton.Size = UDim2.new(0, 200, 0, 50)
-AutomaticButton.Font = Enum.Font.JosefinSans
-AutomaticButton.Text = "Automate"
-AutomaticButton.TextColor3 = Color3.fromRGB(0, 0, 0)
-AutomaticButton.TextSize = 33.000
-AutomaticButton.TextWrapped = true
+AutomateButton.Name = "AutomateButton"
+AutomateButton.Parent = Buttons_2
+AutomateButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AutomateButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AutomateButton.BorderSizePixel = 0
+AutomateButton.Position = UDim2.new(0.00246490631, 0, 0.114290275, 0)
+AutomateButton.Size = UDim2.new(0, 200, 0, 50)
+AutomateButton.Font = Enum.Font.JosefinSans
+AutomateButton.Text = "Automate"
+AutomateButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+AutomateButton.TextSize = 33.000
+AutomateButton.TextWrapped = true
 
-UIGradient_19.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(94, 94, 94)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
-UIGradient_19.Parent = AutomaticButton
+UIGradient_17.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(94, 94, 94)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
+UIGradient_17.Parent = AutomateButton
 
 -- Scripts:
 
-local function YTWHDMX_fake_script() -- MainUI.SortingThings 
+local function FDIJIIW_fake_script() -- MainUI.FirstLayerOfSortingThings 
 	local script = Instance.new('LocalScript', MainUI)
 
 	local buttonsFolder = script.Parent:WaitForChild("Buttons")
 	local framesFolder = script.Parent:WaitForChild("Frames")
 	
 	--All Buttons
-	local AutoButton = buttonsFolder:WaitForChild("AutomaticButton")
+	local AutoButton = buttonsFolder:WaitForChild("AutomateButton")
 	local SettingsButton = buttonsFolder:WaitForChild("SettingsButton")
 	
 	--All Frames
@@ -1145,8 +1105,8 @@ local function YTWHDMX_fake_script() -- MainUI.SortingThings
 		end)
 	end
 end
-coroutine.wrap(YTWHDMX_fake_script)()
-local function PFMSN_fake_script() -- Automatizaion.SortingThings1 
+coroutine.wrap(FDIJIIW_fake_script)()
+local function VYLY_fake_script() -- Automatizaion.SecondLayerOfSortingThings 
 	local script = Instance.new('LocalScript', Automatizaion)
 
 	local buttonsFolder = script.Parent:WaitForChild("Buttons")
@@ -1195,9 +1155,9 @@ local function PFMSN_fake_script() -- Automatizaion.SortingThings1
 		end)
 	end
 end
-coroutine.wrap(PFMSN_fake_script)()
-local function HSNBX_fake_script() -- TextButton.AutoCollect 
-	local script = Instance.new('LocalScript', TextButton)
+coroutine.wrap(VYLY_fake_script)()
+local function HIJBTX_fake_script() -- EHacButton.EHautocollect 
+	local script = Instance.new('LocalScript', EHacButton)
 
 	-- Place this in a LocalScript inside StarterGui
 	local button = script.Parent
@@ -1233,8 +1193,8 @@ local function HSNBX_fake_script() -- TextButton.AutoCollect
 	end)
 	
 end
-coroutine.wrap(HSNBX_fake_script)()
-local function BLHF_fake_script() -- AutoADHDButton.AutoClick 
+coroutine.wrap(HIJBTX_fake_script)()
+local function CNQVBKT_fake_script() -- AutoADHDButton.AutoClick 
 	local script = Instance.new('LocalScript', AutoADHDButton)
 
 	--local button = script.Parent
@@ -1286,15 +1246,15 @@ local function BLHF_fake_script() -- AutoADHDButton.AutoClick
 	end)
 	
 end
-coroutine.wrap(BLHF_fake_script)()
-local function ZEHUDCW_fake_script() -- AmountOfClicks.TrackingStat 
+coroutine.wrap(CNQVBKT_fake_script)()
+local function ZKNASUJ_fake_script() -- AmountOfClicks.TrackingStatADHD 
 	local script = Instance.new('LocalScript', AmountOfClicks)
 
 	local text = script.Parent
 	local amountValue = workspace.Values.GameStats.Currencies.ADHDclicks
 	
 	local function updateChange()
-		text.Text = "Total clicks: " .. amountValue.Value
+		text.Text = "Total clicks: 1e" .. amountValue.Value
 	end
 	
 	amountValue.Changed:Connect(updateChange)
@@ -1305,12 +1265,36 @@ local function ZEHUDCW_fake_script() -- AmountOfClicks.TrackingStat
 	
 	
 end
-coroutine.wrap(ZEHUDCW_fake_script)()
--- TotalAmountOfGoldCubes.TrackingStat is disabled.
+coroutine.wrap(ZKNASUJ_fake_script)()
+local function DKNGQTZ_fake_script() -- TotalAmountOfGoldCubes.TrackingStatGADHD 
+	local script = Instance.new('LocalScript', TotalAmountOfGoldCubes)
+
+	local text = script.Parent
+	local goldCube = workspace.Cube.curr.gcube
+	
+	local function updateCount()
+		local amount = #goldCube:GetChildren()
+		text.Text = "Total clicks: " .. amount .. "/100"
+	end
+	
+	-- Initial update
+	updateCount()
+	
+	-- Update when objects change
+	goldCube.ChildAdded:Connect(updateCount)
+	goldCube.ChildRemoved:Connect(updateCount)
+	
+	for i, v in pairs(goldCube:GetChildren()) do
+		if v.Name == "gcube" then
+			amount += 1
+		end
+	end
+end
+coroutine.wrap(DKNGQTZ_fake_script)()
 -- TotalAmountOfDiamondCubes.TrackingStat is disabled.
 -- TotalAmountOfUnobtaniumCubes.TrackingStat is disabled.
-local function HEPWOB_fake_script() -- TextButton_2.ATS 
-	local script = Instance.new('LocalScript', TextButton_2)
+local function TRZKNBY_fake_script() -- ATSbutton.ATSscript 
+	local script = Instance.new('LocalScript', ATSbutton)
 
 	local button = script.Parent
 	local player = game.Players.LocalPlayer
@@ -1344,9 +1328,9 @@ local function HEPWOB_fake_script() -- TextButton_2.ATS
 	end)
 	
 end
-coroutine.wrap(HEPWOB_fake_script)()
-local function YMOHMUN_fake_script() -- currentTierText.LocalScript 
-	local script = Instance.new('LocalScript', currentTierText)
+coroutine.wrap(TRZKNBY_fake_script)()
+local function IPKECT_fake_script() -- TTcurrentTiersText.TTtrackCurrentTIer 
+	local script = Instance.new('LocalScript', TTcurrentTiersText)
 
 	local text = script.Parent
 	local amount = workspace.Values.GameStats.Currencies:WaitForChild("TreeTierValue")
@@ -1360,9 +1344,9 @@ local function YMOHMUN_fake_script() -- currentTierText.LocalScript
 		changeText()
 	end)
 end
-coroutine.wrap(YMOHMUN_fake_script)()
-local function FCMME_fake_script() -- amountText.LocalScript 
-	local script = Instance.new('LocalScript', amountText)
+coroutine.wrap(IPKECT_fake_script)()
+local function HXKE_fake_script() -- SamountText.StellarifyAmount 
+	local script = Instance.new('LocalScript', SamountText)
 
 	local text = script.Parent
 	local Svalue = workspace.Values.GameStats.Currencies:WaitForChild("StellarifyValue")
@@ -1375,9 +1359,9 @@ local function FCMME_fake_script() -- amountText.LocalScript
 		changeText()
 	end)	
 end
-coroutine.wrap(FCMME_fake_script)()
-local function PQWFS_fake_script() -- TextButton_3.AutoStarForm 
-	local script = Instance.new('LocalScript', TextButton_3)
+coroutine.wrap(HXKE_fake_script)()
+local function NNCXD_fake_script() -- ASFbutton.AutoStarForm 
+	local script = Instance.new('LocalScript', ASFbutton)
 
 	local button = script.Parent
 	local player = game:GetService("Players").LocalPlayer
@@ -1417,51 +1401,9 @@ local function PQWFS_fake_script() -- TextButton_3.AutoStarForm
 		end
 	end)
 end
-coroutine.wrap(PQWFS_fake_script)()
-local function VNJXR_fake_script() -- TextButton_4.AutoStarForm 
-	local script = Instance.new('LocalScript', TextButton_4)
-
-	local button = script.Parent
-	local player = game:GetService("Players").LocalPlayer
-	local starFormation = player.PlayerGui:WaitForChild("Boards"):WaitForChild("StarFormation")
-	
-	local active = false
-	
-	local function updateButtonText()
-		active = not active
-	
-	
-		button.Text = active and "Enabled" or "Disabled"
-	end
-	
-	button.MouseButton1Click:Connect(function()
-		updateButtonText()
-	end)
-	
-	
-	local function BuyStars()
-		for i, planet in pairs(starFormation:GetChildren()) do
-			local fireButton = planet:FindFirstChild("BuyButton")
-	
-			if fireButton and fireButton:IsA("TextButton") then
-				fireButton:Activate()
-			end
-		end
-	end
-	
-	task.spawn(function()
-		while true do
-			if active then
-				BuyStars()
-			end
-	
-			task.wait(0.5)
-		end
-	end)
-end
-coroutine.wrap(VNJXR_fake_script)()
-local function NNTCAM_fake_script() -- CurrentMilestone.LocalScript 
-	local script = Instance.new('LocalScript', CurrentMilestone)
+coroutine.wrap(NNCXD_fake_script)()
+local function KDWURH_fake_script() -- SNcurrentMilestone.SNtrackMilestone 
+	local script = Instance.new('LocalScript', SNcurrentMilestone)
 
 	local text = script.Parent
 	local currentMilestone = workspace.Values.GameStats.Currencies:WaitForChild("SupernovaValue")
@@ -1474,8 +1416,8 @@ local function NNTCAM_fake_script() -- CurrentMilestone.LocalScript
 		changeText()
 	end)	
 end
-coroutine.wrap(NNTCAM_fake_script)()
-local function LQBHD_fake_script() -- highlight.HighlightLinus 
+coroutine.wrap(KDWURH_fake_script)()
+local function YWYX_fake_script() -- highlight.HighlightLinus 
 	local script = Instance.new('LocalScript', highlight)
 
 	local button = script.Parent
@@ -1520,18 +1462,5 @@ local function LQBHD_fake_script() -- highlight.HighlightLinus
 			end
 		end
 	end)
-	
-	
-	--for i, obj in pairs(workspace:GetDescendants()) do
-	--	if obj:IsA("MeshPart") and string.match(obj.Name, "^linusCube_%d+$") then
-	--
-	--		local highlight = Instance.new("Highlight")
-	--		highlight.FillColor = Color3.fromRGB(255, 255, 255) -- white
-	--		highlight.OutlineColor = Color3.fromRGB(255, 0, 0) -- red
-	--		highlight.FillTransparency = 0.5
-	--		highlight.Parent = obj
-	--
-	--	end
-	--end
 end
-coroutine.wrap(LQBHD_fake_script)()
+coroutine.wrap(YWYX_fake_script)()
