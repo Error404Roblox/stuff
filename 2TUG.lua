@@ -827,7 +827,6 @@ AutoStarForm.BorderColor3 = Color3.fromRGB(0, 0, 0)
 AutoStarForm.BorderSizePixel = 0
 AutoStarForm.Position = UDim2.new(0.0090909088, 0, 0.0799999982, 0)
 AutoStarForm.Size = UDim2.new(0, 100, 0, 78)
-AutoStarForm.RichText = true
 
 TextButton_3.Parent = AutoStarForm
 TextButton_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
