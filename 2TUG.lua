@@ -1270,26 +1270,44 @@ local function DKNGQTZ_fake_script() -- TotalAmountOfGoldCubes.TrackingStatGADHD
 	local script = Instance.new('LocalScript', TotalAmountOfGoldCubes)
 
 	local text = script.Parent
-	local goldCube = workspace.Cube.curr.gcube
+	local cubeFolder = workspace:WaitForChild("Cube"):WaitForChild("curr")
 	
+	local goldCube -- will be assigned later
+	
+	-- Function to update UI
 	local function updateCount()
-		local amount = #goldCube:GetChildren()
-		text.Text = "Total clicks: " .. amount .. "/100"
-	end
-	
-	-- Initial update
-	updateCount()
-	
-	-- Update when objects change
-	goldCube.ChildAdded:Connect(updateCount)
-	goldCube.ChildRemoved:Connect(updateCount)
-	
-	for i, v in pairs(goldCube:GetChildren()) do
-		if v.Name == "gcube" then
-			amount += 1
+		if goldCube then
+			local amount = #goldCube:GetChildren()
+			text.Text = "Current Gold Cubes: " .. amount .. "/100"
+		else
+			text.Text = "Current Gold Cubes: 0/100"
 		end
 	end
-end
+	
+	-- Function to hook into gcube when it appears
+	local function setupFolder(folder)
+		goldCube = folder
+	
+		updateCount()
+	
+		folder.ChildAdded:Connect(updateCount)
+		folder.ChildRemoved:Connect(updateCount)
+	end
+	
+	-- Check if gcube already exists
+	local existing = cubeFolder:FindFirstChild("gcube")
+	if existing then
+		setupFolder(existing)
+	else
+		updateCount() -- show 0 until it exists
+	end
+	
+	-- Listen for gcube being created later
+	cubeFolder.ChildAdded:Connect(function(child)
+		if child.Name == "gcube" then
+			setupFolder(child)
+		end
+	end)
 coroutine.wrap(DKNGQTZ_fake_script)()
 -- TotalAmountOfDiamondCubes.TrackingStat is disabled.
 -- TotalAmountOfUnobtaniumCubes.TrackingStat is disabled.
