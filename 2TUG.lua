@@ -30,7 +30,6 @@ local EventHorizon = Instance.new("ScrollingFrame")
 local AutoCollect_2 = Instance.new("Frame")
 local EHacText = Instance.new("TextLabel")
 local EHacButton = Instance.new("TextButton")
-local EHacSwitchMode = Instance.new("TextButton")
 local PostBigBang = Instance.new("ScrollingFrame")
 local ADHD = Instance.new("Frame")
 local AutoADHD = Instance.new("Frame")
@@ -43,10 +42,6 @@ local AmountOfClicks = Instance.new("TextLabel")
 local TotalAmountOfGoldCubes = Instance.new("TextLabel")
 local TotalAmountOfDiamondCubes = Instance.new("TextLabel")
 local TotalAmountOfUnobtaniumCubes = Instance.new("TextLabel")
-local AutoCollectGoldADHD = Instance.new("Frame")
-local ACgoldADHDtext = Instance.new("TextLabel")
-local ACgoldADHDbutton = Instance.new("TextButton")
-local nul = Instance.new("TextLabel")
 local MainSection = Instance.new("ScrollingFrame")
 local CosmicDust = Instance.new("Frame")
 local UIGradient_6 = Instance.new("UIGradient")
@@ -81,6 +76,7 @@ local AutoStarForm = Instance.new("Frame")
 local ASFbutton = Instance.new("TextButton")
 local UIGradient_12 = Instance.new("UIGradient")
 local ASFtext = Instance.new("TextLabel")
+local UIStroke = Instance.new("UIStroke")
 local UIGradient_13 = Instance.new("UIGradient")
 local UIGridLayout = Instance.new("UIGridLayout")
 local UIPadding_3 = Instance.new("UIPadding")
@@ -92,18 +88,12 @@ local SNcurrentMilestone = Instance.new("TextLabel")
 local Settings = Instance.new("Frame")
 local UIGradient_15 = Instance.new("UIGradient")
 local ExitButton = Instance.new("TextButton")
-local InnerSettings = Instance.new("ScrollingFrame")
 local HighlightLinusCubes = Instance.new("Frame")
 local Textlinus = Instance.new("TextLabel")
 local highlight = Instance.new("TextButton")
-local UIListLayout_3 = Instance.new("UIListLayout")
-local EHhelpful = Instance.new("Frame")
-local EHhelfulText = Instance.new("TextLabel")
-local EHhelpfulButton = Instance.new("TextButton")
-local UIPadding_4 = Instance.new("UIPadding")
 local Buttons_2 = Instance.new("ScrollingFrame")
-local UIListLayout_4 = Instance.new("UIListLayout")
-local UIPadding_5 = Instance.new("UIPadding")
+local UIListLayout_3 = Instance.new("UIListLayout")
+local UIPadding_4 = Instance.new("UIPadding")
 local SettingsButton = Instance.new("TextButton")
 local UIGradient_16 = Instance.new("UIGradient")
 local AutomateButton = Instance.new("TextButton")
@@ -133,6 +123,7 @@ ScriptNameText.TextScaled = true
 ScriptNameText.TextSize = 14.000
 ScriptNameText.TextStrokeTransparency = 0.500
 ScriptNameText.TextWrapped = true
+ScriptNameText.Draggable = true
 
 MainUI.Name = "MainUI"
 MainUI.Parent = ScriptNameText
@@ -315,7 +306,7 @@ AutoCollect_2.BackgroundColor3 = Color3.fromRGB(29, 114, 127)
 AutoCollect_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
 AutoCollect_2.BorderSizePixel = 0
 AutoCollect_2.Position = UDim2.new(0.0323129259, 0, 0.0268691592, 0)
-AutoCollect_2.Size = UDim2.new(0, 210, 0, 210)
+AutoCollect_2.Size = UDim2.new(0, 210, 0, 150)
 
 EHacText.Name = "EHacText"
 EHacText.Parent = AutoCollect_2
@@ -338,7 +329,7 @@ EHacButton.Parent = AutoCollect_2
 EHacButton.BackgroundColor3 = Color3.fromRGB(87, 205, 255)
 EHacButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
 EHacButton.BorderSizePixel = 0
-EHacButton.Position = UDim2.new(0.0238095243, 0, 0.320952356, 0)
+EHacButton.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
 EHacButton.Size = UDim2.new(0, 200, 0, 75)
 EHacButton.Font = Enum.Font.SourceSans
 EHacButton.Text = "Enable"
@@ -346,21 +337,6 @@ EHacButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 EHacButton.TextScaled = true
 EHacButton.TextSize = 14.000
 EHacButton.TextWrapped = true
-
-EHacSwitchMode.Name = "EHacSwitchMode"
-EHacSwitchMode.Parent = AutoCollect_2
-EHacSwitchMode.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-EHacSwitchMode.BackgroundTransparency = 0.800
-EHacSwitchMode.BorderColor3 = Color3.fromRGB(255, 255, 255)
-EHacSwitchMode.BorderSizePixel = 0
-EHacSwitchMode.Position = UDim2.new(0.0238095243, 0, 0.714285731, 0)
-EHacSwitchMode.Size = UDim2.new(0, 200, 0, 50)
-EHacSwitchMode.Font = Enum.Font.SourceSans
-EHacSwitchMode.Text = "Mode: Teleport"
-EHacSwitchMode.TextColor3 = Color3.fromRGB(0, 0, 0)
-EHacSwitchMode.TextScaled = true
-EHacSwitchMode.TextSize = 14.000
-EHacSwitchMode.TextWrapped = true
 
 PostBigBang.Name = "PostBigBang"
 PostBigBang.Parent = Frames_2
@@ -371,7 +347,6 @@ PostBigBang.BorderSizePixel = 0
 PostBigBang.Position = UDim2.new(1.04980838, 0, 0, 0)
 PostBigBang.Size = UDim2.new(0, 588, 0, 428)
 PostBigBang.Visible = false
-PostBigBang.CanvasPosition = Vector2.new(0, 28)
 
 ADHD.Name = "ADHD"
 ADHD.Parent = PostBigBang
@@ -379,7 +354,7 @@ ADHD.BackgroundColor3 = Color3.fromRGB(170, 170, 170)
 ADHD.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ADHD.BorderSizePixel = 0
 ADHD.Position = UDim2.new(0, 0, 0.0747663528, 0)
-ADHD.Size = UDim2.new(0, 588, 0, 500)
+ADHD.Size = UDim2.new(0, 588, 0, 373)
 
 AutoADHD.Name = "AutoADHD"
 AutoADHD.Parent = ADHD
@@ -387,7 +362,7 @@ AutoADHD.Active = true
 AutoADHD.BackgroundColor3 = Color3.fromRGB(255, 204, 0)
 AutoADHD.BorderColor3 = Color3.fromRGB(0, 0, 0)
 AutoADHD.BorderSizePixel = 0
-AutoADHD.Position = UDim2.new(0.605442166, 0, 0.0437908918, 0)
+AutoADHD.Position = UDim2.new(0.605442166, 0, 0.0857908875, 0)
 AutoADHD.Size = UDim2.new(0, 210, 0, 235)
 
 AutoADHDText.Name = "AutoADHDText"
@@ -439,7 +414,7 @@ ADHDnameText.Parent = ADHD
 ADHDnameText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 ADHDnameText.BorderColor3 = Color3.fromRGB(0, 0, 0)
 ADHDnameText.BorderSizePixel = 0
-ADHDnameText.Position = UDim2.new(0.00170068024, 0, -0.0953511968, 0)
+ADHDnameText.Position = UDim2.new(0, 0, -0.111351199, 0)
 ADHDnameText.Size = UDim2.new(0, 588, 0, 50)
 ADHDnameText.Font = Enum.Font.PermanentMarker
 ADHDnameText.Text = "A D H D"
@@ -453,7 +428,7 @@ Stats.Parent = ADHD
 Stats.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Stats.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Stats.BorderSizePixel = 0
-Stats.Position = UDim2.new(0.0306122452, 0, 0.0417908952, 0)
+Stats.Position = UDim2.new(0.0272108838, 0, 0.0857908875, 0)
 Stats.Size = UDim2.new(0, 324, 0, 236)
 
 AmountOfClicks.Name = "AmountOfClicks"
@@ -518,60 +493,6 @@ TotalAmountOfUnobtaniumCubes.TextStrokeColor3 = Color3.fromRGB(135, 55, 214)
 TotalAmountOfUnobtaniumCubes.TextStrokeTransparency = 0.500
 TotalAmountOfUnobtaniumCubes.TextWrapped = true
 
-AutoCollectGoldADHD.Name = "AutoCollectGoldADHD"
-AutoCollectGoldADHD.Parent = ADHD
-AutoCollectGoldADHD.Active = true
-AutoCollectGoldADHD.BackgroundColor3 = Color3.fromRGB(255, 204, 0)
-AutoCollectGoldADHD.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutoCollectGoldADHD.BorderSizePixel = 0
-AutoCollectGoldADHD.Position = UDim2.new(0.0306122452, 0, 0.537790895, 0)
-AutoCollectGoldADHD.Size = UDim2.new(0, 210, 0, 157)
-
-ACgoldADHDtext.Name = "ACgoldADHDtext"
-ACgoldADHDtext.Parent = AutoCollectGoldADHD
-ACgoldADHDtext.BackgroundColor3 = Color3.fromRGB(247, 255, 93)
-ACgoldADHDtext.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ACgoldADHDtext.BorderSizePixel = 0
-ACgoldADHDtext.Position = UDim2.new(0.0238095243, 0, 0.0466666669, 0)
-ACgoldADHDtext.Size = UDim2.new(0, 200, 0, 50)
-ACgoldADHDtext.Font = Enum.Font.Fantasy
-ACgoldADHDtext.Text = "Auto Collect Gold ADHDs"
-ACgoldADHDtext.TextColor3 = Color3.fromRGB(255, 255, 255)
-ACgoldADHDtext.TextScaled = true
-ACgoldADHDtext.TextSize = 14.000
-ACgoldADHDtext.TextStrokeTransparency = 0.500
-ACgoldADHDtext.TextWrapped = true
-
-ACgoldADHDbutton.Name = "ACgoldADHDbutton"
-ACgoldADHDbutton.Parent = AutoCollectGoldADHD
-ACgoldADHDbutton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ACgoldADHDbutton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-ACgoldADHDbutton.BorderSizePixel = 0
-ACgoldADHDbutton.Position = UDim2.new(0.0238095243, 0, 0.409910738, 0)
-ACgoldADHDbutton.Size = UDim2.new(0, 200, 0, 75)
-ACgoldADHDbutton.ZIndex = 3
-ACgoldADHDbutton.Font = Enum.Font.SourceSans
-ACgoldADHDbutton.Text = "Enable"
-ACgoldADHDbutton.TextColor3 = Color3.fromRGB(0, 0, 0)
-ACgoldADHDbutton.TextScaled = true
-ACgoldADHDbutton.TextSize = 14.000
-ACgoldADHDbutton.TextWrapped = true
-
-nul.Name = "nul"
-nul.Parent = AutoCollectGoldADHD
-nul.BackgroundColor3 = Color3.fromRGB(255, 204, 0)
-nul.BorderColor3 = Color3.fromRGB(0, 0, 0)
-nul.BorderSizePixel = 0
-nul.Position = UDim2.new(0.0238095243, 0, 0.65200001, 0)
-nul.Size = UDim2.new(0, 200, 0, 77)
-nul.Visible = false
-nul.Font = Enum.Font.Unknown
-nul.Text = "Keep in mind, that it ONLY works within 32 studs from ADHD cube."
-nul.TextColor3 = Color3.fromRGB(255, 0, 4)
-nul.TextScaled = true
-nul.TextSize = 14.000
-nul.TextWrapped = true
-
 MainSection.Name = "MainSection"
 MainSection.Parent = Frames_2
 MainSection.Active = true
@@ -581,6 +502,7 @@ MainSection.BorderSizePixel = 0
 MainSection.Position = UDim2.new(1.04980838, 0, 0, 0)
 MainSection.Size = UDim2.new(0, 588, 0, 428)
 MainSection.Visible = false
+MainSection.CanvasPosition = Vector2.new(0, 600)
 MainSection.CanvasSize = UDim2.new(0, 0, 4, 0)
 
 CosmicDust.Name = "CosmicDust"
@@ -685,7 +607,6 @@ TreeTiers.BorderSizePixel = 0
 TreeTiers.LayoutOrder = 4
 TreeTiers.Position = UDim2.new(0, 0, -0.0411280841, 0)
 TreeTiers.Size = UDim2.new(0, 550, 0, 465)
-TreeTiers.Visible = false
 
 UIGradient_8.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(65, 32, 2)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(165, 103, 16))}
 UIGradient_8.Parent = TreeTiers
@@ -780,6 +701,7 @@ TTcurrentTiersText.TextColor3 = Color3.fromRGB(255, 255, 255)
 TTcurrentTiersText.TextScaled = true
 TTcurrentTiersText.TextSize = 14.000
 TTcurrentTiersText.TextWrapped = true
+TTcurrentTiersText.RichText = true
 
 Astrofy.Name = "Astrofy"
 Astrofy.Parent = MainSection
@@ -886,6 +808,7 @@ SamountText.TextColor3 = Color3.fromRGB(255, 255, 255)
 SamountText.TextScaled = true
 SamountText.TextSize = 14.000
 SamountText.TextWrapped = true
+SamountText.RichText = true
 
 StarFormation.Name = "StarFormation"
 StarFormation.Parent = Stellarify
@@ -938,6 +861,12 @@ ASFtext.TextScaled = true
 ASFtext.TextSize = 14.000
 ASFtext.TextTransparency = 1.000
 ASFtext.TextWrapped = true
+ASFtext.RichText = true
+
+UIStroke.Name = "ASFtextStroke"
+UIStroke.Parent = ASFtext
+UIStroke.Thickness = 0.6
+UIStroke.Transparency = 0
 
 UIGradient_13.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(0, 85, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 255))}
 UIGradient_13.Parent = AutoStarForm
@@ -1009,6 +938,7 @@ SNcurrentMilestone.TextScaled = true
 SNcurrentMilestone.TextSize = 14.000
 SNcurrentMilestone.TextStrokeTransparency = 0.500
 SNcurrentMilestone.TextWrapped = true
+SNcurrentMilestone.RichText = true
 
 Settings.Name = "Settings"
 Settings.Parent = Frames
@@ -1035,19 +965,12 @@ ExitButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 ExitButton.TextScaled = true
 ExitButton.TextSize = 14.000
 ExitButton.TextWrapped = true
-
-InnerSettings.Name = "InnerSettings"
-InnerSettings.Parent = Settings
-InnerSettings.Active = true
-InnerSettings.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-InnerSettings.BackgroundTransparency = 1.000
-InnerSettings.BorderColor3 = Color3.fromRGB(0, 0, 0)
-InnerSettings.BorderSizePixel = 0
-InnerSettings.Size = UDim2.new(0, 245, 0, 430)
-InnerSettings.CanvasPosition = Vector2.new(0, 100)
+ExitButton.MouseButton1Down:Connect(function()
+	GUT2Script:Destroy()
+end)
 
 HighlightLinusCubes.Name = "HighlightLinusCubes"
-HighlightLinusCubes.Parent = InnerSettings
+HighlightLinusCubes.Parent = Settings
 HighlightLinusCubes.Active = true
 HighlightLinusCubes.BackgroundColor3 = Color3.fromRGB(127, 127, 127)
 HighlightLinusCubes.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1079,59 +1002,11 @@ highlight.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
 highlight.Size = UDim2.new(0, 200, 0, 75)
 highlight.ZIndex = 3
 highlight.Font = Enum.Font.SourceSans
-highlight.Text = "Enable"
+highlight.Text = "Disabled"
 highlight.TextColor3 = Color3.fromRGB(0, 0, 0)
 highlight.TextScaled = true
 highlight.TextSize = 14.000
 highlight.TextWrapped = true
-
-UIListLayout_3.Parent = InnerSettings
-UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout_3.Padding = UDim.new(0, 15)
-
-EHhelpful.Name = "EHhelpful"
-EHhelpful.Parent = InnerSettings
-EHhelpful.Active = true
-EHhelpful.BackgroundColor3 = Color3.fromRGB(49, 120, 127)
-EHhelpful.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EHhelpful.BorderSizePixel = 0
-EHhelpful.Position = UDim2.new(0.0323129259, 0, 0.0268691592, 0)
-EHhelpful.Size = UDim2.new(0, 210, 0, 150)
-
-EHhelfulText.Name = "EHhelfulText"
-EHhelfulText.Parent = EHhelpful
-EHhelfulText.BackgroundColor3 = Color3.fromRGB(16, 50, 62)
-EHhelfulText.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EHhelfulText.BorderSizePixel = 0
-EHhelfulText.Position = UDim2.new(0.0238095243, 0, 0.0466666669, 0)
-EHhelfulText.Size = UDim2.new(0, 200, 0, 50)
-EHhelfulText.Font = Enum.Font.SourceSans
-EHhelfulText.Text = "Modify Graviton"
-EHhelfulText.TextColor3 = Color3.fromRGB(255, 255, 255)
-EHhelfulText.TextScaled = true
-EHhelfulText.TextSize = 14.000
-EHhelfulText.TextStrokeColor3 = Color3.fromRGB(54, 28, 182)
-EHhelfulText.TextStrokeTransparency = 0.500
-EHhelfulText.TextWrapped = true
-
-EHhelpfulButton.Name = "EHhelpfulButton"
-EHhelpfulButton.Parent = EHhelpful
-EHhelpfulButton.BackgroundColor3 = Color3.fromRGB(5, 126, 255)
-EHhelpfulButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-EHhelpfulButton.BorderSizePixel = 0
-EHhelpfulButton.Position = UDim2.new(0.0238095243, 0, 0.439999998, 0)
-EHhelpfulButton.Size = UDim2.new(0, 200, 0, 75)
-EHhelpfulButton.ZIndex = 3
-EHhelpfulButton.Font = Enum.Font.SourceSans
-EHhelpfulButton.Text = "Enable"
-EHhelpfulButton.TextColor3 = Color3.fromRGB(0, 0, 0)
-EHhelpfulButton.TextScaled = true
-EHhelpfulButton.TextSize = 14.000
-EHhelpfulButton.TextWrapped = true
-
-UIPadding_4.Parent = InnerSettings
-UIPadding_4.PaddingLeft = UDim.new(0, 10)
-UIPadding_4.PaddingTop = UDim.new(0, 5)
 
 Buttons_2.Name = "Buttons"
 Buttons_2.Parent = MainUI
@@ -1145,13 +1020,13 @@ Buttons_2.CanvasSize = UDim2.new(4, 0, 0, 0)
 Buttons_2.HorizontalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 Buttons_2.ScrollBarThickness = 8
 
-UIListLayout_4.Parent = Buttons_2
-UIListLayout_4.FillDirection = Enum.FillDirection.Horizontal
-UIListLayout_4.Padding = UDim.new(0, 15)
+UIListLayout_3.Parent = Buttons_2
+UIListLayout_3.FillDirection = Enum.FillDirection.Horizontal
+UIListLayout_3.Padding = UDim.new(0, 15)
 
-UIPadding_5.Parent = Buttons_2
-UIPadding_5.PaddingLeft = UDim.new(0, 15)
-UIPadding_5.PaddingTop = UDim.new(0, 5)
+UIPadding_4.Parent = Buttons_2
+UIPadding_4.PaddingLeft = UDim.new(0, 15)
+UIPadding_4.PaddingTop = UDim.new(0, 5)
 
 SettingsButton.Name = "SettingsButton"
 SettingsButton.Parent = Buttons_2
@@ -1185,28 +1060,22 @@ AutomateButton.TextWrapped = true
 UIGradient_17.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(94, 94, 94)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
 UIGradient_17.Parent = AutomateButton
 
-ScriptNameText.Draggable = true
-TTcurrentTiersText.RichText = true
-SamountText.RichText = true
-ASFtext.RichText = true
-SNcurrentMilestone.RichText = true
-
 -- Scripts:
 
-local function DPWD_fake_script() -- MainUI.FirstLayerOfSortingThings 
+local function FDIJIIW_fake_script() -- MainUI.FirstLayerOfSortingThings 
 	local script = Instance.new('LocalScript', MainUI)
 
 	local buttonsFolder = script.Parent:WaitForChild("Buttons")
 	local framesFolder = script.Parent:WaitForChild("Frames")
-	
+
 	--All Buttons
 	local AutoButton = buttonsFolder:WaitForChild("AutomateButton")
 	local SettingsButton = buttonsFolder:WaitForChild("SettingsButton")
-	
+
 	--All Frames
 	local Automatization = framesFolder:WaitForChild("Automatizaion")
 	local Settings = framesFolder:WaitForChild("Settings")
-	
+
 	-- Hide all frames
 	local function hideAllFrames()
 		for _, frame in pairs(framesFolder:GetChildren()) do
@@ -1215,19 +1084,19 @@ local function DPWD_fake_script() -- MainUI.FirstLayerOfSortingThings
 			end
 		end
 	end
-	
+
 	-- Switch function
 	local function switchFrame(frame)
 		hideAllFrames()
 		frame.Visible = true
 	end
-	
+
 	-- 🔗 Mapping buttons to frames
 	local buttonToFrame = {
 		[AutoButton]=Automatization,
 		[SettingsButton]=Settings
 	}
-	
+
 	-- Connect buttons
 	for button, frame in pairs(buttonToFrame) do
 		print(button, frame)
@@ -1236,25 +1105,25 @@ local function DPWD_fake_script() -- MainUI.FirstLayerOfSortingThings
 		end)
 	end
 end
-coroutine.wrap(DPWD_fake_script)()
-local function WWFRDW_fake_script() -- Automatizaion.SecondLayerOfSortingThings 
+coroutine.wrap(FDIJIIW_fake_script)()
+local function VYLY_fake_script() -- Automatizaion.SecondLayerOfSortingThings 
 	local script = Instance.new('LocalScript', Automatizaion)
 
 	local buttonsFolder = script.Parent:WaitForChild("Buttons")
 	local framesFolder = script.Parent:WaitForChild("Frames")
-	
+
 	--All Buttons
 	local MainButton = buttonsFolder:WaitForChild("MainButton")
 	local SGbutton = buttonsFolder:WaitForChild("SGbutton")
 	local EHbutton = buttonsFolder:WaitForChild("EHbutton")
 	local PBBbutton = buttonsFolder:WaitForChild("PBBbutton")
-	
+
 	--All Frames
 	local MainSection = framesFolder:WaitForChild("MainSection")
 	local StarryGround = framesFolder:WaitForChild("StarryGround")
 	local EventHorizon = framesFolder:WaitForChild("EventHorizon")
 	local PostBigBang = framesFolder:WaitForChild("PostBigBang")
-	
+
 	-- Hide all frames
 	local function hideAllFrames()
 		for _, frame in pairs(framesFolder:GetChildren()) do
@@ -1263,13 +1132,13 @@ local function WWFRDW_fake_script() -- Automatizaion.SecondLayerOfSortingThings
 			end
 		end
 	end
-	
+
 	-- Switch function
 	local function switchFrame(frame)
 		hideAllFrames()
 		frame.Visible = true
 	end
-	
+
 	-- 🔗 Mapping buttons to frames
 	local buttonToFrame = {
 		[MainButton]=MainSection,
@@ -1277,7 +1146,7 @@ local function WWFRDW_fake_script() -- Automatizaion.SecondLayerOfSortingThings
 		[EHbutton]=EventHorizon,
 		[PBBbutton]=PostBigBang
 	}
-	
+
 	-- Connect buttons
 	for button, frame in pairs(buttonToFrame) do
 		print(button, frame)
@@ -1286,326 +1155,202 @@ local function WWFRDW_fake_script() -- Automatizaion.SecondLayerOfSortingThings
 		end)
 	end
 end
-coroutine.wrap(WWFRDW_fake_script)()
--- EHacButton.EHautocollect is disabled.
-local function VCELVY_fake_script() -- EHacButton.EHautocollect 
+coroutine.wrap(VYLY_fake_script)()
+local function HIJBTX_fake_script() -- EHacButton.EHautocollect 
 	local script = Instance.new('LocalScript', EHacButton)
 
+	-- Place this in a LocalScript inside StarterGui
 	local button = script.Parent
 	local player = game.Players.LocalPlayer
-	
+
 	local active = false
-	local mode = script.Parent.Parent:WaitForChild("EHacSwitchMode"):WaitForChild("EHacSwitchMode")
-	
+
 	local function updateButtonText()
 		active = not active
+
+
 		button.Text = active and "Enabled" or "Disabled"
 	end
-	
-	button.MouseButton1Click:Connect(updateButtonText)
-	
-	-- Cache folder instead of single graviton
-	local gravitonFolder = workspace:WaitForChild("EventHorizon"):WaitForChild("spawned")
-	
-	task.spawn(function()
-		while true do
-			local character = player.Character or player.CharacterAdded:Wait()
-			local rootPart = character:WaitForChild("HumanoidRootPart")
-	
-			if active then
-				for _, graviton in pairs(gravitonFolder:GetChildren()) do
-	
-					if graviton.Name == "Graviton" and graviton:IsA("BasePart") then
-	
-						if mode.collect.Value == false then
-							-- Teleport player to gravitons (one by one)
-							rootPart.CFrame = graviton.CFrame
-							task.wait(0.05)
-	
-						elseif mode.collect.Value == true then
-							-- Bring ALL gravitons to player
-							graviton.CFrame = rootPart.CFrame
-						end
-	
-					end
-				end
-			end
-	
-			task.wait(0.1)
-		end
-	end)
-end
-coroutine.wrap(VCELVY_fake_script)()
-local function NLKUXC_fake_script() -- EHacSwitchMode.EHacSwitchMode 
-	local script = Instance.new('LocalScript', EHacSwitchMode)
 
-	local button = script.Parent
-	
-	local collect = false -- Mode: Teleport
-	
 	button.MouseButton1Click:Connect(function()
-		collect = not collect
-		button.Text = collect and "Mode: Collect" or "Mode: Teleport"
+		updateButtonText()
 	end)
-end
-coroutine.wrap(NLKUXC_fake_script)()
-local function DVPF_fake_script() -- AutoADHDButton.AutoClick 
-	local script = Instance.new('LocalScript', AutoADHDButton)
 
-	local button = script.Parent
-	local player = game.Players.LocalPlayer
-	
-	local active = false
-	local ogPos = nil
-	
-	local function clickOnADHD()
-		if active then
-			fireclickdetector(workspace.Cube["1 ADHD cube"].ClickDetector)
-			--Keep in mind, that even it works, you need atleast be in range of 32 studs to clickdetector
-		end
-	
-		task.wait(0.2)
-	end
-	local function teleportBack()
-		if active then
-			local character = player.Character
-			if character then
-				local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-				if humanoidRootPart then
-					humanoidRootPart.CFrame = CFrame.new(ogPos) -- Teleport to (0, 0, 0)
-				end
-				task.wait(2)
-			end
-		end
-	end
-	local function rememberPos()
-		local rootPart = player.Character:WaitForChild("HumanoidRootPart")
-		ogPos = rootPart.CFrame
-	end
-	button.MouseButton1Click:Connect(function()
-		active = not active
-	
-		button.Text = active and "Enabled" or "Disabled"
-		if active then
-			rememberPos()
-		end
-	end)
 	-- Loop that constantly checks
 	task.spawn(function()
 		while true do
 			if active then
-				clickOnADHD()
-				teleportBack()
+				local character = player.Character or player.CharacterAdded:Wait()
+				local rootPart = character:WaitForChild("HumanoidRootPart")
+
+				local graviton = workspace:WaitForChild("EventHorizon"):WaitForChild("spawned"):WaitForChild("Graviton")
+
+				rootPart.CFrame = graviton.CFrame
 			end
+
+			task.wait(0.2)
 		end
 	end)
-	
-	
-	
+
 end
-coroutine.wrap(DVPF_fake_script)()
-local function VXAMZ_fake_script() -- AmountOfClicks.TrackingStatADHD 
+coroutine.wrap(HIJBTX_fake_script)()
+local function CNQVBKT_fake_script() -- AutoADHDButton.AutoClick 
+	local script = Instance.new('LocalScript', AutoADHDButton)
+
+	--local button = script.Parent
+	--local rootPart = game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+
+	--local active = false
+
+	--button.MouseButton1Click:Connect(function()
+	--	if active == false then
+	--		active = true
+	--		--button.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+	--		button.Text = "Activated"
+	--	else
+	--		active = false
+	--		--button.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+	--		button.Text = "Disabled"
+	--	end
+	--end)
+
+	--while active do
+	--	rootPart.CFrame = workspace.EventHorizon.spawned.Graviton.CFrame
+	--	wait(0.2)
+	--end
+	local button = script.Parent
+	local player = game.Players.LocalPlayer
+
+	local active = false
+
+	button.MouseButton1Click:Connect(function()
+		active = not active
+
+		if active then
+			button.Text = "Activated"
+		else
+			button.Text = "Disabled"
+		end
+	end)
+
+	-- Loop that constantly checks
+	task.spawn(function()
+		while true do
+			if active then
+				fireclickdetector(workspace.Cube["1 ADHD cube"].ClickDetector)
+				--Keep in mind, that even it works, you need atleast be in range of 32 studs to clickdetector
+			end
+
+			task.wait(0.2)
+		end
+	end)
+
+end
+coroutine.wrap(CNQVBKT_fake_script)()
+local function ZKNASUJ_fake_script() -- AmountOfClicks.TrackingStatADHD 
 	local script = Instance.new('LocalScript', AmountOfClicks)
 
 	local text = script.Parent
 	local amountValue = workspace.Values.GameStats.Currencies.ADHDclicks
-	local scientific = require(game:GetService("ReplicatedStorage").Scripts:WaitForChild("ScientificNotation"))
-	
+
 	local function updateChange()
-		--text.Text = "Total clicks: " .. amountValue.Value
-		text.Text = "Total clicks: " .. scientific(amountValue.Value)
+		text.Text = "Total clicks: 1e" .. amountValue.Value
 	end
-	
+
 	amountValue.Changed:Connect(updateChange)
-	
+
 	updateChange()
+
+
+
+
 end
-coroutine.wrap(VXAMZ_fake_script)()
-local function UWJADJ_fake_script() -- TotalAmountOfGoldCubes.TrackingStatGADHD 
+coroutine.wrap(ZKNASUJ_fake_script)()
+local function DKNGQTZ_fake_script() -- TotalAmountOfGoldCubes.TrackingStatGADHD 
 	local script = Instance.new('LocalScript', TotalAmountOfGoldCubes)
 
-	--local text = script.Parent
-	--local goldCube = workspace.Cube.curr.gcube
-	
-	--local function updateCount()
-	--	local amount = #goldCube:GetChildren()
-	--	text.Text = "Current Gold Cubes: " .. amount .. "/100"
-	--end
-	
-	-- Initial update
-	--updateCount()
-	
-	-- Update when objects change
-	--goldCube.ChildAdded:Connect(updateCount)
-	--goldCube.ChildRemoved:Connect(updateCount)
-	
-	--for i, v in pairs(goldCube:GetChildren()) do
-	--	if v.Name == "gcube" then
-	--		amount += 1
-	--	end
-	--end
 	local text = script.Parent
-	local cubeFolder = workspace:WaitForChild("Cube"):WaitForChild("curr")
-	
-	local goldCube -- will be assigned later
-	
-	-- Function to update UI
+	local goldCube = workspace.Cube.curr.gcube
+
 	local function updateCount()
-		if goldCube then
-			local amount = #goldCube:GetChildren()
-			text.Text = "Gold ADHD: " .. amount .. "/100"
-		else
-			text.Text = "Gold ADHD: 0/100"
+		local amount = #goldCube:GetChildren()
+		text.Text = "Total clicks: " .. amount .. "/100"
+	end
+
+	-- Initial update
+	updateCount()
+
+	-- Update when objects change
+	goldCube.ChildAdded:Connect(updateCount)
+	goldCube.ChildRemoved:Connect(updateCount)
+
+	for i, v in pairs(goldCube:GetChildren()) do
+		if v.Name == "gcube" then
+			amount += 1
 		end
 	end
-	
-	-- Function to hook into gcube when it appears
-	local function setupFolder(folder)
-		goldCube = folder
-	
-		updateCount()
-	
-		folder.ChildAdded:Connect(updateCount)
-		folder.ChildRemoved:Connect(updateCount)
-	end
-	
-	-- Check if gcube already exists
-	local existing = cubeFolder:FindFirstChild("gcube")
-	if existing then
-		setupFolder(existing)
-	else
-		updateCount() -- show 0 until it exists
-	end
-	
-	-- Listen for gcube being created later
-	cubeFolder.ChildAdded:Connect(function(child)
-		if child.Name == "gcube" then
-			setupFolder(child)
-		end
-	end)
 end
-coroutine.wrap(UWJADJ_fake_script)()
+coroutine.wrap(DKNGQTZ_fake_script)()
 -- TotalAmountOfDiamondCubes.TrackingStat is disabled.
 -- TotalAmountOfUnobtaniumCubes.TrackingStat is disabled.
-local function FLCI_fake_script() -- ACgoldADHDbutton.ACgoldADHD 
-	local script = Instance.new('LocalScript', ACgoldADHDbutton)
-
-	local button = script.Parent
-	local player = game.Players.LocalPlayer
-	local gcubeFolder = workspace.Cube.curr
-	
-	local active = false
-	--local ogPos = nil
-	
-	local function clickOnADHD()
-		if active then
-			fireclickdetector(gcubeFolder["gcube"].ClickDetector)
-			--Keep in mind, that even it works, you need atleast be in range of 32 studs to clickdetector
-		end
-	
-		task.wait(0.2)
-	end
-	
-	local function teleport()
-		local rootPart = player.Character:WaitForChild("HumanoidRootPart")
-		
-		for i, gcube in pairs(gcubeFolder:GetChildren()) do
-			if gcube.Name == "gcube" then
-				--local clickDetector = gcube:FindFirstChild("ClickDetector")
-				--if clickDetector then
-				--	local clickPos = clickDetector.Parent.Position
-				--	local distance = (rootPart.Position - clickPos).Magnitude
-				--	if distance <= 32 then
-				--		return
-				--	end
-				--end
-				rootPart.CFrame = CFrame.new(gcube.x.Value, gcube.y.Value+5, gcube.z.Value) -- Teleport to (0, 0, 0)
-			end
-		end
-	end
-	
-	button.MouseButton1Click:Connect(function()
-		active = not active
-	
-		button.Text = active and "Enabled" or "Disabled"
-	--	if active then
-	--		rememberPos()
-	--	end
-	end)
-	-- Loop that constantly checks
-	task.spawn(function()
-		while true do
-			if active then
-				teleport()
-				task.wait(0.1)
-				clickOnADHD()
-				task.wait(0.1)
-			end
-		end
-	end)
-	
-	
-	
-end
-coroutine.wrap(FLCI_fake_script)()
-local function TLMHUR_fake_script() -- ATSbutton.ATSscript 
+local function TRZKNBY_fake_script() -- ATSbutton.ATSscript 
 	local script = Instance.new('LocalScript', ATSbutton)
 
 	local button = script.Parent
 	local player = game.Players.LocalPlayer
-	
+
 	local fireButton = game:GetService("Players").LocalPlayer.PlayerGui.Boards.TreeTiers.Frame.Reset
-	
+
 	local active = false
-	
+
 	local function updateButtonText()
 		active = not active
-	
+
 		print("Clicked! Active =", active) -- debug
-	
+
 		button.Text = active and "Enabled" or "Disabled"
 	end
-	
+
 	button.MouseButton1Click:Connect(function()
 		updateButtonText()
 	end)
-	
-	
+
+
 	-- Loop that constantly checks thiongy
 	task.spawn(function()
 		while true do
 			if active then
 				fireButton:Activate()
 			end
-	
+
 			task.wait(2)
 		end
 	end)
-	
+
 end
-coroutine.wrap(TLMHUR_fake_script)()
-local function BKHBQ_fake_script() -- TTcurrentTiersText.TTtrackCurrentTIer 
+coroutine.wrap(TRZKNBY_fake_script)()
+local function IPKECT_fake_script() -- TTcurrentTiersText.TTtrackCurrentTIer 
 	local script = Instance.new('LocalScript', TTcurrentTiersText)
 
 	local text = script.Parent
 	local amount = workspace.Values.GameStats.Currencies:WaitForChild("TreeTierValue")
-	
+
 	local function changeText()
 		text.Text = "Current Tier: <font color=\"rgb(156, 82, 67)\">"..amount.Value .. "</font>"
 	end
-	
+
 	changeText()
 	amount.Changed:Connect(function()
 		changeText()
 	end)
 end
-coroutine.wrap(BKHBQ_fake_script)()
-local function OBGEZLS_fake_script() -- SamountText.StellarifyAmount 
+coroutine.wrap(IPKECT_fake_script)()
+local function HXKE_fake_script() -- SamountText.StellarifyAmount 
 	local script = Instance.new('LocalScript', SamountText)
 
 	local text = script.Parent
 	local Svalue = workspace.Values.GameStats.Currencies:WaitForChild("StellarifyValue")
-	
+
 	local function changeText()
 		text.Text = "You have Stellarified: <font color=\"rgb(210, 100, 210)\">"..Svalue.Value .. "</font> times."
 	end
@@ -1614,55 +1359,55 @@ local function OBGEZLS_fake_script() -- SamountText.StellarifyAmount
 		changeText()
 	end)	
 end
-coroutine.wrap(OBGEZLS_fake_script)()
-local function HWJWGTK_fake_script() -- ASFbutton.AutoStarForm 
+coroutine.wrap(HXKE_fake_script)()
+local function NNCXD_fake_script() -- ASFbutton.AutoStarForm 
 	local script = Instance.new('LocalScript', ASFbutton)
 
 	local button = script.Parent
 	local player = game:GetService("Players").LocalPlayer
 	local starFormation = player.PlayerGui:WaitForChild("Boards"):WaitForChild("StarFormation")
-	
+
 	local active = false
-	
+
 	local function updateButtonText()
 		active = not active
-	
-	
+
+
 		button.Text = active and "Enabled" or "Disabled"
 	end
-	
+
 	button.MouseButton1Click:Connect(function()
 		updateButtonText()
 	end)
-	
-	
+
+
 	local function BuyStars()
 		for i, planet in pairs(starFormation:GetChildren()) do
 			local fireButton = planet:FindFirstChild("BuyButton")
-	
+
 			if fireButton and fireButton:IsA("TextButton") then
 				fireButton:Activate()
 			end
 		end
 	end
-	
+
 	task.spawn(function()
 		while true do
 			if active then
 				BuyStars()
 			end
-	
+
 			task.wait(0.5)
 		end
 	end)
 end
-coroutine.wrap(HWJWGTK_fake_script)()
-local function ZATDER_fake_script() -- SNcurrentMilestone.SNtrackMilestone 
+coroutine.wrap(NNCXD_fake_script)()
+local function KDWURH_fake_script() -- SNcurrentMilestone.SNtrackMilestone 
 	local script = Instance.new('LocalScript', SNcurrentMilestone)
 
 	local text = script.Parent
 	local currentMilestone = workspace.Values.GameStats.Currencies:WaitForChild("SupernovaValue")
-	
+
 	local function changeText()
 		text.Text = "Current Milestone: <font color=\"rgb(255, 140, 0)\">"..currentMilestone.Value .. "</font>"
 	end
@@ -1671,21 +1416,21 @@ local function ZATDER_fake_script() -- SNcurrentMilestone.SNtrackMilestone
 		changeText()
 	end)	
 end
-coroutine.wrap(ZATDER_fake_script)()
-local function YYGUKYO_fake_script() -- highlight.HighlightLinus 
+coroutine.wrap(KDWURH_fake_script)()
+local function YWYX_fake_script() -- highlight.HighlightLinus 
 	local script = Instance.new('LocalScript', highlight)
 
 	local button = script.Parent
 	local player = game.Players.LocalPlayer
 	local workspace = game:GetService("Workspace")
-	
+
 	local active = false
 	local highlights = {}
-	
+
 	local function createHighlights()
 		for _, obj in pairs(workspace:GetDescendants()) do
 			if obj:IsA("MeshPart") and string.match(obj.Name, "^linusCube_%d+$") then
-	
+
 				-- Avoid duplicating highlights
 				if not highlights[obj] then
 					local highlight = Instance.new("Highlight")
@@ -1694,22 +1439,22 @@ local function YYGUKYO_fake_script() -- highlight.HighlightLinus
 					highlight.FillTransparency = 0.5
 					highlight.Enabled = active
 					highlight.Parent = obj
-	
+
 					highlights[obj] = highlight
 				end
-	
+
 			end
 		end
 	end
-	
+
 	button.MouseButton1Click:Connect(function()
 		active = not active
-	
+
 		button.Text = active and "Activated" or "Disabled"
-	
+
 		-- Create highlights if not already made
 		createHighlights()
-	
+
 		-- Enable/disable all highlights
 		for i, highlight in pairs(highlights) do
 			if highlight then
@@ -1718,44 +1463,4 @@ local function YYGUKYO_fake_script() -- highlight.HighlightLinus
 		end
 	end)
 end
-coroutine.wrap(YYGUKYO_fake_script)()
-local function UOWB_fake_script() -- EHhelpfulButton.EHhelpfulModifyGraviton 
-	local script = Instance.new('LocalScript', EHhelpfulButton)
-
-	local button = script.Parent
-	local player = game.Players.LocalPlayer
-	local workspace = game:GetService("Workspace")
-	
-	local active = false
-	local gravitonFolder = workspace:WaitForChild("EventHorizon"):WaitForChild("spawned")
-	
-	local function modifyGraviton()
-		for i, graviton in pairs(gravitonFolder:GetChildren()) do
-			if graviton:IsA("BasePart") then
-				if active then
-					graviton.Transparency = 0.9
-					graviton.Size = Vector3.new(10, 10, 10)
-				end
-				else
-					graviton.Transparency = 0
-					graviton.Size = Vector3.new(3, 3, 3)
-			end
-		end
-	end
-	
-	button.MouseButton1Click:Connect(function()
-		active = not active
-		button.Text = active and "Activated" or "Disabled"
-	
-		--modifyGraviton()
-	end)
-	task.spawn(function()
-		while true do
-			if active then
-				modifyGraviton()
-			end
-			task.wait(0.5)
-		end
-	end)
-end
-coroutine.wrap(UOWB_fake_script)()
+coroutine.wrap(YWYX_fake_script)()
