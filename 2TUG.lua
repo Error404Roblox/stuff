@@ -133,7 +133,6 @@ ScriptNameText.TextScaled = true
 ScriptNameText.TextSize = 14.000
 ScriptNameText.TextStrokeTransparency = 0.500
 ScriptNameText.TextWrapped = true
-ScriptNameText.Draggable = true
 
 MainUI.Name = "MainUI"
 MainUI.Parent = ScriptNameText
@@ -1186,6 +1185,7 @@ AutomateButton.TextWrapped = true
 UIGradient_17.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(94, 94, 94)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(184, 184, 184))}
 UIGradient_17.Parent = AutomateButton
 
+ScriptNameText.Draggable = true
 TTcurrentTiersText.RichText = true
 SamountText.RichText = true
 ASFtext.RichText = true
@@ -1193,7 +1193,7 @@ SNcurrentMilestone.RichText = true
 
 -- Scripts:
 
-local function RIBFE_fake_script() -- MainUI.FirstLayerOfSortingThings 
+local function DPWD_fake_script() -- MainUI.FirstLayerOfSortingThings 
 	local script = Instance.new('LocalScript', MainUI)
 
 	local buttonsFolder = script.Parent:WaitForChild("Buttons")
@@ -1236,8 +1236,8 @@ local function RIBFE_fake_script() -- MainUI.FirstLayerOfSortingThings
 		end)
 	end
 end
-coroutine.wrap(RIBFE_fake_script)()
-local function FVZOO_fake_script() -- Automatizaion.SecondLayerOfSortingThings 
+coroutine.wrap(DPWD_fake_script)()
+local function WWFRDW_fake_script() -- Automatizaion.SecondLayerOfSortingThings 
 	local script = Instance.new('LocalScript', Automatizaion)
 
 	local buttonsFolder = script.Parent:WaitForChild("Buttons")
@@ -1286,9 +1286,9 @@ local function FVZOO_fake_script() -- Automatizaion.SecondLayerOfSortingThings
 		end)
 	end
 end
-coroutine.wrap(FVZOO_fake_script)()
+coroutine.wrap(WWFRDW_fake_script)()
 -- EHacButton.EHautocollect is disabled.
-local function IFCXDHV_fake_script() -- EHacButton.EHautocollect 
+local function VCELVY_fake_script() -- EHacButton.EHautocollect 
 	local script = Instance.new('LocalScript', EHacButton)
 
 	local button = script.Parent
@@ -1335,8 +1335,8 @@ local function IFCXDHV_fake_script() -- EHacButton.EHautocollect
 		end
 	end)
 end
-coroutine.wrap(IFCXDHV_fake_script)()
-local function AIEM_fake_script() -- EHacSwitchMode.EHacSwitchMode 
+coroutine.wrap(VCELVY_fake_script)()
+local function NLKUXC_fake_script() -- EHacSwitchMode.EHacSwitchMode 
 	local script = Instance.new('LocalScript', EHacSwitchMode)
 
 	local button = script.Parent
@@ -1348,8 +1348,8 @@ local function AIEM_fake_script() -- EHacSwitchMode.EHacSwitchMode
 		button.Text = collect and "Mode: Collect" or "Mode: Teleport"
 	end)
 end
-coroutine.wrap(AIEM_fake_script)()
-local function ZIZQ_fake_script() -- AutoADHDButton.AutoClick 
+coroutine.wrap(NLKUXC_fake_script)()
+local function DVPF_fake_script() -- AutoADHDButton.AutoClick 
 	local script = Instance.new('LocalScript', AutoADHDButton)
 
 	local button = script.Parent
@@ -1403,8 +1403,8 @@ local function ZIZQ_fake_script() -- AutoADHDButton.AutoClick
 	
 	
 end
-coroutine.wrap(ZIZQ_fake_script)()
-local function HBBDV_fake_script() -- AmountOfClicks.TrackingStatADHD 
+coroutine.wrap(DVPF_fake_script)()
+local function VXAMZ_fake_script() -- AmountOfClicks.TrackingStatADHD 
 	local script = Instance.new('LocalScript', AmountOfClicks)
 
 	local text = script.Parent
@@ -1420,8 +1420,8 @@ local function HBBDV_fake_script() -- AmountOfClicks.TrackingStatADHD
 	
 	updateChange()
 end
-coroutine.wrap(HBBDV_fake_script)()
-local function UAKLLC_fake_script() -- TotalAmountOfGoldCubes.TrackingStatGADHD 
+coroutine.wrap(VXAMZ_fake_script)()
+local function UWJADJ_fake_script() -- TotalAmountOfGoldCubes.TrackingStatGADHD 
 	local script = Instance.new('LocalScript', TotalAmountOfGoldCubes)
 
 	--local text = script.Parent
@@ -1484,10 +1484,10 @@ local function UAKLLC_fake_script() -- TotalAmountOfGoldCubes.TrackingStatGADHD
 		end
 	end)
 end
-coroutine.wrap(UAKLLC_fake_script)()
+coroutine.wrap(UWJADJ_fake_script)()
 -- TotalAmountOfDiamondCubes.TrackingStat is disabled.
 -- TotalAmountOfUnobtaniumCubes.TrackingStat is disabled.
-local function ZYLEQH_fake_script() -- ACgoldADHDbutton.ACgoldADHD 
+local function FLCI_fake_script() -- ACgoldADHDbutton.ACgoldADHD 
 	local script = Instance.new('LocalScript', ACgoldADHDbutton)
 
 	local button = script.Parent
@@ -1547,8 +1547,8 @@ local function ZYLEQH_fake_script() -- ACgoldADHDbutton.ACgoldADHD
 	
 	
 end
-coroutine.wrap(ZYLEQH_fake_script)()
-local function MALKVWL_fake_script() -- ATSbutton.ATSscript 
+coroutine.wrap(FLCI_fake_script)()
+local function TLMHUR_fake_script() -- ATSbutton.ATSscript 
 	local script = Instance.new('LocalScript', ATSbutton)
 
 	local button = script.Parent
@@ -1583,8 +1583,8 @@ local function MALKVWL_fake_script() -- ATSbutton.ATSscript
 	end)
 	
 end
-coroutine.wrap(MALKVWL_fake_script)()
-local function PNLWZD_fake_script() -- TTcurrentTiersText.TTtrackCurrentTIer 
+coroutine.wrap(TLMHUR_fake_script)()
+local function BKHBQ_fake_script() -- TTcurrentTiersText.TTtrackCurrentTIer 
 	local script = Instance.new('LocalScript', TTcurrentTiersText)
 
 	local text = script.Parent
@@ -1599,8 +1599,8 @@ local function PNLWZD_fake_script() -- TTcurrentTiersText.TTtrackCurrentTIer
 		changeText()
 	end)
 end
-coroutine.wrap(PNLWZD_fake_script)()
-local function NZQHFH_fake_script() -- SamountText.StellarifyAmount 
+coroutine.wrap(BKHBQ_fake_script)()
+local function OBGEZLS_fake_script() -- SamountText.StellarifyAmount 
 	local script = Instance.new('LocalScript', SamountText)
 
 	local text = script.Parent
@@ -1614,8 +1614,8 @@ local function NZQHFH_fake_script() -- SamountText.StellarifyAmount
 		changeText()
 	end)	
 end
-coroutine.wrap(NZQHFH_fake_script)()
-local function GHTBW_fake_script() -- ASFbutton.AutoStarForm 
+coroutine.wrap(OBGEZLS_fake_script)()
+local function HWJWGTK_fake_script() -- ASFbutton.AutoStarForm 
 	local script = Instance.new('LocalScript', ASFbutton)
 
 	local button = script.Parent
@@ -1656,8 +1656,8 @@ local function GHTBW_fake_script() -- ASFbutton.AutoStarForm
 		end
 	end)
 end
-coroutine.wrap(GHTBW_fake_script)()
-local function WHMZBQ_fake_script() -- SNcurrentMilestone.SNtrackMilestone 
+coroutine.wrap(HWJWGTK_fake_script)()
+local function ZATDER_fake_script() -- SNcurrentMilestone.SNtrackMilestone 
 	local script = Instance.new('LocalScript', SNcurrentMilestone)
 
 	local text = script.Parent
@@ -1671,8 +1671,8 @@ local function WHMZBQ_fake_script() -- SNcurrentMilestone.SNtrackMilestone
 		changeText()
 	end)	
 end
-coroutine.wrap(WHMZBQ_fake_script)()
-local function TNKALYC_fake_script() -- highlight.HighlightLinus 
+coroutine.wrap(ZATDER_fake_script)()
+local function YYGUKYO_fake_script() -- highlight.HighlightLinus 
 	local script = Instance.new('LocalScript', highlight)
 
 	local button = script.Parent
@@ -1718,8 +1718,8 @@ local function TNKALYC_fake_script() -- highlight.HighlightLinus
 		end
 	end)
 end
-coroutine.wrap(TNKALYC_fake_script)()
-local function VHDR_fake_script() -- EHhelpfulButton.EHhelpfulModifyGraviton 
+coroutine.wrap(YYGUKYO_fake_script)()
+local function UOWB_fake_script() -- EHhelpfulButton.EHhelpfulModifyGraviton 
 	local script = Instance.new('LocalScript', EHhelpfulButton)
 
 	local button = script.Parent
@@ -1731,7 +1731,7 @@ local function VHDR_fake_script() -- EHhelpfulButton.EHhelpfulModifyGraviton
 	
 	local function modifyGraviton()
 		for i, graviton in pairs(gravitonFolder:GetChildren()) do
-			if graviton.IsName == "Graviton" and graviton:IsA("BasePart") then
+			if graviton:IsA("BasePart") then
 				if active then
 					graviton.Transparency = 0.9
 					graviton.Size = Vector3.new(10, 10, 10)
@@ -1739,7 +1739,6 @@ local function VHDR_fake_script() -- EHhelpfulButton.EHhelpfulModifyGraviton
 				else
 					graviton.Transparency = 0
 					graviton.Size = Vector3.new(3, 3, 3)
-				end
 			end
 		end
 	end
@@ -1759,4 +1758,4 @@ local function VHDR_fake_script() -- EHhelpfulButton.EHhelpfulModifyGraviton
 		end
 	end)
 end
-coroutine.wrap(VHDR_fake_script)()
+coroutine.wrap(UOWB_fake_script)()
