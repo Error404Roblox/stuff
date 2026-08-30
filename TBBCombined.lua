@@ -417,17 +417,17 @@ local NdeletionProjectilesList = {
 
 table.sort(NdeletionProjectilesList)
 
-for _, delName in ipairs(NdeletionProjectilesList) do
-    activeNeutralToggles[delName] = true
+for _, dellName in ipairs(NdeletionProjectilesList) do
+    activeNeutralToggles[dellName] = true
     
     NeutralProjectilesTab:CreateToggle({
-        Name = delName,
+        Name = dellName,
         CurrentValue = true,
         Callback = function(state)
-            activeNeutralToggles[delName] = state
+            activeNeutralToggles[dellName] = state
             
             for _, v in ipairs(ProjectileFolder:GetChildren()) do
-                if (v:IsA("BasePart") or v:IsA("MeshPart")) and v.Name == delName then
+                if (v:IsA("BasePart") or v:IsA("MeshPart")) and v.Name == dellName then
                     if state then
                         v.Anchored = true
                         neutralProjectiles[v] = true
@@ -438,8 +438,8 @@ for _, delName in ipairs(NdeletionProjectilesList) do
             end
             
             Rayfield:Notify({
-                Title = state and "Deletion Enabled" or "Deletion Disabled",
-                Content = delName .. " auto-delete is now " .. (state and "ON" or "OFF"),
+                Title = state and "Neutral Projectiles Enabled" or "Neutral Projectiles Disabled",
+                Content = dellName .. " neutral projectiles is now " .. (state and "ON" or "OFF"),
                 Duration = 2,
                 Image = 8275803737
             })
