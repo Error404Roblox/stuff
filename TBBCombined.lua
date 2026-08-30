@@ -114,7 +114,7 @@ AutomationTab:CreateToggle({
         spamSlotsEnabled = state
         Rayfield:Notify({
             Title = state and "Spam Enabled" or "Spam Disabled",
-            Content = "Slot spamming is now " .. (state and "ON" or "OFF"),
+            Content = "Slot Spamming is now " .. (state and "ON" or "OFF"),
             Duration = 2,
             Image = 4483362458
         })
@@ -140,7 +140,7 @@ AutomationTab:CreateSection("--slot choice--")
 for i = 1, 8 do
     local slotName = "Slot" .. i
     AutomationTab:CreateToggle({
-        Name = "Spam slot " .. i,
+        Name = "Spam Slot " .. i,
         CurrentValue = false,
         Callback = function(state)
             individualSlotStates[slotName] = state
@@ -244,7 +244,7 @@ ProjectileFolder.ChildAdded:Connect(function(c)
 end)
 -- Populate trackedProjectiles and deletionProjectiles on script load
 for _, v in ipairs(ProjectileFolder:GetChildren()) do 
-    if v:IsA("BasePart") or v:IsA("MeshPart") then 
+    if (v:IsA("BasePart") or v:IsA("MeshPart")) then 
         checkDeletion(v)
         if IsTracked(v) then 
             Setup(v)
@@ -374,7 +374,7 @@ for _, delName in ipairs(deletionProjectilesList) do
             activeDeletionToggles[delName] = state
             
             for _, v in ipairs(ProjectileFolder:GetChildren()) do
-                if v:IsA("BasePart") or v:IsA("MeshPart") and v.Name == delName then
+                if (v:IsA("BasePart") or v:IsA("MeshPart")) and v.Name == delName then
                     if state then
                         v.Anchored = true
                         deletionProjectiles[v] = true
@@ -393,20 +393,21 @@ for _, delName in ipairs(deletionProjectilesList) do
         end
     })
 end
+
 -- Anti Boss Tab
-AntiBoss:CreateSection("CHRONOS")
-AntiBoss:CreateParagraph({
+AntiBossTab:CreateSection("CHRONOS")
+AntiBossTab:CreateParagraph({
     Title = "Projectiles",
     Content = "Teapot, FireTeapot, ...(TBA)"
 })
 -- Chronos
-AntiBoss:CreateButton({
+AntiBossTab:CreateButton({
     Name = "Answer Clock",
     Callback = function()
     game:GetService("Players").LocalPlayer.PlayerGui.ClockQuiz.Answer:FireServer(true)
     end,
 })
-AntiBoss:CreateKeybind({
+AntiBossTab:CreateKeybind({
     Name = "Answer Clock Keybind",
     CurrentKeybind = "T",
     HoldToInteract = false,
@@ -416,8 +417,8 @@ AntiBoss:CreateKeybind({
     end,
 })
 
-AntiBoss:CreateSection("FUNK1D")
-AntiBoss:CreateParagraph({
+AntiBossTab:CreateSection("FUNK1D")
+AntiBossTab:CreateParagraph({
     Title = "Projectiles",
     Content = "TBA"
 })
@@ -426,7 +427,7 @@ _G.AutoShootK1d = false
 _G.AutoShootFunK1d = false
 
 --FUNK1D
-AntiBoss:CreateToggle({
+AntiBossTab:CreateToggle({
     Name = "Auto Shoot Target",
     CurrentValue = false,
     Flag = "AutoShoot1", 
@@ -446,7 +447,7 @@ AntiBoss:CreateToggle({
         end
     end,
 })
-AntiBoss:CreateToggle({
+AntiBossTab:CreateToggle({
     Name = "Auto Shoot Target K1d",
     CurrentValue = false,
     Flag = "AutoShootK1dFlag", 
@@ -469,7 +470,7 @@ AntiBoss:CreateToggle({
         end
     end,
 })
-AntiBoss:CreateToggle({
+AntiBossTab:CreateToggle({
     Name = "Auto Shoot FunK1d",
     CurrentValue = false,
     Flag = "AutoShootFunK1dFlag", 
@@ -493,19 +494,19 @@ AntiBoss:CreateToggle({
     end,
 })
 
-AntiBoss:CreateSection("GAMERK1D")
-AntiBoss:CreateParagraph({
+AntiBossTab:CreateSection("GAMERK1D")
+AntiBossTab:CreateParagraph({
     Title = "Projectiles",
     Content = "Hyperlaser, Ghostwalker, BigGhostwalker, Duck, EvilDuck, NeonEvilDuck (last 3 doesnt works)"
 })
 -- GamerK1d
-AntiBoss:CreateButton({
+AntiBossTab:CreateButton({
     Name = "Anti GameOver (i think you should do this during last heart. idk.)",
     Callback = function()
     game:GetService("Players").LocalPlayer.PlayerGui.FunGui.SuccessEvent:FireServer(true)
     end,
 })
-AntiBoss:CreateKeybind({
+AntiBossTab:CreateKeybind({
     Name = "Anti GameOver Keybind",
     CurrentKeybind = "Y",
     HoldToInteract = false,
@@ -515,15 +516,15 @@ AntiBoss:CreateKeybind({
     end,
 })
 
-AntiBoss:CreateSection("Lichen")
-AntiBoss:CreateParagraph({
+AntiBossTab:CreateSection("Lichen")
+AntiBossTab:CreateParagraph({
     Title = "Projectiles",
     Content = "TBA"
 })
 _G.AutoShootBush = false
 
 -- Lichen
-AntiBoss:CreateToggle({
+AntiBossTab:CreateToggle({
     Name = "Auto Shoot Tree Bush",
     CurrentValue = false,
     Flag = "AutoShootBushFlag", 
@@ -548,12 +549,12 @@ AntiBoss:CreateToggle({
     end,
 })
 
-AntiBoss:CreateSection("MORTIS")
-AntiBoss:CreateParagraph({
+AntiBossTab:CreateSection("MORTIS")
+AntiBossTab:CreateParagraph({
     Title = "Information",
     Content = "Look. You'd better have 60 FPS to counter EVERY single projectiles of Mortis, because task.wait() depends on your FPS."
 })
-AntiBoss:CreateParagraph({
+AntiBossTab:CreateParagraph({
     Title = "Projectiles",
     Content = "ZombieBomb, SorcusEgg, SorcusBlade(Not Recommended To Enable), SuperSorcusBlade, BigStar, SuperStar(Maybe will conflict with Ivory's projectile)"
 })
@@ -563,7 +564,7 @@ _G.AutoCounterCores = false
 _G.AutoCounterMonitors = false
 
 -- Mortis
-AntiBoss:CreateToggle({
+AntiBossTab:CreateToggle({
     Name = "Auto Counter Sorcus Blades",
     CurrentValue = false,
     Flag = "AutoCounterBladesFlag", 
@@ -580,7 +581,7 @@ AntiBoss:CreateToggle({
                             -- Click on the projectile
                         --    game:GetService("Players").LocalPlayer.PlayerGui.CrosshairUI.ShootEvent:FireServer(sorcusBlade)
                         --end
-                        local sorcusBlade = shootable:WaitForChild("SorcusBlade")
+                        local sorcusBlade = shootable:FindFirstChild("SorcusBlade")
                         if sorcusBlade then
                             -- Click on the projectile
                             game:GetService("Players").LocalPlayer.PlayerGui.CrosshairUI.ShootEvent:FireServer(sorcusBlade)
@@ -593,7 +594,7 @@ AntiBoss:CreateToggle({
         end
     end,
 })
-AntiBoss:CreateToggle({
+AntiBossTab:CreateToggle({
     Name = "Auto Counter Star Balls (Big + Super)",
     CurrentValue = false,
     Flag = "AutoCounterStarsFlag", 
@@ -622,7 +623,7 @@ AntiBoss:CreateToggle({
         end
     end,
 })
-AntiBoss:CreateToggle({
+AntiBossTab:CreateToggle({
     Name = "Auto Counter Cores (maybe works)",
     CurrentValue = false,
     Flag = "AutoCounterCoresFlag", 
@@ -646,7 +647,7 @@ AntiBoss:CreateToggle({
         end
     end,
 })
-AntiBoss:CreateToggle({
+AntiBossTab:CreateToggle({
     Name = "Auto Counter Monitors",
     CurrentValue = false,
     Flag = "AutoCounterMonitorsFlag", 
