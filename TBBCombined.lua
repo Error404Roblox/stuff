@@ -890,12 +890,14 @@ LQFTab:CreateToggle({
             damageFill.Parent = clip
 
             -- Current HP bar
+            local parentFolder = model.Parent
+
             local hpFill = Instance.new("Frame")
             hpFill.Size = UDim2.fromScale(1, 1)
             --hpFill.BackgroundColor3 = COLOR_HP
-            if humanoid.Parent.Parent == FriendlyFolder then
+            if parentFolder == FriendlyFolder then
                 hpFill.BackgroundColor3 = COLOR_HP
-            else if humanoid.Parent.Parent == EnemyFolder then
+            elseif parentFolder == EnemyFolder then
                 hpFill.BackgroundColor3 = COLOR_ENEMYHP
             end
             hpFill.BorderSizePixel = 0
