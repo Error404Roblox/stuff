@@ -351,7 +351,7 @@ for _, projName in ipairs(projectileNamesList) do
                 Title = state and "Projectile Enabled" or "Projectile Disabled",
                 Content = projName .. " tracking is now " .. (state and "ON" or "OFF"),
                 Duration = 2,
-                Image = 4483362458
+                Image = 14030922776
             })
         end
     })
@@ -359,7 +359,7 @@ end
 
 -- Populate Toggles inside DeletEneProj Tab (Sorted A to Z)
 local deletionProjectilesList = {
-    "Arrow", "BloodStone", "BloodCrystal", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "ElectricRock", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "Rock", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "ThrowingAxe", "TinyBomb", "TNT", "TrollPie", "ZetaRocket", "ZombieBomb"
+    "Arrow", "BloodStone", "BloodCrystal", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "ElectricRock", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "Rock", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "TrollPie", "ZetaRocket", "ZombieBomb"
 }
 
 table.sort(deletionProjectilesList)
@@ -388,7 +388,44 @@ for _, delName in ipairs(deletionProjectilesList) do
                 Title = state and "Deletion Enabled" or "Deletion Disabled",
                 Content = delName .. " auto-delete is now " .. (state and "ON" or "OFF"),
                 Duration = 2,
-                Image = 4483362458
+                Image = 8275803737
+            })
+        end
+    })
+end
+
+-- DeleteProjectile but now they're neutral
+local NdeletionProjectilesList = {
+    "Teapot", "FireTeapot"
+}
+
+table.sort(NdeletionProjectilesList)
+
+for _, delName in ipairs(NdeletionProjectilesList) do
+    activeDeletionToggles[delName] = true
+    
+    NeutralDeletionTab:CreateToggle({
+        Name = delName,
+        CurrentValue = true,
+        Callback = function(state)
+            activeDeletionToggles[delName] = state
+            
+            for _, v in ipairs(ProjectileFolder:GetChildren()) do
+                if (v:IsA("BasePart") or v:IsA("MeshPart")) and v.Name == delName then
+                    if state then
+                        v.Anchored = true
+                        deletionProjectiles[v] = true
+                    else
+                        deletionProjectiles[v] = nil
+                    end
+                end
+            end
+            
+            Rayfield:Notify({
+                Title = state and "Deletion Enabled" or "Deletion Disabled",
+                Content = delName .. " auto-delete is now " .. (state and "ON" or "OFF"),
+                Duration = 2,
+                Image = 8275803737
             })
         end
     })
@@ -552,11 +589,11 @@ AntiBossTab:CreateToggle({
 AntiBossTab:CreateSection("MORTIS")
 AntiBossTab:CreateParagraph({
     Title = "Information",
-    Content = "Look. You'd better have 60 FPS to counter EVERY single projectiles of Mortis, because task.wait() depends on your FPS."
+    Content = "Look. You'd better have 60 FPS to counter EVERY single projectiles of Mortis, because task.wait() depends on your FPS. Another thing: DO NOT 3* MORTIS. Otherwise everyone will think about you as exploiter. Just letting you know about common sense, but you can ignore this warning."
 })
 AntiBossTab:CreateParagraph({
     Title = "Projectiles",
-    Content = "ZombieBomb, SorcusEgg, SorcusBlade(Not Recommended To Enable), SuperSorcusBlade, BigStar, SuperStar(Maybe will conflict with Ivory's projectile)"
+    Content = "ZombieBomb, SorcusEgg, SuperSpam, SorcusBlade, SuperSorcusBlade, BigStar, SuperStar(Maybe will conflict with Ivory's projectile)"
 })
 _G.AutoCounterSorcusBlades = false
 _G.AutoCounterStarBalls = false
@@ -682,6 +719,7 @@ LQFTab:CreateButton({
 })
 
 _G.BlockRemoteOnly = false 
+_G.Healthbar=false
 -- Delta Block
 if not hookmetamethod then
     return warn("❌ Executor don't have hook method")
@@ -710,6 +748,304 @@ LQFTab:CreateToggle({
     Callback = function(Value)
         _G.BlockRemoteOnly = Value
         print(_G.BlockRemoteOnly and "🚫 Enable Remote Blocking" or "🟢 Disable Remote Blocking")
+        Rayfield:Notify({
+            Title = Value and "Enabled" or "Disabled",
+            Content = "Anti-Raigbaiter has been " .. (Value and "enabled" or "disabled") .. ".",
+            Duration = 5,
+            Image = 80480434908797
+        })
     end,
 })
+LQFTab:CreateToggle({
+    Name = "Healthbar",
+    CurrentValue = false,
+    Flag = "HealthbarFlag",
+    Callback = function(Value)
+    _G.Healthbar = Value
 
+    Rayfield:Notify({
+        Title = Value and "Enabled" or "Disabled",
+        Content = "Healthbar has been " .. (Value and "enabled" or "disabled") .. ".",
+        Duration = 5,
+        Image = 80480434908797
+    })
+    --Healthbar itself
+    local Players = game:GetService("Players")
+
+    _G.HealthbarData = _G.HealthbarData or {
+        tracked = {},
+        connections = {}
+    }
+
+    local data = _G.HealthbarData
+    local tracked = data.tracked
+    local connections = data.connections
+
+    local BAR_WIDTH_PX = 130
+    local BAR_HEIGHT_PX = 14
+    local BAR_Y_OFFSET = 2.2
+
+    local COLOR_BG = Color3.fromRGB(15, 15, 20)
+    local COLOR_HP = Color3.fromRGB(0, 220, 220)
+    local COLOR_DAMAGE = Color3.fromRGB(255, 70, 70)
+    local COLOR_TEXT = Color3.fromRGB(255, 255, 255)
+
+    --cleanup
+    local function cleanup()
+            -- Disconnect all global connections
+            for _, connection in ipairs(connections) do
+                if connection then
+                    connection:Disconnect()
+                end
+            end
+
+            table.clear(connections)
+
+            -- Destroy all health bars
+            for model, info in pairs(tracked) do
+                if info.gui then
+                    info.gui:Destroy()
+                end
+
+                tracked[model] = nil
+            end
+        end
+
+        -- If disabling, clean everything and stop here
+        if not Value then
+            cleanup()
+            return
+        end
+        -- New healthbar
+        local function makeBar(model)
+            if not Value then
+                return
+            end
+
+            if tracked[model] then
+                return
+            end
+
+            local root = model:FindFirstChild("HumanoidRootPart")
+            local humanoid = model:FindFirstChildOfClass("Humanoid")
+
+            if not root or not humanoid then
+                return
+            end
+
+            local bb = Instance.new("BillboardGui")
+            bb.Name = "SF2HealthBar"
+            bb.Adornee = root
+            bb.Size = UDim2.fromOffset(BAR_WIDTH_PX, BAR_HEIGHT_PX)
+            bb.StudsOffset = Vector3.new(0, BAR_Y_OFFSET, 0)
+            bb.AlwaysOnTop = true
+            bb.LightInfluence = 0
+            bb.MaxDistance = 100
+            bb.Parent = root
+
+            local bg = Instance.new("Frame")
+            bg.Size = UDim2.fromScale(1, 1)
+            bg.BackgroundColor3 = COLOR_BG
+            bg.BorderSizePixel = 0
+            bg.Parent = bb
+
+            local bgCorner = Instance.new("UICorner")
+            bgCorner.CornerRadius = UDim.new(0, 5)
+            bgCorner.Parent = bg
+
+            local clip = Instance.new("Frame")
+            clip.Size = UDim2.fromScale(1, 1)
+            clip.BackgroundTransparency = 1
+            clip.BorderSizePixel = 0
+            clip.ClipsDescendants = true
+            clip.Parent = bg
+
+            local clipCorner = Instance.new("UICorner")
+            clipCorner.CornerRadius = UDim.new(0, 5)
+            clipCorner.Parent = clip
+
+            -- Red "damage" bar
+            local damageFill = Instance.new("Frame")
+            damageFill.Size = UDim2.fromScale(1, 1)
+            damageFill.BackgroundColor3 = COLOR_DAMAGE
+            damageFill.BorderSizePixel = 0
+            damageFill.Parent = clip
+
+            -- Current HP bar
+            local hpFill = Instance.new("Frame")
+            hpFill.Size = UDim2.fromScale(1, 1)
+            hpFill.BackgroundColor3 = COLOR_HP
+            hpFill.BorderSizePixel = 0
+            hpFill.Parent = clip
+
+            local shine = Instance.new("Frame")
+            shine.Size = UDim2.new(1, 0, 0, 2)
+            shine.BackgroundColor3 = Color3.new(1, 1, 1)
+            shine.BackgroundTransparency = 0.75
+            shine.BorderSizePixel = 0
+            shine.Parent = hpFill
+
+            local txt = Instance.new("TextLabel")
+            txt.Size = UDim2.fromScale(1, 1)
+            txt.BackgroundTransparency = 1
+            txt.Font = Enum.Font.GothamBold
+            txt.TextScaled = true
+            txt.TextColor3 = COLOR_TEXT
+            txt.TextStrokeTransparency = 0
+            txt.ZIndex = 5
+            txt.Parent = bb
+
+            local lastHealth = humanoid.Health
+
+            local DAMAGE_DELAY = 1.2
+            local DAMAGE_DRAIN_TIME = 0.9
+            local damageToken = 0
+
+            tracked[model] = {
+                gui = bb,
+                humanoid = humanoid
+            }
+
+            local function update()
+                if not Value then
+                    return
+                end
+
+                if not model.Parent or not humanoid.Parent then
+                    return
+                end
+
+                local maxHealth = math.max(humanoid.MaxHealth, 1)
+                local health = math.max(humanoid.Health, 0)
+                local ratio = math.clamp(health / maxHealth, 0, 1)
+
+                txt.Text = string.format(
+                    "%d / %d",
+                    math.floor(health),
+                    math.floor(maxHealth)
+                )
+
+                hpFill.Size = UDim2.new(ratio, 0, 1, 0)
+
+                -- Health decreased
+                if health < lastHealth then
+                    damageToken += 1
+
+                    local myToken = damageToken
+                    local targetRatio = ratio
+
+                    task.spawn(function()
+                        task.wait(DAMAGE_DELAY)
+
+                        if not Value then
+                            return
+                        end
+
+                        if myToken ~= damageToken then
+                            return
+                        end
+
+                        if damageFill.Parent then
+                            damageFill:TweenSize(
+                                UDim2.new(targetRatio, 0, 1, 0),
+                                Enum.EasingDirection.Out,
+                                Enum.EasingStyle.Quint,
+                                DAMAGE_DRAIN_TIME,
+                                true
+                            )
+                        end
+                    end)
+
+                -- Health increased
+                elseif health > lastHealth then
+                    damageToken += 1
+
+                    hpFill.Size = UDim2.new(ratio, 0, 1, 0)
+                    damageFill.Size = UDim2.new(ratio, 0, 1, 0)
+                end
+
+                lastHealth = health
+            end
+
+            update()
+
+            local healthConnection = humanoid.HealthChanged:Connect(update)
+
+            local ancestryConnection = model.AncestryChanged:Connect(function()
+                if not model.Parent then
+                    if tracked[model] then
+                        if tracked[model].gui then
+                            tracked[model].gui:Destroy()
+                        end
+
+                        tracked[model] = nil
+                    end
+
+                    healthConnection:Disconnect()
+                    ancestryConnection:Disconnect()
+                end
+            end)
+        end
+        -- Find models
+        local function scanModel(model)
+            if not Value then
+                return
+            end
+
+            if tracked[model] then
+                return
+            end
+
+            if not model:IsA("Model") then
+                return
+            end
+
+            local humanoid = model:FindFirstChildOfClass("Humanoid")
+            local root = model:FindFirstChild("HumanoidRootPart")
+
+            if humanoid and root then
+                makeBar(model)
+            end
+        end
+        -- Check for existing NPCs
+        for _, obj in ipairs(workspace:GetDescendants()) do
+            if obj:IsA("Model")
+                and obj:FindFirstChildOfClass("Humanoid")
+                and obj:FindFirstChild("HumanoidRootPart") then
+
+                -- Don't put healthbars on player characters here
+                if not Players:GetPlayerFromCharacter(obj) then
+                    scanModel(obj)
+                end
+            end
+        end
+        -- New npcs
+        table.insert(
+            connections,
+            workspace.DescendantAdded:Connect(function(obj)
+                if not Value then
+                    return
+                end
+
+                if not obj:IsA("Model") then
+                    return
+                end
+
+                task.delay(0.5, function()
+                    if not Value or not obj.Parent then
+                        return
+                    end
+
+                    local humanoid = obj:FindFirstChildOfClass("Humanoid")
+                    local root = obj:FindFirstChild("HumanoidRootPart")
+
+                    if humanoid and root then
+                        if not Players:GetPlayerFromCharacter(obj) then
+                            scanModel(obj)
+                        end
+                    end
+                end)
+            end)
+        )
+    end
+})
