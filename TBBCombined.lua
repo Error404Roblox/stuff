@@ -420,7 +420,7 @@ table.sort(NdeletionProjectilesList)
 for _, delName in ipairs(NdeletionProjectilesList) do
     activeNeutralToggles[delName] = true
     
-    NeutralDeletionTab:CreateToggle({
+    NeutralProjectilesTab:CreateToggle({
         Name = delName,
         CurrentValue = true,
         Callback = function(state)
