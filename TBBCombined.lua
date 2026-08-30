@@ -223,6 +223,7 @@ local function checkDeletion(p)
     if activeDeletionToggles[p.Name] or activeNeutralToggles[p.Name] then
         p.Anchored = true
         deletionProjectiles[p] = true
+        neutralProjectiles[p] = true
         return
     end
 end
@@ -289,7 +290,7 @@ RunService.Heartbeat:Connect(function(dt)
     -- Auto Delete EnemyProjectiles
     for p, _ in pairs(deletionProjectiles) do
         if p and p.Parent then
-            if activeDeletionToggles[p.Name] or activeNeutralToggles[p.Name] then
+            if activeDeletionToggles[p.Name] then
                 pcall(function()
                     p.CFrame += Vector3.new(0, -100, 0)
                 end)
@@ -298,6 +299,20 @@ RunService.Heartbeat:Connect(function(dt)
             end
         else
             deletionProjectiles[p] = nil
+        end
+    end
+    -- Auto Delete NeutralProjectiles
+    for p, _ in pairs(neutralProjectiles) do
+        if p and p.Parent then
+            if activeNeutralToggles[p.Name] then
+                pcall(function()
+                    p.CFrame += Vector3.new(0, -100, 0)
+                end)
+            else
+                neutralProjectiles[p] = nil
+            end
+        else
+            neutralProjectiles[p] = nil
         end
     end
     
