@@ -87,9 +87,10 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local EnemyFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("EnemyFolder")
 local ProjectileFolder = Workspace:WaitForChild("Projectile")
 
-local trackedProjectiles, deletionProjectiles = {}, {}
+local trackedProjectiles, deletionProjectiles, neutralProjectiles = {}, {}, {}
 local activeProjectileToggles = {}
 local activeDeletionToggles = {}
+local activeNeutralToggles = {}
 local block, timerRemaining, isActive = nil, 0, false
 
 -- Automation States
@@ -219,7 +220,7 @@ local function IsTracked(p)
 end
 
 local function checkDeletion(p)
-    if activeDeletionToggles[p.Name] then
+    if activeDeletionToggles[p.Name] or activeNeutralToggles[p.Name] then
         p.Anchored = true
         deletionProjectiles[p] = true
         return
@@ -288,7 +289,7 @@ RunService.Heartbeat:Connect(function(dt)
     -- Auto Delete EnemyProjectiles
     for p, _ in pairs(deletionProjectiles) do
         if p and p.Parent then
-            if activeDeletionToggles[p.Name] then
+            if activeDeletionToggles[p.Name] or activeNeutralToggles[p.Name] then
                 pcall(function()
                     p.CFrame += Vector3.new(0, -100, 0)
                 end)
@@ -402,21 +403,21 @@ local NdeletionProjectilesList = {
 table.sort(NdeletionProjectilesList)
 
 for _, delName in ipairs(NdeletionProjectilesList) do
-    activeDeletionToggles[delName] = true
+    activeNeutralToggles[delName] = true
     
     NeutralDeletionTab:CreateToggle({
         Name = delName,
         CurrentValue = true,
         Callback = function(state)
-            activeDeletionToggles[delName] = state
+            activeNeutralToggles[delName] = state
             
             for _, v in ipairs(ProjectileFolder:GetChildren()) do
                 if (v:IsA("BasePart") or v:IsA("MeshPart")) and v.Name == delName then
                     if state then
                         v.Anchored = true
-                        deletionProjectiles[v] = true
+                        neutralProjectiles[v] = true
                     else
-                        deletionProjectiles[v] = nil
+                        neutralProjectiles[v] = nil
                     end
                 end
             end
