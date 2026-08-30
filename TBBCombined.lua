@@ -769,7 +769,7 @@ LQFTab:CreateToggle({
             Title = Value and "Enabled" or "Disabled",
             Content = "Anti-Raigbaiter has been " .. (Value and "enabled" or "disabled") .. ".",
             Duration = 5,
-            Image = 80480434908797
+            Image = 133168476746555
         })
     end,
 })
@@ -784,7 +784,7 @@ LQFTab:CreateToggle({
         Title = Value and "Enabled" or "Disabled",
         Content = "Healthbar has been " .. (Value and "enabled" or "disabled") .. ".",
         Duration = 5,
-        Image = 80480434908797
+        Image = 10850711054
     })
     --Healthbar itself
     local Players = game:GetService("Players")
