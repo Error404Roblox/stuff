@@ -84,6 +84,7 @@ SettingsTab:CreateSection("Settings")
 -- Services & Folders
 local Workspace, RunService = game:GetService("Workspace"), game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local FriendlyFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("FriendlyFolder")
 local EnemyFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("EnemyFolder")
 local ProjectileFolder = Workspace:WaitForChild("Projectile")
 
@@ -803,6 +804,7 @@ LQFTab:CreateToggle({
 
     local COLOR_BG = Color3.fromRGB(15, 15, 20)
     local COLOR_HP = Color3.fromRGB(0, 220, 220)
+    local COLOR_ENEMYHP = Color3.fromRGB(224, 162, 99)
     local COLOR_DAMAGE = Color3.fromRGB(255, 70, 70)
     local COLOR_TEXT = Color3.fromRGB(255, 255, 255)
 
@@ -890,7 +892,12 @@ LQFTab:CreateToggle({
             -- Current HP bar
             local hpFill = Instance.new("Frame")
             hpFill.Size = UDim2.fromScale(1, 1)
-            hpFill.BackgroundColor3 = COLOR_HP
+            --hpFill.BackgroundColor3 = COLOR_HP
+            if humanoid.Parent.Parent == FriendlyFolder then
+                hpFill.BackgroundColor3 = COLOR_HP
+            else if humanoid.Parent.Parent == EnemyFolder then
+                hpFill.BackgroundColor3 = COLOR_ENEMYHP
+            end
             hpFill.BorderSizePixel = 0
             hpFill.Parent = clip
 
