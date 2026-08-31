@@ -731,11 +731,11 @@ AntiBossTab:CreateToggle({
 
 
 LQFTab:CreateSection("Miscellaneous")
-_G.AutoBoostFPS=false;
+--_G.AutoBoostFPS=false;
 _G.BlockRemoteOnly = false 
 _G.Healthbar=false
 
-local decorationConnection
+--local decorationConnection
 
 LQFTab:CreateToggle({
 	Name = "Auto BoostFPS (Removes Decorations)",
@@ -743,30 +743,30 @@ LQFTab:CreateToggle({
 	Flag = "AutoBoostFPSFlag",
 
 	Callback = function(Value)
-		_G.AutoBoostFPS = Value
+		--_G.AutoBoostFPS = Value
 
-		if decorationConnection then
-			decorationConnection:Disconnect()
-			decorationConnection = nil
-		end
+		--if decorationConnection then
+		--	decorationConnection:Disconnect()
+		--	decorationConnection = nil
+		--end
 
-		if not Value then
-			return
-		end
+		--if not Value then
+		--	return
+		--end
 
-		local map = workspace:WaitForChild("Map")
+		--local map = workspace:WaitForChild("Map")
 
-		local function checkObject(obj)
-			if obj.Name == "Decoration" and obj:IsA("Folder") then
-				obj:Destroy()
-			end
-		end
+		--local function checkObject(obj)
+		--	if obj.Name == "Decoration" and obj:IsA("Folder") then
+		--		obj:Destroy()
+		--	end
+		--end
 
-		for _, obj in ipairs(map:GetDescendants()) do
-			checkObject(obj)
-		end
+		--for _, obj in ipairs(map:GetDescendants()) do
+		--	checkObject(obj)
+		--end
 
-		decorationConnection = map.DescendantAdded:Connect(checkObject)
+		--decorationConnection = map.DescendantAdded:Connect(checkObject)
 	end,
 })
 
