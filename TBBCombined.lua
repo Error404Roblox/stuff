@@ -1110,6 +1110,6 @@ LQFTab:CreateToggle({
 LQFTab:CreateButton({
     Name = "Delete Gloom hazard",
     Callback = function()
-    game:GetService("Players").LocalPlayer.PlayerGui.Gloom:Destroy()
+    game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("Gloom"):Destroy()
     end,
 })
