@@ -572,6 +572,26 @@ AntiBossTab:CreateKeybind({
     game:GetService("Players").LocalPlayer.PlayerGui.FunGui.SuccessEvent:FireServer(true)
     end,
 })
+AntiBossTab:CreateToggle({
+   Name = "Anti GameOver",
+   CurrentValue = false,
+   Flag = "AntiGameOverToggle", 
+   Callback = function(Value)
+       _G.AntiGameOver = Value
+       
+       if _G.AntiGameOver then
+           task.spawn(function()
+               while _G.AntiGameOver do
+                   local funGui = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("FunGui")
+                   if funGui and funGui:FindFirstChild("SuccessEvent") then
+                       funGui.SuccessEvent:FireServer(true)
+                   end
+                   task.wait(0.5) 
+               end
+           end)
+       end
+   end,
+})
 
 AntiBossTab:CreateSection("Lichen")
 AntiBossTab:CreateParagraph({
@@ -681,7 +701,7 @@ AntiBossTab:CreateToggle({
     end,
 })
 AntiBossTab:CreateToggle({
-    Name = "Auto Counter Cores (doesnt works)",
+    Name = "Auto Counter Cores",
     CurrentValue = false,
     Flag = "AutoCounterCoresFlag", 
     Callback = function(Value)
@@ -692,10 +712,12 @@ AntiBossTab:CreateToggle({
                 while _G.AutoCounterCores do
                     local shootable = workspace:FindFirstChild("Shootable")
                     if shootable then
-                        local core = shootable.Core:FindFirstChild("CoreInside")
+                        local core = shootable.Core:FindFirstChild("Core")
                         if core then
-                            -- Click on the projectile
-                            game:GetService("Players").LocalPlayer.PlayerGui.CrosshairUI.ShootEvent:FireServer(core)
+                            local shield = core:FindFirstChild("Shield")
+                            if shield then
+                                game:GetService("Players").LocalPlayer.PlayerGui.CrosshairUI.ShootEvent:FireServer(shield)
+                            end
                         end
                     end
                     task.wait(0.05)
@@ -770,6 +792,14 @@ LQFTab:CreateToggle({
 
 		-- Remove Decorations added later
 		decorationConnection = map.DescendantAdded:Connect(checkObject)
+        taskSpawn(function()
+            while _G.AutoBoostFPS do
+                for _, obj in ipairs(map:GetDescendants()) do
+                    checkObject(obj)
+                end
+                task.wait(1) -- Check every second
+            end
+        end)
 	end,
 })
 
