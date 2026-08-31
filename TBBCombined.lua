@@ -11,7 +11,7 @@ if getgenv().ProjectileAuraLoaded then return end
 getgenv().ProjectileAuraLoaded = true
 
 -- Rayfield UI Setup (Moved to top so windows/tabs exist before listeners register)
---local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
     Name = "The Battle Bricks Combined",
@@ -737,41 +737,41 @@ _G.Healthbar=false
 
 local decorationConnection
 
-LQFTab:CreateToggle({
-	Name = "Auto BoostFPS (Removes Decorations)",
-	CurrentValue = false,
-	Flag = "AutoBoostFPSFlag",
+--LQFTab:CreateToggle({
+	--Name = "Auto BoostFPS (Removes Decorations)",
+	--CurrentValue = false,
+	--Flag = "AutoBoostFPSFlag",
 
-	Callback = function(Value)
-		_G.AutoBoostFPS = Value
+	--Callback = function(Value)
+	--	_G.AutoBoostFPS = Value
 
 		-- Remove previous connection
-		if decorationConnection then
-			decorationConnection:Disconnect()
-			decorationConnection = nil
-		end
+	--	if decorationConnection then
+	--		decorationConnection:Disconnect()
+	--		decorationConnection = nil
+	--	end
 
-		if not Value then
-			return
-		end
+	--	if not Value then
+	--		return
+	--	end
 
-		local map = workspace:WaitForChild("Map")
+	--	local map = workspace:WaitForChild("Map")
 
-		local function checkObject(obj)
-			if obj.Name == "Decoration" and obj:IsA("Folder") then
-				obj:Destroy()
-			end
-		end
+	--	local function checkObject(obj)
+	--		if obj.Name == "Decoration" and obj:IsA("Folder") then
+	--			obj:Destroy()
+	--		end
+	--	end
 
 		-- Remove existing Decorations
-		for _, obj in ipairs(map:GetDescendants()) do
-			checkObject(obj)
-		end
+	--	for _, obj in ipairs(map:GetDescendants()) do
+	--		checkObject(obj)
+	--	end
 
 		-- Remove Decorations added later
-		decorationConnection = map.DescendantAdded:Connect(checkObject)
-	end,
-})
+	--	decorationConnection = map.DescendantAdded:Connect(checkObject)
+	--end,
+--})
 
 -- Delta Block
 if not hookmetamethod then
