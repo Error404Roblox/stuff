@@ -452,7 +452,7 @@ end
 AntiBossTab:CreateSection("CHRONOS")
 AntiBossTab:CreateParagraph({
     Title = "Projectiles",
-    Content = "Teapot, FireTeapot, ...(TBA)"
+    Content = "Teapot, FireTeapot, CesusBomb, Cesuspot"
 })
 -- Chronos
 AntiBossTab:CreateButton({
@@ -728,15 +728,35 @@ AntiBossTab:CreateToggle({
 
 
 LQFTab:CreateSection("Miscellaneous")
-LQFTab:CreateButton({
-    Name = "Boost FPS on the current stage (deletes decorations)",
-    Callback = function()
-    workspace.Map.Battle_AllanHQ.Decoration:Destroy()
+_G.AutoBoostFPS=false;
+_G.BlockRemoteOnly = false 
+_G.Healthbar=false
+
+LQFTab:CreateToggle({
+    Name = "Auto BoostFPS (Removes Decorations)",
+    CurrentValue = false,
+    Flag = "AutoBoostFPSFlag", 
+    Callback = function(Value)
+        _G.AutoBoostFPS = Value
+
+        if _G.AutoBoostFPS then
+            local map = workspace:WaitForChild("Map")
+
+            local function checkObject(obj)
+                if obj.Name == "Decoration" and obj:IsA("Folder") then
+                    obj:Destroy()
+                end
+            end
+
+            for _, obj in ipairs(map:GetDescendants()) do
+                checkObject(obj)
+            end
+
+            map.DescendantAdded:Connect(checkObject)
+        end
     end,
 })
 
-_G.BlockRemoteOnly = false 
-_G.Healthbar=false
 -- Delta Block
 if not hookmetamethod then
     return warn("❌ Executor don't have hook method")
@@ -1073,4 +1093,10 @@ LQFTab:CreateToggle({
             end)
         )
     end
+})
+LQFTab:CreateButton({
+    Name = "Delete Gloom hazard",
+    Callback = function()
+    game:GetService("Players").LocalPlayer.PlayerGui.Gloom:Destroy()
+    end,
 })
