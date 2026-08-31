@@ -220,13 +220,24 @@ local function IsTracked(p)
     return activeProjectileToggles[p.Name] or false
 end
 
+--local function checkDeletion(p)
+--    if activeDeletionToggles[p.Name] or activeNeutralToggles[p.Name] then
+--        p.Anchored = true
+--        deletionProjectiles[p] = true
+--        neutralProjectiles[p] = true
+--        return
+--    end
+--end
 local function checkDeletion(p)
-    if activeDeletionToggles[p.Name] or activeNeutralToggles[p.Name] then
-        p.Anchored = true
-        deletionProjectiles[p] = true
-        neutralProjectiles[p] = true
-        return
-    end
+	if activeDeletionToggles[p.Name] then
+		p.Anchored = true
+		deletionProjectiles[p] = true
+	end
+
+	if activeNeutralToggles[p.Name] then
+		p.Anchored = true
+		neutralProjectiles[p] = true
+	end
 end
 -- Setting up for a specific projectile
 local function Setup(p)
@@ -678,7 +689,7 @@ AntiBossTab:CreateToggle({
     end,
 })
 AntiBossTab:CreateToggle({
-    Name = "Auto Counter Cores (maybe works)",
+    Name = "Auto Counter Cores (doesnt works)",
     CurrentValue = false,
     Flag = "AutoCounterCoresFlag", 
     Callback = function(Value)
@@ -732,29 +743,39 @@ _G.AutoBoostFPS=false;
 _G.BlockRemoteOnly = false 
 _G.Healthbar=false
 
+local decorationConnection
+
 LQFTab:CreateToggle({
-    Name = "Auto BoostFPS (Removes Decorations)",
-    CurrentValue = false,
-    Flag = "AutoBoostFPSFlag", 
-    Callback = function(Value)
-        _G.AutoBoostFPS = Value
+	Name = "Auto BoostFPS (Removes Decorations)",
+	CurrentValue = false,
+	Flag = "AutoBoostFPSFlag",
 
-        if _G.AutoBoostFPS then
-            local map = workspace:WaitForChild("Map")
+	Callback = function(Value)
+		_G.AutoBoostFPS = Value
 
-            local function checkObject(obj)
-                if obj.Name == "Decoration" and obj:IsA("Folder") then
-                    obj:Destroy()
-                end
-            end
+		if decorationConnection then
+			decorationConnection:Disconnect()
+			decorationConnection = nil
+		end
 
-            for _, obj in ipairs(map:GetDescendants()) do
-                checkObject(obj)
-            end
+		if not Value then
+			return
+		end
 
-            map.DescendantAdded:Connect(checkObject)
-        end
-    end,
+		local map = workspace:WaitForChild("Map")
+
+		local function checkObject(obj)
+			if obj.Name == "Decoration" and obj:IsA("Folder") then
+				obj:Destroy()
+			end
+		end
+
+		for _, obj in ipairs(map:GetDescendants()) do
+			checkObject(obj)
+		end
+
+		decorationConnection = map.DescendantAdded:Connect(checkObject)
+	end,
 })
 
 -- Delta Block
