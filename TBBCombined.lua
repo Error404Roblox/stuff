@@ -11,7 +11,7 @@ if getgenv().ProjectileAuraLoaded then return end
 getgenv().ProjectileAuraLoaded = true
 
 -- Rayfield UI Setup (Moved to top so windows/tabs exist before listeners register)
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+--local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 local Window = Rayfield:CreateWindow({
     Name = "The Battle Bricks Combined",
