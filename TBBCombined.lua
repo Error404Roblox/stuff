@@ -220,14 +220,6 @@ local function IsTracked(p)
     return activeProjectileToggles[p.Name] or false
 end
 
---local function checkDeletion(p)
---    if activeDeletionToggles[p.Name] or activeNeutralToggles[p.Name] then
---        p.Anchored = true
---        deletionProjectiles[p] = true
---        neutralProjectiles[p] = true
---        return
---    end
---end
 local function checkDeletion(p)
 	if activeDeletionToggles[p.Name] then
 		p.Anchored = true
@@ -246,7 +238,7 @@ local function Setup(p)
 end
 
 ProjectileFolder.ChildAdded:Connect(function(c)
-    if not c:IsA("BasePart") and not c:IsA("MeshPart") then return end
+    if not c:IsA("BasePart") then return end
     checkDeletion(c)
     if c.Name == "StoneFist" or c.Name == "Teapot" or c.Name == "FireTeapot" then
         if not block then block = Instance.new("Part", Workspace); block.Anchored, block.Transparency, block.Size, block.CFrame = true, 1, Vector3.new(6,6,6), CFrame.new(0, -0.25, 1.23) end
@@ -258,7 +250,7 @@ ProjectileFolder.ChildAdded:Connect(function(c)
 end)
 -- Populate trackedProjectiles and deletionProjectiles on script load
 for _, v in ipairs(ProjectileFolder:GetChildren()) do 
-    if (v:IsA("BasePart") or v:IsA("MeshPart")) then 
+    if v:IsA("BasePart") then 
         checkDeletion(v)
         if IsTracked(v) then 
             Setup(v)
