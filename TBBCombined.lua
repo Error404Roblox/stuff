@@ -1235,16 +1235,16 @@ LQFTab:CreateToggle({
         local FIRERATE_TEXTURE = "rbxassetid://483225199"
         local DAMAGE_TEXTURE = "rbxassetid://8897806060"
         local RANGE_TEXTURE = "rbxassetid://10164277616"
-        local REGEN_TEXTURE = "rbxassetid://88457796085288"
-        local FIRE_TEXTURE = "rbxassetid://14502433634"
-        local HELLFIRE_TEXTURE = "rbxassetid://18255006166"
-        local BLIND_TEXTURE = "rbxassetid://13492317633"
-        local STUN_TEXTURE = "rbxassetid://94236547149613"
-        local BOUNTY_TEXTURE = "rbxassetid://12771100802"
+        local REGEN_TEXTURE = "rbxassetid://104560409730225"
+        local FIRE_TEXTURE = "rbxassetid://14502433595"
+        local HELLFIRE_TEXTURE = "rbxassetid://18255006123"
+        local BLIND_TEXTURE = "rbxassetid://13492317602"
+        local STUN_TEXTURE = "rbxassetid://89657581729186"
+        local BOUNTY_TEXTURE = "rbxassetid://12771100740"
 
-        local SLOWNESS_TEXTURE = "rbxassetid://17288802865"
-        local VULNERABLE_TEXTURE = "rbxassetid://90047509074616"
-        local SLATE_TEXTURE = "rbxassetid://76333770045047"
+        local SLOWNESS_TEXTURE = "rbxassetid://17288802854"
+        local VULNERABLE_TEXTURE = "rbxassetid://90784857801052"
+        local SLATE_TEXTURE = "rbxassetid://114797259538353"
 
         -- cleaning
         local function cleanup()
@@ -1337,19 +1337,17 @@ LQFTab:CreateToggle({
             local function createStatus(name, texture, color)
 
                 local holder = Instance.new("Frame")
+
                 holder.Name = name
 
-                --[[holder.Size = UDim2.new(
-                    0,
-                    40,
-                    1,
-                    0
+                holder.Size = UDim2.fromOffset(
+                    STATUS_HEIGHT,
+                    STATUS_HEIGHT
                 )
 
                 holder.BackgroundColor3 = STATUS_BG
-
+                holder.BackgroundTransparency = 0
                 holder.BorderSizePixel = 0
-
                 holder.Visible = false
 
                 holder.Parent = statusRow
@@ -1365,113 +1363,31 @@ LQFTab:CreateToggle({
                 corner.Parent = holder
 
 
-                -- Icon
                 local icon = Instance.new("ImageLabel")
 
-                icon.Name = "Icon"
-
-                icon.Size = UDim2.fromOffset(
-                    14,
-                    14
-                )
-
-                icon.Position = UDim2.new(
-                    0,
-                    3,
-                    0.5,
-                    -7
-                )
-
-                icon.BackgroundTransparency = 1
-
-                icon.Image = texture
-
-                icon.ImageColor3 = color
-
-                icon.ScaleType = Enum.ScaleType.Fit
-
-                icon.Parent = holder
-
-
-                -- Text
-                local label = Instance.new("TextLabel")
-
-                label.Name = "Label"
-
-                label.Size = UDim2.new(
-                    1,
-                    -20,
-                    1,
-                    0
-                )
-
-                label.Position = UDim2.new(
-                    0,
-                    20,
-                    0,
-                    0
-                )
-
-                label.BackgroundTransparency = 1
-
-                label.Text = name
-
-                label.Font = Enum.Font.GothamBold
-
-                label.TextScaled = true
-
-                label.TextColor3 = STATUS_TEXT
-
-                label.TextStrokeTransparency = 0.25
-
-                label.Parent = holder
-
-
-                return holder
-            end]]--
-                --local holder = Instance.new("Frame")
-                --holder.Name = name
-
-                holder.Size = UDim2.fromOffset(
-                    STATUS_HEIGHT,
-                    STATUS_HEIGHT
-                )
-
-                holder.BackgroundColor3 = STATUS_BG
-                holder.BorderSizePixel = 0
-                holder.Visible = false
-
-                holder.Parent = statusRow
-
-
-                -- Rounded background
-                local corner = Instance.new("UICorner")
-                corner.CornerRadius = UDim.new(0, 4)
-                corner.Parent = holder
-
-
-                -- Icon
-                local icon = Instance.new("ImageLabel")
                 icon.Name = "Icon"
 
                 icon.Size = UDim2.new(
                     1,
-                    -4,
+                    -2,
                     1,
-                    -4
+                    -2
                 )
 
                 icon.Position = UDim2.fromOffset(
-                    2,
-                    2
+                    1,
+                    1
                 )
 
                 icon.BackgroundTransparency = 1
 
                 icon.Image = texture
                 icon.ImageColor3 = color
+                icon.ImageTransparency = 0
 
                 icon.ScaleType = Enum.ScaleType.Fit
+
+                icon.ZIndex = 2
 
                 icon.Parent = holder
 
