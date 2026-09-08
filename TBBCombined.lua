@@ -1337,7 +1337,6 @@ LQFTab:CreateToggle({
             local function createStatus(name, texture, color)
 
                 local holder = Instance.new("Frame")
-
                 holder.Name = name
 
                 --[[holder.Size = UDim2.new(
@@ -1430,8 +1429,8 @@ LQFTab:CreateToggle({
 
                 return holder
             end]]--
-                local holder = Instance.new("Frame")
-                holder.Name = name
+                --local holder = Instance.new("Frame")
+                --holder.Name = name
 
                 holder.Size = UDim2.fromOffset(
                     STATUS_HEIGHT,
