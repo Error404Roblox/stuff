@@ -1213,15 +1213,38 @@ LQFTab:CreateToggle({
         local STATUS_GAP = 3
 
         local STATUS_BG = Color3.fromRGB(15, 15, 20)
-        local STATUS_TEXT = Color3.fromRGB(255, 255, 255)
+        --local STATUS_TEXT = Color3.fromRGB(255, 255, 255)
 
-        local FIRE_COLOR = Color3.fromRGB(255, 220, 0)
+        -- Colors
+        local FIRERATE_COLOR = Color3.fromRGB(255, 220, 0)
         local DAMAGE_COLOR = Color3.fromRGB(255, 60, 60)
         local RANGE_COLOR = Color3.fromRGB(0, 255, 255)
+        local REGEN_COLOR = Color3.fromRGB(0, 255, 0)
+        local FIRE_COLOR = Color3.fromRGB(255, 99, 0)
+        local HELLFIRE_COLOR = Color3.fromRGB(166, 0, 0)
+        local BLIND_COLOR = Color3.fromRGB(255, 255, 255)
+        local STUN_COLOR = Color3.fromRGB(0, 132, 255)
+        local BOUNTY_COLOR = Color3.fromRGB(255, 255, 255)
 
-        local FIRE_TEXTURE = "rbxassetid://483225199"
+        local COLAs_COLOR = Color3.fromRGB(176, 101, 9)
+        local ICEs_COLOR = Color3.fromRGB(55, 172, 250)
+        local BREW_COLOR = Color3.fromRGB(34, 150, 1)
+        local SLATE_COLOR = Color3.fromRGB(255, 255, 255)
+
+        -- Textures
+        local FIRERATE_TEXTURE = "rbxassetid://483225199"
         local DAMAGE_TEXTURE = "rbxassetid://8897806060"
         local RANGE_TEXTURE = "rbxassetid://10164277616"
+        local REGEN_TEXTURE = "rbxassetid://88457796085288"
+        local FIRE_TEXTURE = "rbxassetid://14502433634"
+        local HELLFIRE_TEXTURE = "rbxassetid://18255006166"
+        local BLIND_TEXTURE = "rbxassetid://13492317633"
+        local STUN_TEXTURE = "rbxassetid://94236547149613"
+        local BOUNTY_TEXTURE = "rbxassetid://12771100802"
+
+        local SLOWNESS_TEXTURE = "rbxassetid://17288802865"
+        local VULNERABLE_TEXTURE = "rbxassetid://90047509074616"
+        local SLATE_TEXTURE = "rbxassetid://76333770045047"
 
         -- cleaning
         local function cleanup()
@@ -1311,17 +1334,13 @@ LQFTab:CreateToggle({
             layout.Parent = statusRow
 
             -- Process of creating separate status
-            local function createStatus(
-                name,
-                texture,
-                color
-            )
+            local function createStatus(name, texture, color)
 
                 local holder = Instance.new("Frame")
 
                 holder.Name = name
 
-                holder.Size = UDim2.new(
+                --[[holder.Size = UDim2.new(
                     0,
                     40,
                     1,
@@ -1410,26 +1429,126 @@ LQFTab:CreateToggle({
 
 
                 return holder
+            end]]--
+                local holder = Instance.new("Frame")
+                holder.Name = name
+
+                holder.Size = UDim2.fromOffset(
+                    STATUS_HEIGHT,
+                    STATUS_HEIGHT
+                )
+
+                holder.BackgroundColor3 = STATUS_BG
+                holder.BorderSizePixel = 0
+                holder.Visible = false
+
+                holder.Parent = statusRow
+
+
+                -- Rounded background
+                local corner = Instance.new("UICorner")
+                corner.CornerRadius = UDim.new(0, 4)
+                corner.Parent = holder
+
+
+                -- Icon
+                local icon = Instance.new("ImageLabel")
+                icon.Name = "Icon"
+
+                icon.Size = UDim2.new(
+                    1,
+                    -4,
+                    1,
+                    -4
+                )
+
+                icon.Position = UDim2.fromOffset(
+                    2,
+                    2
+                )
+
+                icon.BackgroundTransparency = 1
+
+                icon.Image = texture
+                icon.ImageColor3 = color
+
+                icon.ScaleType = Enum.ScaleType.Fit
+
+                icon.Parent = holder
+
+
+                return holder
             end
 
-            -- Buffs
-            local fireStatus = createStatus(
-                "FIRE",
-                FIRE_TEXTURE,
-                FIRE_COLOR
+            -- Statuses
+            local fireRateStatus = createStatus(
+                "FIRERATE",
+                FIRERATE_TEXTURE,
+                FIRERATE_COLOR
             )
-
             local damageStatus = createStatus(
                 "DAMAGE",
                 DAMAGE_TEXTURE,
                 DAMAGE_COLOR
             )
-
             local rangeStatus = createStatus(
                 "RANGE",
                 RANGE_TEXTURE,
                 RANGE_COLOR
             )
+
+            local regenStatus = createStatus(
+                "REGEN",
+                REGEN_TEXTURE,
+                REGEN_COLOR
+            )
+            local fireStatus = createStatus(
+                "FIRE",
+                FIRE_TEXTURE,
+                FIRE_COLOR
+            )
+            local hellFireStatus = createStatus(
+                "HELLFIRE",
+                HELLFIRE_TEXTURE,
+                HELLFIRE_COLOR
+            )
+            local blindStatus = createStatus(
+                "BLIND",
+                BLIND_TEXTURE,
+                BLIND_COLOR
+            )
+            local stunStatus = createStatus(
+                "STUN",
+                STUN_TEXTURE,
+                STUN_COLOR
+            )
+            local bountyStatus = createStatus(
+                "BOUNTY",
+                BOUNTY_TEXTURE,
+                BOUNTY_COLOR
+            )
+
+            local colaStatus = createStatus(
+                "COLA",
+                SLOWNESS_TEXTURE,
+                COLAs_COLOR
+            )
+            local iceStatus = createStatus(
+                "ICE",
+                SLOWNESS_TEXTURE,
+                ICEs_COLOR
+            )
+            local brewStatus = createStatus(
+                "BREW",
+                VULNERABLE_TEXTURE,
+                BREW_COLOR
+            )
+            local slateskinStatus = createStatus(
+                "SLATE",
+                SLATE_TEXTURE,
+                SLATE_COLOR
+            )
+
 
             -- Detecting status
 
@@ -1452,6 +1571,27 @@ LQFTab:CreateToggle({
 
                 rangeStatus.Visible =
                     torso:FindFirstChild("Sight") ~= nil
+
+                regenStatus.Visible =
+                    torso:FindFirstChild("Regen") ~= nil
+                fireStatus.Visible =
+                    torso:FindFirstChild("Fire") ~= nil
+                hellFireStatus.Visible =
+                    torso:FindFirstChild("Hellfire") ~= nil
+                blindStatus.Visible =
+                    torso:FindFirstChild("Blind") ~= nil
+                stunStatus.Visible =
+                    torso:FindFirstChild("Stun") ~= nil
+                bountyStatus.Visible =
+                    torso:FindFirstChild("Gold") ~= nil
+                colaStatus.Visible =
+                    torso:FindFirstChild("Slow") ~= nil
+                iceStatus.Visible =
+                    torso:FindFirstChild("Cold") ~= nil
+                brewStatus.Visible =
+                    torso:FindFirstChild("Weaken") ~= nil
+                slateskinStatus.Visible =
+                    torso:FindFirstChild("Armor") ~= nil
             end
 
 
@@ -1619,3 +1759,9 @@ LQFTab:CreateButton({
 		end
 	end,
 })
+
+
+--[[ ideas:
+- try to finally utilize WEAKEST enemy
+- do every list of final bosses with their projectile naming
+]]--
