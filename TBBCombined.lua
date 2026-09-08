@@ -73,8 +73,8 @@ AntiBossTab:CreateParagraph({
 --Life Quality Features
 local LQFTab = Window:CreateTab("Life Quality Features", 4483362458)
 LQFTab:CreateParagraph({
-    Title = "Information",
-    Content = "'HOW TO COUNTER DEPRIVER BE LIKE:'"
+    Title = "PLAYER:",
+    Content = "HOW TO COUNTER DEPRIVER !!!!!!!!"
 })
 
 -- Settings Tab
@@ -357,7 +357,7 @@ for _, projName in ipairs(projectileNamesList) do
             Config.RandomizedProjectiles.List[projName] = state
             
             for _, v in ipairs(ProjectileFolder:GetChildren()) do
-                if (v:IsA("BasePart") or v:IsA("MeshPart")) and v.Name == projName then
+                if v:IsA("BasePart") and v.Name == projName then
                     if state then
                         Setup(v)
                         trackedProjectiles[v] = true
@@ -394,7 +394,7 @@ for _, delName in ipairs(deletionProjectilesList) do
             activeDeletionToggles[delName] = state
             
             for _, v in ipairs(ProjectileFolder:GetChildren()) do
-                if (v:IsA("BasePart") or v:IsA("MeshPart")) and v.Name == delName then
+                if v:IsA("BasePart") and v.Name == delName then
                     if state then
                         v.Anchored = true
                         deletionProjectiles[v] = true
@@ -554,7 +554,7 @@ AntiBossTab:CreateToggle({
 AntiBossTab:CreateSection("GAMERK1D")
 AntiBossTab:CreateParagraph({
     Title = "Projectiles",
-    Content = "Hyperlaser, Ghostwalker, BigGhostwalker, Duck, EvilDuck, NeonEvilDuck (last 3 doesnt works)"
+    Content = "Hyperlaser, Ghostwalker, BigGhostwalker, BloodStone, NeonEvilDuck (last doesnt works)"
 })
 -- GamerK1d
 AntiBossTab:CreateButton({
@@ -756,10 +756,42 @@ LQFTab:CreateSection("Miscellaneous")
 --_G.AutoBoostFPS=false;
 _G.BlockRemoteOnly = false 
 _G.Healthbar=false
+_G.Status=false
 
 local decorationConnection
 
-LQFTab:CreateToggle({
+LQFTab:CreateButton({
+    Name = "Boost FPS",
+    Callback = function()
+        -- Remove previous connection
+		if decorationConnection then
+			decorationConnection:Disconnect()
+			decorationConnection = nil
+		end
+
+		if not Value then
+			return
+		end
+
+		local map = workspace:WaitForChild("Map")
+
+		local function checkObject(obj)
+			if obj.Name == "Decoration" and obj:IsA("Folder") then
+				obj:Destroy()
+			end
+		end
+
+		-- Remove existing Decorations
+		for _, obj in ipairs(map:GetDescendants()) do
+			checkObject(obj)
+		end
+
+		-- Remove Decorations added later
+		decorationConnection = map.DescendantAdded:Connect(checkObject)
+    end,
+})
+
+--[[LQFTab:CreateToggle({
 	Name = "Auto BoostFPS (Removes Decorations)",
 	CurrentValue = false,
 	Flag = "AutoBoostFPSFlag",
@@ -802,7 +834,7 @@ LQFTab:CreateToggle({
         end)
 	end,
 })
-
+]]--
 -- Delta Block
 if not hookmetamethod then
     return warn("❌ Executor don't have hook method")
@@ -1131,6 +1163,440 @@ LQFTab:CreateToggle({
                     local root = obj:FindFirstChild("HumanoidRootPart")
 
                     if humanoid and root then
+                        if not Players:GetPlayerFromCharacter(obj) then
+                            scanModel(obj)
+                        end
+                    end
+                end)
+            end)
+        )
+    end
+})
+LQFTab:CreateToggle({
+    Name = "Status Bar",
+    CurrentValue = false,
+    Flag = "StatusFlag",
+
+    Callback = function(Value)
+        _G.Status = Value
+
+        Rayfield:Notify({
+            Title = Value and "Enabled" or "Disabled",
+            Content = "Status Bar has been " .. (Value and "enabled" or "disabled") .. ".",
+            Duration = 5,
+            Image = 10850711054
+        })
+
+        local Players = game:GetService("Players")
+
+        -- data
+        _G.StatusData = _G.StatusData or {
+            tracked = {},
+            connections = {}
+        }
+
+        local data = _G.StatusData
+        local tracked = data.tracked
+        local connections = data.connections
+
+        -- settings
+        local STATUS_WIDTH = 130
+        local STATUS_HEIGHT = 18
+
+        -- This is the important part:
+        -- Healthbar has its own BillboardGui.
+        -- Statusbar gets its own BillboardGui.
+        --
+        -- A larger Y offset puts Statusbar ABOVE Healthbar.
+        local STATUS_Y_OFFSET = 3.4
+
+        local STATUS_GAP = 3
+
+        local STATUS_BG = Color3.fromRGB(15, 15, 20)
+        local STATUS_TEXT = Color3.fromRGB(255, 255, 255)
+
+        local FIRE_COLOR = Color3.fromRGB(255, 220, 0)
+        local DAMAGE_COLOR = Color3.fromRGB(255, 60, 60)
+        local RANGE_COLOR = Color3.fromRGB(0, 255, 255)
+
+        local FIRE_TEXTURE = "rbxassetid://483225199"
+        local DAMAGE_TEXTURE = "rbxassetid://8897806060"
+        local RANGE_TEXTURE = "rbxassetid://10164277616"
+
+        -- cleaning
+        local function cleanup()
+            -- Disconnect global connections
+            for _, connection in ipairs(connections) do
+                if connection then
+                    connection:Disconnect()
+                end
+            end
+
+            table.clear(connections)
+
+            -- Destroy status bars
+            for model, info in pairs(tracked) do
+                if info.gui then
+                    info.gui:Destroy()
+                end
+
+                tracked[model] = nil
+            end
+        end
+
+        if not Value then
+            cleanup()
+            return
+        end
+
+
+        -- Creation of status bar
+        local function makeStatusBar(model)
+
+            if not Value then
+                return
+            end
+
+            if tracked[model] then
+                return
+            end
+
+            local root = model:FindFirstChild("HumanoidRootPart")
+            local torso = model:FindFirstChild("Torso")
+
+            if not root or not torso then
+                return
+            end
+
+
+
+            local bb = Instance.new("BillboardGui")
+            bb.Name = "SF2StatusBar"
+            bb.Adornee = root
+            bb.Size = UDim2.fromOffset(
+                STATUS_WIDTH,
+                STATUS_HEIGHT
+            )
+            bb.StudsOffset = Vector3.new(
+                0,
+                STATUS_Y_OFFSET,
+                0
+            )
+
+            bb.AlwaysOnTop = true
+            bb.LightInfluence = 0
+            bb.MaxDistance = 100
+
+            bb.Parent = root
+
+
+            -- Forcing statuses into one row
+            local statusRow = Instance.new("Frame")
+            statusRow.Name = "StatusRow"
+            statusRow.Size = UDim2.fromScale(1, 1)
+            statusRow.BackgroundTransparency = 1
+            statusRow.BorderSizePixel = 0
+            statusRow.Parent = bb
+
+
+            local layout = Instance.new("UIListLayout")
+
+            layout.FillDirection = Enum.FillDirection.Horizontal
+            layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+            layout.VerticalAlignment = Enum.VerticalAlignment.Center
+            layout.Padding = UDim.new(
+                0,
+                STATUS_GAP
+            )
+            layout.Parent = statusRow
+
+            -- Process of creating separate status
+            local function createStatus(
+                name,
+                texture,
+                color
+            )
+
+                local holder = Instance.new("Frame")
+
+                holder.Name = name
+
+                holder.Size = UDim2.new(
+                    0,
+                    40,
+                    1,
+                    0
+                )
+
+                holder.BackgroundColor3 = STATUS_BG
+
+                holder.BorderSizePixel = 0
+
+                holder.Visible = false
+
+                holder.Parent = statusRow
+
+
+                local corner = Instance.new("UICorner")
+
+                corner.CornerRadius = UDim.new(
+                    0,
+                    4
+                )
+
+                corner.Parent = holder
+
+
+                -- Icon
+                local icon = Instance.new("ImageLabel")
+
+                icon.Name = "Icon"
+
+                icon.Size = UDim2.fromOffset(
+                    14,
+                    14
+                )
+
+                icon.Position = UDim2.new(
+                    0,
+                    3,
+                    0.5,
+                    -7
+                )
+
+                icon.BackgroundTransparency = 1
+
+                icon.Image = texture
+
+                icon.ImageColor3 = color
+
+                icon.ScaleType = Enum.ScaleType.Fit
+
+                icon.Parent = holder
+
+
+                -- Text
+                local label = Instance.new("TextLabel")
+
+                label.Name = "Label"
+
+                label.Size = UDim2.new(
+                    1,
+                    -20,
+                    1,
+                    0
+                )
+
+                label.Position = UDim2.new(
+                    0,
+                    20,
+                    0,
+                    0
+                )
+
+                label.BackgroundTransparency = 1
+
+                label.Text = name
+
+                label.Font = Enum.Font.GothamBold
+
+                label.TextScaled = true
+
+                label.TextColor3 = STATUS_TEXT
+
+                label.TextStrokeTransparency = 0.25
+
+                label.Parent = holder
+
+
+                return holder
+            end
+
+            -- Buffs
+            local fireStatus = createStatus(
+                "FIRE",
+                FIRE_TEXTURE,
+                FIRE_COLOR
+            )
+
+            local damageStatus = createStatus(
+                "DAMAGE",
+                DAMAGE_TEXTURE,
+                DAMAGE_COLOR
+            )
+
+            local rangeStatus = createStatus(
+                "RANGE",
+                RANGE_TEXTURE,
+                RANGE_COLOR
+            )
+
+            -- Detecting status
+
+            local function updateStatuses()
+
+                if not Value then
+                    return
+                end
+
+                if not torso or not torso.Parent then
+                    return
+                end
+                
+                -- Status Naming part
+                fireStatus.Visible =
+                    torso:FindFirstChild("Speed") ~= nil
+
+                damageStatus.Visible =
+                    torso:FindFirstChild("Strength") ~= nil
+
+                rangeStatus.Visible =
+                    torso:FindFirstChild("Sight") ~= nil
+            end
+
+
+            -- Initial update
+            updateStatuses()
+
+            -- new particle
+            local childAddedConnection =
+                torso.ChildAdded:Connect(function(child)
+
+                    if not Value then
+                        return
+                    end
+
+                    updateStatuses()
+                end)
+            
+            -- deletion particle
+            local childRemovedConnection =
+                torso.ChildRemoved:Connect(function(child)
+
+                    if not Value then
+                        return
+                    end
+
+                    updateStatuses()
+                end)
+
+            
+            -- tracking
+            tracked[model] = {
+                gui = bb,
+                torso = torso,
+
+                childAddedConnection =
+                    childAddedConnection,
+
+                childRemovedConnection =
+                    childRemovedConnection
+            }
+
+            -- model cleanup
+            local ancestryConnection
+
+            ancestryConnection =
+                model.AncestryChanged:Connect(function()
+
+                    if not model.Parent then
+
+                        if tracked[model] then
+
+                            local info = tracked[model]
+
+                            if info.gui then
+                                info.gui:Destroy()
+                            end
+
+                            if info.childAddedConnection then
+                                info.childAddedConnection:Disconnect()
+                            end
+
+                            if info.childRemovedConnection then
+                                info.childRemovedConnection:Disconnect()
+                            end
+
+                            tracked[model] = nil
+                        end
+
+                        ancestryConnection:Disconnect()
+                    end
+                end)
+        end
+
+        -- scanning
+        local function scanModel(model)
+
+            if not Value then
+                return
+            end
+
+            if tracked[model] then
+                return
+            end
+
+            if not model:IsA("Model") then
+                return
+            end
+
+            local root =
+                model:FindFirstChild("HumanoidRootPart")
+
+            local torso =
+                model:FindFirstChild("Torso")
+
+            if root and torso then
+
+                -- Don't put status bars on players
+                if not Players:GetPlayerFromCharacter(model) then
+                    makeStatusBar(model)
+                end
+            end
+        end
+
+        -- do smth for existing npcs
+        for _, obj in ipairs(workspace:GetDescendants()) do
+
+            if obj:IsA("Model")
+                and obj:FindFirstChild("HumanoidRootPart")
+                and obj:FindFirstChild("Torso") then
+
+                if not Players:GetPlayerFromCharacter(obj) then
+                    scanModel(obj)
+                end
+            end
+        end
+
+
+        -- triggers with new npc
+        table.insert(
+            connections,
+
+            workspace.DescendantAdded:Connect(function(obj)
+
+                if not Value then
+                    return
+                end
+
+                if not obj:IsA("Model") then
+                    return
+                end
+
+                task.delay(0.5, function()
+
+                    if not Value or not obj.Parent then
+                        return
+                    end
+
+                    local root =
+                        obj:FindFirstChild("HumanoidRootPart")
+
+                    local torso =
+                        obj:FindFirstChild("Torso")
+
+                    if root and torso then
+
                         if not Players:GetPlayerFromCharacter(obj) then
                             scanModel(obj)
                         end
