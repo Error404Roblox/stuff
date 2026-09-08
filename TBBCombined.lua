@@ -1244,7 +1244,7 @@ LQFTab:CreateToggle({
 
         local SLOWNESS_TEXTURE = "rbxassetid://17288802854"
         local VULNERABLE_TEXTURE = "rbxassetid://90784857801052"
-        local SLATE_TEXTURE = "rbxassetid://114797259538353"
+        local SLATE_TEXTURE = "rbxassetid://11322093465"
 
         -- cleaning
         local function cleanup()
