@@ -1563,7 +1563,7 @@ LQFTab:CreateToggle({
                 end
                 
                 -- Status Naming part
-                fireStatus.Visible =
+                fireRateStatus.Visible =
                     torso:FindFirstChild("Speed") ~= nil
 
                 damageStatus.Visible =
