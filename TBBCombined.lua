@@ -1853,6 +1853,119 @@ LQFTab:CreateButton({
 	end,
 })
 
+--SETTINGS
+--- Brick Tracker
+SettingsTab:CreateToggle({
+    Name = "Brick Tracker",
+    CurrentValue = false,
+    Flag = "BrickTrackerFlag",
+
+    Callback = function(Value)
+        _G.BrickTracker = Value
+
+        print(
+            _G.BrickTracker
+                and "🟢 Brick Tracker Enabled"
+                or "🚫 Brick Tracker Disabled"
+        )
+
+        Rayfield:Notify({
+            Title = Value and "Enabled" or "Disabled",
+            Content = "Brick Tracker has been " .. (Value and "enabled" or "disabled") .. ".",
+            Duration = 2,
+            Image = "toy-brick"
+        })
+
+        local Players = game:GetService("Players")
+        local RunService = game:GetService("RunService")
+
+        local player = Players.LocalPlayer
+        local playerGui = player:WaitForChild("PlayerGui")
+
+        -- Remove old tracker if one already exists
+        if _G.BrickTrackerText then
+            _G.BrickTrackerText:Destroy()
+            _G.BrickTrackerText = nil
+        end
+
+        if _G.BrickTrackerConnection then
+            _G.BrickTrackerConnection:Disconnect()
+            _G.BrickTrackerConnection = nil
+        end
+
+        if not Value then
+            return
+        end
+
+        -- Original timer text
+        local mainMenu = playerGui:WaitForChild("MainMenu")
+        local selection = mainMenu:WaitForChild("Lobby"):WaitForChild("Selection")
+        local streakFrame = selection:WaitForChild("StreakFrame")
+
+        local originalTimeText = streakFrame:WaitForChild("Standard"):WaitForChild("Time")
+
+        -- End game bar
+        local battleScreen = playerGui:WaitForChild("BattleScreen")
+        local endGameBar = battleScreen:WaitForChild("EndGame"):WaitForChild("Bar")
+
+        -- Clone the original timer so it keeps its styling
+        local brickTrackText = originalTimeText:Clone()
+        brickTrackText.Name = "BrickTrackText"
+
+        -- Red-ish color
+        brickTrackText.TextColor3 = Color3.fromRGB(255, 80, 80)
+
+        -- Put it in the same parent as EndGame.Bar
+        brickTrackText.Parent = endGameBar.Parent
+
+        _G.BrickTrackerText = brickTrackText
+
+        -- Position it below EndGame.Bar
+        local function updatePosition()
+            if not brickTrackText.Parent or not endGameBar.Parent then
+                return
+            end
+
+            local parent = endGameBar.Parent
+
+            local barPosition = endGameBar.Position
+            local barSize = endGameBar.Size
+
+            brickTrackText.AnchorPoint = Vector2.new(0.5, 0)
+
+            brickTrackText.Position = UDim2.new(
+                barPosition.X.Scale + (barSize.X.Scale / 2),
+                barPosition.X.Offset + (barSize.X.Offset / 2),
+                barPosition.Y.Scale + barSize.Y.Scale,
+                barPosition.Y.Offset + barSize.Y.Offset + 5
+            )
+        end
+
+        updatePosition()
+
+        -- Copy timer text from the original Time label
+        _G.BrickTrackerConnection = RunService.RenderStepped:Connect(function()
+            if not _G.BrickTracker then
+                return
+            end
+
+            if not originalTimeText.Parent then
+                return
+            end
+
+            if not brickTrackText.Parent then
+                return
+            end
+
+            -- Copy the text
+            brickTrackText.Text = originalTimeText.Text .. " left to claim Bricks."
+
+            -- Keep it positioned below the EndGame bar
+            updatePosition()
+        end)
+    end,
+})
+
 
 --[[ ideas:
 - try to finally utilize WEAKEST enemy
