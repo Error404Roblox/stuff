@@ -77,7 +77,7 @@ local ACpushboxButton = Instance.new("TextButton")
 local UICorner_17 = Instance.new("UICorner")
 local UIAspectRatioConstraint_14 = Instance.new("UIAspectRatioConstraint")
 local tbbTab = Instance.new("ScrollingFrame")
-local HealthbarButton = Instance.new("TextButton")
+local TBBCButton = Instance.new("TextButton")
 local UICorner_18 = Instance.new("UICorner")
 local UIAspectRatioConstraint_15 = Instance.new("UIAspectRatioConstraint")
 local ChornosQuizButton = Instance.new("TextButton")
@@ -832,246 +832,25 @@ tbbTab.Visible = false
 tbbTab.CanvasSize = UDim2.new(0, 0, 1, 100)
 tbbTab.HorizontalScrollBarInset = Enum.ScrollBarInset.ScrollBar
 
-HealthbarButton.Name = "HealthbarButton"
-HealthbarButton.Parent = tbbTab
-HealthbarButton.BackgroundColor3 = Color3.fromRGB(255, 213, 61)
-HealthbarButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-HealthbarButton.BorderSizePixel = 0
-HealthbarButton.Position = UDim2.new(0.0174945276, 0, 0.0217318609, 0)
-HealthbarButton.Size = UDim2.new(0, 138, 0, 52)
-HealthbarButton.Font = Enum.Font.DenkOne
-HealthbarButton.Text = "Healthbar"
-HealthbarButton.TextColor3 = Color3.fromRGB(0, 0, 0)
-HealthbarButton.TextSize = 21.000
-HealthbarButton.TextWrapped = true
-HealthbarButton.MouseButton1Down:Connect(function()
-	local Players = game:GetService("Players")
-	local TweenService = game:GetService("TweenService")
-
-	local tracked = {}
-
-	local BAR_WIDTH_PX = 130
-	local BAR_HEIGHT_PX = 14
-	local BAR_Y_OFFSET = 2.2
-
-	local COLOR_BG = Color3.fromRGB(15,15,20)
-	local COLOR_HP = Color3.fromRGB(0,220,220)
-	local COLOR_DAMAGE = Color3.fromRGB(255,70,70)
-	local COLOR_TEXT = Color3.fromRGB(255,255,255)
-
-	local function makeBar(model)
-		if tracked[model] then
-			return
-		end
-
-		local root = model:FindFirstChild("HumanoidRootPart")
-		local humanoid = model:FindFirstChildOfClass("Humanoid")
-
-		if not root or not humanoid then
-			return
-		end
-
-		local bb = Instance.new("BillboardGui")
-		bb.Name = "SF2HealthBar"
-		bb.Adornee = root
-		bb.Size = UDim2.fromOffset(BAR_WIDTH_PX, BAR_HEIGHT_PX)
-		bb.StudsOffset = Vector3.new(0, BAR_Y_OFFSET, 0)
-		bb.AlwaysOnTop = true
-		bb.LightInfluence = 0
-		bb.MaxDistance = 100
-		bb.Parent = root
-
-		local bg = Instance.new("Frame")
-		bg.Size = UDim2.fromScale(1,1)
-		bg.BackgroundColor3 = COLOR_BG
-		bg.BorderSizePixel = 0
-		bg.Parent = bb
-
-		local bgCorner = Instance.new("UICorner")
-		bgCorner.CornerRadius = UDim.new(0,5)
-		bgCorner.Parent = bg
-
-		local clip = Instance.new("Frame")
-		clip.Size = UDim2.fromScale(1,1)
-		clip.BackgroundTransparency = 1
-		clip.BorderSizePixel = 0
-		clip.ClipsDescendants = true
-		clip.Parent = bg
-
-		local clipCorner = Instance.new("UICorner")
-		clipCorner.CornerRadius = UDim.new(0,5)
-		clipCorner.Parent = clip
-
-		local damageFill = Instance.new("Frame")
-		damageFill.Size = UDim2.fromScale(1,1)
-		damageFill.BackgroundColor3 = COLOR_DAMAGE
-		damageFill.BorderSizePixel = 0
-		damageFill.Parent = clip
-
-		local hpFill = Instance.new("Frame")
-		hpFill.Size = UDim2.fromScale(1,1)
-		hpFill.BackgroundColor3 = COLOR_HP
-		hpFill.BorderSizePixel = 0
-		hpFill.Parent = clip
-
-		local shine = Instance.new("Frame")
-		shine.Size = UDim2.new(1,0,0,2)
-		shine.BackgroundColor3 = Color3.new(1,1,1)
-		shine.BackgroundTransparency = 0.75
-		shine.BorderSizePixel = 0
-		shine.Parent = hpFill
-
-		local txt = Instance.new("TextLabel")
-		txt.Size = UDim2.fromScale(1,1)
-		txt.BackgroundTransparency = 1
-		txt.Font = Enum.Font.GothamBold
-		txt.TextScaled = true
-		txt.TextColor3 = COLOR_TEXT
-		txt.TextStrokeTransparency = 0
-		txt.ZIndex = 5
-		txt.Parent = bb
-
-		local lastHealth = humanoid.Health
-
-		local DAMAGE_DELAY = 1.2
-		local DAMAGE_DRAIN_TIME = 0.9
-
-		local damageToken = 0
-
-		tracked[model] = {
-			gui = bb
-		}
-
-		local function update()
-			if not model.Parent then
-				return
-			end
-
-			local maxHealth = math.max(humanoid.MaxHealth,1)
-			local health = math.max(humanoid.Health,0)
-
-			local ratio = health / maxHealth
-
-			txt.Text = string.format(
-				"%d / %d",
-				math.floor(health),
-				math.floor(maxHealth)
-			)
-
-			hpFill.Size = UDim2.new(ratio,0,1,0)
-
-			if health < lastHealth then
-				damageToken += 1
-
-				local myToken = damageToken
-				local targetRatio = ratio
-
-				task.spawn(function()
-					task.wait(DAMAGE_DELAY)
-
-					if myToken ~= damageToken then
-						return
-					end
-
-					if damageFill.Parent then
-						damageFill:TweenSize(
-							UDim2.new(targetRatio,0,1,0),
-							Enum.EasingDirection.Out,
-							Enum.EasingStyle.Quint,
-							DAMAGE_DRAIN_TIME,
-							true
-						)
-					end
-				end)
-
-			elseif health > lastHealth then
-				damageToken += 1
-
-				hpFill.Size = UDim2.new(ratio,0,1,0)
-				damageFill.Size = UDim2.new(ratio,0,1,0)
-			end
-
-			lastHealth = health
-		end
-
-		update()
-
-		humanoid.HealthChanged:Connect(update)
-
-		model.AncestryChanged:Connect(function()
-			if not model.Parent then
-				if tracked[model] then
-					tracked[model].gui:Destroy()
-					tracked[model] = nil
-				end
-			end
-		end)
-	end
-
-	local function scanModel(model)
-		if tracked[model] then
-			return
-		end
-
-		local humanoid = model:FindFirstChildOfClass("Humanoid")
-		local root = model:FindFirstChild("HumanoidRootPart")
-
-		if humanoid and root then
-			makeBar(model)
-		end
-	end
-
-	for _, player in ipairs(Players:GetPlayers()) do
-		local function onCharacter(character)
-			task.wait(0.5)
-			scanModel(character)
-		end
-
-		if player.Character then
-			onCharacter(player.Character)
-		end
-
-		player.CharacterAdded:Connect(onCharacter)
-	end
-
-	Players.PlayerAdded:Connect(function(player)
-		player.CharacterAdded:Connect(function(character)
-			task.wait(0.5)
-			scanModel(character)
-		end)
-	end)
-
-	for _, obj in ipairs(workspace:GetDescendants()) do
-		if obj:IsA("Model")
-			and obj:FindFirstChildOfClass("Humanoid")
-			and obj:FindFirstChild("HumanoidRootPart") then
-
-			if not Players:GetPlayerFromCharacter(obj) then
-				scanModel(obj)
-			end
-		end
-	end
-
-	workspace.DescendantAdded:Connect(function(obj)
-		if not obj:IsA("Model") then
-			return
-		end
-
-		task.wait(0.5)
-
-		if obj:FindFirstChildOfClass("Humanoid")
-			and obj:FindFirstChild("HumanoidRootPart") then
-
-			if not Players:GetPlayerFromCharacter(obj) then
-				scanModel(obj)
-			end
-		end
-	end)
+TBBCButton.Name = "TBBCombinedButton"
+TBBCButton.Parent = tbbTab
+TBBCButton.BackgroundColor3 = Color3.fromRGB(255, 213, 61)
+TBBCButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TBBCButton.BorderSizePixel = 0
+TBBCButton.Position = UDim2.new(0.0174945276, 0, 0.0217318609, 0)
+TBBCButton.Size = UDim2.new(0, 138, 0, 52)
+TBBCButton.Font = Enum.Font.DenkOne
+TBBCButton.Text = "TBB Combined"
+TBBCButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TBBCButton.TextSize = 21.000
+TBBCButton.TextWrapped = true
+TBBCButton.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet("https://github.com/Error404Roblox/stuff/raw/refs/heads/main/TBBCombined.lua"))()
 end)
 
-UICorner_18.Parent = HealthbarButton
+UICorner_18.Parent = TBBCButton
 
-UIAspectRatioConstraint_15.Parent = HealthbarButton
+UIAspectRatioConstraint_15.Parent = TBBCButton
 UIAspectRatioConstraint_15.AspectRatio = 2.654
 
 ChornosQuizButton.Name = "ChornosQuizButton"
