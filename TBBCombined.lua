@@ -1949,10 +1949,8 @@ SettingsTab:CreateToggle({
                 barPosition.Y.Offset + barSize.Y.Offset + BAR_OFFSET_Y
             )
             brickTrackText.Size = UDim2.new(
-                barSize.X.Scale == 4,
-                barSize.X.Offset == 100,
-                barSize.Y.Scale == 1,
-                barSize.Y.Offset == 5
+                4, 100, -- Scale, Offscale of X
+                1, 5 -- Scale, Offscale of Y
             )
             brickTrackText.TextXAlignment = Enum.TextXAlignment.Left
         end
