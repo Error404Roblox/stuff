@@ -1519,7 +1519,7 @@ LQFTab:CreateToggle({
             resistanceIcon.Size = UDim2.new(1, -4, 0, STATUS_HEIGHT)
             resistanceIcon.Position = UDim2.fromOffset(2, 2)
             resistanceIcon.BackgroundTransparency = 1
-            resistanceIcon.Image = RESISTANCE_TEXTURE
+            resistanceIcon.Image = SHIELD_TEXTURE
             resistanceIcon.ImageColor3 = RESISTANCE_COLOR
             resistanceIcon.ScaleType = Enum.ScaleType.Fit
             resistanceIcon.Parent = resistanceHolder
