@@ -1854,6 +1854,7 @@ LQFTab:CreateButton({
 })
 
 --SETTINGS
+_G.BrickTracker=true
 --- Brick Tracker
 SettingsTab:CreateToggle({
     Name = "Brick Tracker",
@@ -1900,7 +1901,7 @@ SettingsTab:CreateToggle({
 
         -- Custom offset for EndGameBar position
         local BAR_OFFSET_X = -5
-        local BAR_OFFSET_Y = 25
+        local BAR_OFFSET_Y = 15
         -- Current BattleScreen references
         local currentBattleScreen = nil
         local currentEndGameBar = nil
@@ -1961,7 +1962,7 @@ SettingsTab:CreateToggle({
                         end
                         -- Update text
                         if brickTrackText and brickTrackText.Parent then
-                            brickTrackText.Text = originalTimeText.Text .. "s left to claim Bricks."
+                            brickTrackText.Text = originalTimeText.Text .. " left to claim Bricks."
                             updatePosition()
                         end
                     else
