@@ -344,7 +344,7 @@ end)
 
 -- Populate Toggles inside Main Projectiles Tab (Sorted A to Z)
 local projectileNamesList = {
-    "Bacon", "Basketball", "Beer", "Bigfireball", "BigFireball", "BigIceball", "BigRocket", "BigStunpellet", "Brew", "CesusBomb", "Cesuspot", "Cola", "CrimsonBall", "Duck", "ElectricFist", "EvilDuck", "Fireball", "Goala", "Goobab", "Grenade", "Iceball", "Kunai", "LabTable", "LilCesuspot", "MagicBall", "Molotov", "NeonEvilDuck", "Noir", "NoirBiograft", "Paintball", "Pellet", "Puck", "Rocket", "Shuriken", "Soccerball", "SorcusBlade", "SorcusEgg", "Stunpellet", "Superball", "SuperSorcusBlade", "TumorePellet", "Volleyball", "WoodArrow"
+    "Bacon", "Basketball", "Beer", "Bigfireball", "BigFireball", "BigIceball", "BigRocket", "BigStunpellet", "Brew", "CesusBomb", "Cesuspot", "Cola", "CrimsonBall", "Duck", "ElectricFist", "ElectricRock", "EvilDuck", "Fireball", "Goala", "Goobab", "Grenade", "Iceball", "Kunai", "LabTable", "LilCesuspot", "MagicBall", "Molotov", "NeonEvilDuck", "Noir", "NoirBiograft", "Paintball", "Pellet", "Puck", "Rocket", "Shuriken", "Soccerball", "SorcusBlade", "SorcusEgg", "Stunpellet", "Superball", "SuperSorcusBlade", "TumorePellet", "Volleyball", "WoodArrow"
 }
 
 table.sort(projectileNamesList)
@@ -383,7 +383,7 @@ end
 
 -- Populate Toggles inside DeletEneProj Tab (Sorted A to Z)
 local deletionProjectilesList = {
-    "Arrow", "BloodStone", "BloodCrystal", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "ElectricRock", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "Rock", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "TrollPie", "ZetaRocket", "ZombieBomb"
+    "Arrow", "BloodStone", "BloodCrystal", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "Rock", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "ZetaRocket", "ZombieBomb"
 }
 
 table.sort(deletionProjectilesList)
@@ -420,7 +420,7 @@ end
 
 -- DeleteProjectile but now they're neutral
 local NdeletionProjectilesList = {
-    "Teapot", "FireTeapot", "Spam"
+    "Teapot", "FireTeapot", "Spam", "TrollPie"
 }
 
 table.sort(NdeletionProjectilesList)
@@ -1260,6 +1260,7 @@ LQFTab:CreateToggle({
 
         -- Colors
         local RESISTANCE_COLOR = Color3.fromRGB(171, 255, 35)
+        local ARMOR_COLOR = Color3.fromRGB(255, 255, 255)
 
         local FIRERATE_COLOR = Color3.fromRGB(255, 220, 0)
         local DAMAGE_COLOR = Color3.fromRGB(255, 60, 60)
@@ -1269,14 +1270,16 @@ LQFTab:CreateToggle({
         local HELLFIRE_COLOR = Color3.fromRGB(166, 0, 0)
         local BLIND_COLOR = Color3.fromRGB(255, 255, 255)
         local STUN_COLOR = Color3.fromRGB(0, 132, 255)
+        local TRIP_COLOR = Color3.fromRGB(222, 215, 0)
         local BOUNTY_COLOR = Color3.fromRGB(255, 255, 255)
 
         local COLAs_COLOR = Color3.fromRGB(176, 101, 9)
         local ICEs_COLOR = Color3.fromRGB(55, 172, 250)
         local BREW_COLOR = Color3.fromRGB(34, 150, 1)
-        local SLATE_COLOR = Color3.fromRGB(156, 82, 0)
 
         -- Textures
+        local SHIELD_TEXTURE = "rbxassetid://11322093465"
+
         local FIRERATE_TEXTURE = "rbxassetid://483225199"
         local DAMAGE_TEXTURE = "rbxassetid://8897806060"
         local RANGE_TEXTURE = "rbxassetid://10164277616"
@@ -1284,12 +1287,14 @@ LQFTab:CreateToggle({
         local FIRE_TEXTURE = "rbxassetid://14502433595"
         local HELLFIRE_TEXTURE = "rbxassetid://18255006123"
         local BLIND_TEXTURE = "rbxassetid://13492317602"
-        local STUN_TEXTURE = "rbxassetid://89657581729186"
+        local STUN_TEXTURE = "rbxassetid://78228042889080"
+        local SUPERSTUN_TEXTURE = "rbxassetid://90612620710655"
+        local TRIP_TEXTURE = "rbxassetid://9657499712"
         local BOUNTY_TEXTURE = "rbxassetid://12771100740"
 
         local SLOWNESS_TEXTURE = "rbxassetid://13492313545"
         local VULNERABLE_TEXTURE = "rbxassetid://90784857801052"
-        local SHIELD_TEXTURE = "rbxassetid://11322093465"
+        
 
         -- cleaning
         local function cleanup()
@@ -1382,63 +1387,45 @@ LQFTab:CreateToggle({
             local function createStatus(name, texture, color)
 
                 local holder = Instance.new("Frame")
-
                 holder.Name = name
-
                 holder.Size = UDim2.fromOffset(
                     STATUS_HEIGHT,
                     STATUS_HEIGHT
                 )
-
                 holder.BackgroundColor3 = STATUS_BG
                 holder.BackgroundTransparency = 0
                 holder.BorderSizePixel = 0
                 holder.Visible = false
-
                 holder.Parent = statusRow
 
-
                 local corner = Instance.new("UICorner")
-
                 corner.CornerRadius = UDim.new(
                     0,
                     4
                 )
-
                 corner.Parent = holder
 
-
                 local icon = Instance.new("ImageLabel")
-
                 icon.Name = "Icon"
-
                 icon.Size = UDim2.new(
                     1,
                     -2,
                     1,
                     -2
                 )
-
                 icon.Position = UDim2.fromOffset(
                     1,
                     1
                 )
-
                 icon.BackgroundTransparency = 1
-
                 icon.Image = texture
                 icon.ImageColor3 = color
                 icon.ImageTransparency = 0
-
                 icon.ScaleType = Enum.ScaleType.Fit
-
                 icon.ZIndex = 2
-
                 icon.Parent = holder
 
-
                 return holder
-                
             end
 
             -- Statuses
@@ -1483,6 +1470,16 @@ LQFTab:CreateToggle({
                 STUN_TEXTURE,
                 STUN_COLOR
             )
+            local superStunStatus = createStatus(
+                "SUPERSTUN",
+                SUPERSTUN_TEXTURE,
+                STUN_COLOR
+            )
+            local tripStatus = createStatus(
+                "TRIP",
+                TRIP_TEXTURE,
+                TRIP_COLOR
+            )
             local bountyStatus = createStatus(
                 "BOUNTY",
                 BOUNTY_TEXTURE,
@@ -1504,11 +1501,6 @@ LQFTab:CreateToggle({
                 VULNERABLE_TEXTURE,
                 BREW_COLOR
             )
-            --[[local slateskinStatus = createStatus(
-                "SLATE",
-                SHIELD_TEXTURE,
-                SLATE_COLOR
-            )]]--
             -- ARMOR STATUS
             local armorHolder = Instance.new("Frame")
             armorHolder.Name = "ARMOR"
@@ -1529,7 +1521,7 @@ LQFTab:CreateToggle({
             armorIcon.Position = UDim2.fromOffset(1, 1)
             armorIcon.BackgroundTransparency = 1
             armorIcon.Image = SHIELD_TEXTURE
-            armorIcon.ImageColor3 = SLATE_COLOR
+            armorIcon.ImageColor3 = ARMOR_COLOR
             armorIcon.ImageTransparency = 0
             armorIcon.ScaleType = Enum.ScaleType.Fit
             armorIcon.ZIndex = 2
@@ -1614,6 +1606,11 @@ LQFTab:CreateToggle({
                     torso:FindFirstChild("Blind") ~= nil
                 stunStatus.Visible =
                     torso:FindFirstChild("Stun") ~= nil
+                superStunStatus.Visible =
+                    torso:FindFirstChild("SuperStun") ~= nil
+                local _humanoid = model:FindFirstChildOfClass("Humanoid")
+                tripStatus.Visible =
+                    _humanoid ~= nil and _humanoid.Sit
                 bountyStatus.Visible =
                     torso:FindFirstChild("Gold") ~= nil
                 colaStatus.Visible =
@@ -1632,8 +1629,10 @@ LQFTab:CreateToggle({
                     armorHolder.Visible = true
 
                     if typeof(armorTime) == "number" then
+                        armorIcon.ImageColor3 = Color3.fromRGB(222, 151, 44)
                         armorText.Text = tostring(armor) .. "; " .. tostring(armorTime) .. "s"
                     else
+                        armorIcon.ImageColor3 = Color3.fromRGB(133, 249, 255)
                         armorText.Text = tostring(armor)
                     end
                 else
@@ -1713,7 +1712,10 @@ LQFTab:CreateToggle({
                 armorConnection =
                     armorConnection,
                 armorTimeConnection =
-                    armorTimeConnection
+                    armorTimeConnection,
+
+                ancestryConnection =
+                    ancestryConnection
             }
 
             -- model cleanup
