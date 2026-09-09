@@ -1252,11 +1252,9 @@ LQFTab:CreateToggle({
         --
         -- A larger Y offset puts Statusbar ABOVE Healthbar.
         local STATUS_Y_OFFSET = 3.4
-
         local STATUS_GAP = 3
 
         local STATUS_BG = Color3.fromRGB(15, 15, 20)
-        --local STATUS_TEXT = Color3.fromRGB(255, 255, 255)
 
         -- Colors
         local RESISTANCE_COLOR = Color3.fromRGB(171, 255, 35)
@@ -1480,6 +1478,8 @@ LQFTab:CreateToggle({
                 TRIP_TEXTURE,
                 TRIP_COLOR
             )
+            local _humanoid = model:FindFirstChildOfClass("Humanoid")
+
             local bountyStatus = createStatus(
                 "BOUNTY",
                 BOUNTY_TEXTURE,
@@ -1581,14 +1581,15 @@ LQFTab:CreateToggle({
 
             local function updateStatuses()
 
+                local _humanoid = model:FindFirstChildOfClass("Humanoid")
                 if not Value then
                     return
                 end
 
-                --[[if not torso or not torso.Parent then
+                if not torso or not torso.Parent then
                     return
-                end]]--
-                
+                end
+
                 -- Status Naming part
                 fireRateStatus.Visible =
                     torso:FindFirstChild("Speed") ~= nil
@@ -1608,9 +1609,8 @@ LQFTab:CreateToggle({
                     torso:FindFirstChild("Stun") ~= nil
                 superStunStatus.Visible =
                     torso:FindFirstChild("SuperStun") ~= nil
-                local _humanoid = model:FindFirstChildOfClass("Humanoid")
                 tripStatus.Visible =
-                    _humanoid ~= nil and _humanoid.Sit
+                    _humanoid ~= nil and _humanoid.Sit == true
                 bountyStatus.Visible =
                     torso:FindFirstChild("Gold") ~= nil
                 colaStatus.Visible =
@@ -1619,8 +1619,6 @@ LQFTab:CreateToggle({
                     torso:FindFirstChild("Cold") ~= nil
                 brewStatus.Visible =
                     torso:FindFirstChild("Weaken") ~= nil
-                --[[slateskinStatus.Visible =
-                    torso:FindFirstChild("Armor") ~= nil]]--
                 -- FIND ARMOR
                 local armor = model:GetAttribute("Armor")
                 local armorTime = model:GetAttribute("ArmorTime")
@@ -1695,28 +1693,22 @@ LQFTab:CreateToggle({
 
                 updateStatuses()
             end)
-            
-            -- tracking
-            tracked[model] = {
-                gui = bb,
-                torso = torso,
+            local humanoidConnection
 
-                childAddedConnection =
-                    childAddedConnection,
+            if _humanoid then
+                humanoidConnection =
+                    _humanoid:GetPropertyChangedSignal("Sit"):Connect(function()
+                        if not Value then
+                            return
+                        end
 
-                childRemovedConnection =
-                    childRemovedConnection,
+                        if not tripStatus.Parent then
+                            return
+                        end
 
-                resistanceConnection =
-                    resistanceConnection,
-                armorConnection =
-                    armorConnection,
-                armorTimeConnection =
-                    armorTimeConnection,
-
-                ancestryConnection =
-                    ancestryConnection
-            }
+                        tripStatus.Visible = _humanoid.Sit == true
+                    end)
+            end
 
             -- model cleanup
             local ancestryConnection
@@ -1750,13 +1742,37 @@ LQFTab:CreateToggle({
                             if info.armorTimeConnection then
                                 info.armorTimeConnection:Disconnect()
                             end
-
+                            if info.humanoidConnection then
+                                info.humanoidConnection:Disconnect()
+                            end
                             tracked[model] = nil
                         end
 
                         ancestryConnection:Disconnect()
                     end
                 end)
+            -- tracking
+            tracked[model] = {
+                gui = bb,
+                torso = torso,
+
+                childAddedConnection =
+                    childAddedConnection,
+
+                childRemovedConnection =
+                    childRemovedConnection,
+
+                resistanceConnection =
+                    resistanceConnection,
+                armorConnection =
+                    armorConnection,
+                armorTimeConnection =
+                    armorTimeConnection,
+                humanoidConnection =
+                    humanoidConnection,
+                ancestryConnection =
+                    ancestryConnection
+            }
         end
 
         -- scanning
