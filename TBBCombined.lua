@@ -43,6 +43,10 @@ AnnouncementsTab:CreateParagraph({
     Title = "Updates",
     Content = "Sorting Updates 1.0\n\nAwesome epik sauce addition of Anti Boss, Life Quality Features, and Settings... Yeah."
 })
+AnnouncementsTab:CreateParagraph({
+    Title = "Update 1.1",
+    Content = "Health and Status bars are added! Also BoostFPS now should work properly."
+})
 
 -- New Tab for Main Projectiles
 local MainProjectilesTab = Window:CreateTab("Main projectiles", 4483362458)
@@ -760,7 +764,7 @@ _G.Status=false
 
 local decorationConnection
 
-LQFTab:CreateButton({
+--[[LQFTab:CreateButton({
     Name = "Boost FPS",
     Callback = function()
         -- Remove previous connection
@@ -789,7 +793,7 @@ LQFTab:CreateButton({
 		-- Remove Decorations added later
 		decorationConnection = map.DescendantAdded:Connect(checkObject)
     end,
-})
+})]]--
 
 --[[LQFTab:CreateToggle({
 	Name = "Auto BoostFPS (Removes Decorations)",
@@ -835,6 +839,37 @@ LQFTab:CreateButton({
 	end,
 })
 ]]--
+LQFTab:CreateToggle({
+    Name = "Auto BoostFPS (Removes Decorations)",
+    CurrentValue = false,
+    Flag = "AutoBoostFPSFlag",
+
+    Callback = function(Value)
+        _G.AutoBoostFPS = Value
+
+        if not Value then
+            return
+        end
+
+        task.spawn(function()
+            local map = workspace:WaitForChild("Map")
+
+            while _G.AutoBoostFPS do
+
+                -- Check everything inside Map
+                for _, obj in ipairs(map:GetDescendants()) do
+                    if obj.Name == "Decoration" and obj:IsA("Folder") then
+                        obj:Destroy()
+                    end
+                end
+
+                -- Wait 1 second before checking again
+                task.wait(1)
+            end
+        end)
+    end,
+})
+
 -- Delta Block
 if not hookmetamethod then
     return warn("❌ Executor don't have hook method")
@@ -1202,6 +1237,7 @@ LQFTab:CreateToggle({
         -- settings
         local STATUS_WIDTH = 130
         local STATUS_HEIGHT = 18
+        local STATUS_BAR_HEIGHT = 32
 
         -- This is the important part:
         -- Healthbar has its own BillboardGui.
@@ -1300,7 +1336,7 @@ LQFTab:CreateToggle({
             bb.Adornee = root
             bb.Size = UDim2.fromOffset(
                 STATUS_WIDTH,
-                STATUS_HEIGHT
+                STATUS_BAR_HEIGHT
             )
             bb.StudsOffset = Vector3.new(
                 0,
@@ -1395,41 +1431,8 @@ LQFTab:CreateToggle({
 
 
                 return holder
+                
             end
-            -- Creation of Resistance
-            local resistanceHolder = Instance.new("Frame")
-            resistanceHolder.Name = "RESISTANCE"
-            resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 12)
-            resistanceHolder.BackgroundColor3 = STATUS_BG
-            resistanceHolder.BorderSizePixel = 0
-            resistanceHolder.Visible = false
-            resistanceHolder.Parent = statusRow
-
-            local corner = Instance.new("UICorner")
-            corner.CornerRadius = UDim.new(0, 4)
-            corner.Parent = resistanceHolder
-
-            local resistanceIcon = Instance.new("ImageLabel")
-            resistanceIcon.Name = "Icon"
-            resistanceIcon.Size = UDim2.new(1, -4, 0, STATUS_HEIGHT)
-            resistanceIcon.Position = UDim2.fromOffset(2, 2)
-            resistanceIcon.BackgroundTransparency = 1
-            resistanceIcon.Image = RESISTANCE_TEXTURE
-            resistanceIcon.ImageColor3 = RESISTANCE_COLOR
-            resistanceIcon.ScaleType = Enum.ScaleType.Fit
-            resistanceIcon.Parent = resistanceHolder
-
-            local resistanceText = Instance.new("TextLabel")
-            resistanceText.Name = "Percentage"
-            resistanceText.Size = UDim2.new(1, 0, 0, 12)
-            resistanceText.Position = UDim2.new(0, 0, 1, -12)
-            resistanceText.BackgroundTransparency = 1
-            resistanceText.TextColor3 = Color3.fromRGB(255, 255, 255)
-            resistanceText.TextStrokeTransparency = 0
-            resistanceText.TextScaled = true
-            resistanceText.Font = Enum.Font.GothamBold
-            resistanceText.Text = "0%"
-            resistanceText.Parent = resistanceHolder
 
             -- Statuses
             local fireRateStatus = createStatus(
@@ -1499,6 +1502,39 @@ LQFTab:CreateToggle({
                 SHIELD_TEXTURE,
                 SLATE_COLOR
             )
+            local resistanceHolder = Instance.new("Frame")
+            resistanceHolder.Name = "RESISTANCE"
+            resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 12)
+            resistanceHolder.BackgroundColor3 = STATUS_BG
+            resistanceHolder.BorderSizePixel = 0
+            resistanceHolder.Visible = false
+            resistanceHolder.Parent = statusRow
+
+            local corner = Instance.new("UICorner")
+            corner.CornerRadius = UDim.new(0, 4)
+            corner.Parent = resistanceHolder
+
+            local resistanceIcon = Instance.new("ImageLabel")
+            resistanceIcon.Name = "Icon"
+            resistanceIcon.Size = UDim2.new(1, -4, 0, STATUS_HEIGHT)
+            resistanceIcon.Position = UDim2.fromOffset(2, 2)
+            resistanceIcon.BackgroundTransparency = 1
+            resistanceIcon.Image = RESISTANCE_TEXTURE
+            resistanceIcon.ImageColor3 = RESISTANCE_COLOR
+            resistanceIcon.ScaleType = Enum.ScaleType.Fit
+            resistanceIcon.Parent = resistanceHolder
+
+            local resistanceText = Instance.new("TextLabel")
+            resistanceText.Name = "Percentage"
+            resistanceText.Size = UDim2.new(1, 0, 0, 12)
+            resistanceText.Position = UDim2.new(0, 0, 1, -12)
+            resistanceText.BackgroundTransparency = 1
+            resistanceText.TextColor3 = Color3.fromRGB(255, 255, 255)
+            resistanceText.TextStrokeTransparency = 0
+            resistanceText.TextScaled = true
+            resistanceText.Font = Enum.Font.GothamBold
+            resistanceText.Text = "0%"
+            resistanceText.Parent = resistanceHolder
 
 
             -- Detecting status
