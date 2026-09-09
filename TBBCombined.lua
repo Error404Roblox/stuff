@@ -1875,6 +1875,16 @@ SettingsTab:CreateToggle({
             Duration = 2,
             Image = "toy-brick"
         })
+        -- Stop previous loop 
+        if _G.BrickTrackerConnection then
+            _G.BrickTrackerConnection:Disconnect()
+            _G.BrickTrackerConnection = nil
+        end
+        if _G.BrickTrackerText then
+            _G.BrickTrackerText:Destroy() 
+            _G.BrickTrackerText = nil
+        end
+        if not Value then return end
 
         local Players = game:GetService("Players")
         local RunService = game:GetService("RunService")
@@ -1882,29 +1892,113 @@ SettingsTab:CreateToggle({
         local player = Players.LocalPlayer
         local playerGui = player:WaitForChild("PlayerGui")
 
-        -- Remove old tracker if one already exists
-        if _G.BrickTrackerText then
-            _G.BrickTrackerText:Destroy()
-            _G.BrickTrackerText = nil
-        end
-
-        if _G.BrickTrackerConnection then
-            _G.BrickTrackerConnection:Disconnect()
-            _G.BrickTrackerConnection = nil
-        end
-
-        if not Value then
-            return
-        end
-
         -- Original timer text
         local mainMenu = playerGui:WaitForChild("MainMenu")
         local selection = mainMenu:WaitForChild("Lobby"):WaitForChild("Selection")
         local streakFrame = selection:WaitForChild("StreakFrame")
+        local originalTimeText = playerGui:WaitForChild("MainMenu"):WaitForChild("Lobby"):WaitForChild("Selection"):WaitForChild("StreakFrame"):WaitForChild("Standard"):WaitForChild("Time")
 
-        local originalTimeText = streakFrame:WaitForChild("Standard"):WaitForChild("Time")
+        -- Custom offset for EndGameBar position
+        local BAR_OFFSET_X = -5
+        local BAR_OFFSET_Y = 25
+        -- Current BattleScreen references
+        local currentBattleScreen = nil
+        local currentEndGameBar = nil
+        local brickTrackText = nil
 
-        -- End game bar
+        local function createTracker(endGameBar)
+            -- Destroy previous tracker
+            if brickTrackText then
+                brickTrackText:Destroy()
+                brickTrackText = nil
+            end
+            if not endGameBar or not endGameBar.Parent then
+                return
+            end
+            -- Clone original timer
+            brickTrackText = originalTimeText:Clone()
+            brickTrackText.Name = "BrickTrackText"
+            -- Red-ish color
+            brickTrackText.TextColor3 = Color3.fromRGB(255, 80, 80)
+            -- Put it alongside EndGame.Bar
+            brickTrackText.Parent = endGameBar.Parent
+            -- Size
+            brickTrackText.Size = UDim2.new(
+                4, 100, -- Scale, Offscale of X
+                1, 5 -- Scale, Offscale of Y
+            )
+            brickTrackText.TextXAlignment = Enum.TextXAlignment.Left
+            _G.BrickTrackerText = brickTrackText
+        end
+        -- Updates position of the tracker
+        local function updatePosition()
+            if not brickTrackText or not brickTrackText.Parent or not currentEndGameBar or not currentEndGameBar.Parent then
+                return
+            end
+            local barPosition = currentEndGameBar.Position
+            local barSize = currentEndGameBar.Size
+            brickTrackText.AnchorPoint = Vector2.new(0.5, 0)
+            brickTrackText.Position = UDim2.new(
+                barPosition.X.Scale + (barSize.X.Scale / 2),
+                barPosition.X.Offset + (barSize.X.Offset / 2) + BAR_OFFSET_X,
+                barPosition.Y.Scale + barSize.Y.Scale,
+                barPosition.Y.Offset + barSize.Y.Offset + BAR_OFFSET_Y
+            )
+        end
+        -- Check for BattleScreen every second
+        task.spawn(function()
+            while _G.BrickTracker do
+                local battleScreen = playerGui:FindFirstChild("BattleScreen")
+                if battleScreen then
+                    local endGame = battleScreen:FindFirstChild("EndGame")
+                    local endGameBar = endGame and endGame:FindFirstChild("Bar")
+                    if endGameBar then
+                        -- New BattleScreen/Bar detected
+                        if currentEndGameBar ~= endGameBar then
+                            currentBattleScreen = battleScreen
+                            currentEndGameBar = endGameBar
+                            createTracker(endGameBar)
+                        end
+                        -- Update text
+                        if brickTrackText and brickTrackText.Parent then
+                            brickTrackText.Text = originalTimeText.Text .. "s left to claim Bricks."
+                            updatePosition()
+                        end
+                    else
+                        -- EndGame or Bar doesn't exist
+                        currentEndGameBar = nil
+                        currentBattleScreen = nil
+                        if brickTrackText then
+                            brickTrackText:Destroy()
+                            brickTrackText = nil
+                            _G.BrickTrackerText = nil
+                        end
+                    end
+                else
+                    -- BattleScreen doesn't exist
+                    currentBattleScreen = nil
+                    currentEndGameBar = nil
+                    if brickTrackText then
+                        brickTrackText:Destroy()
+                        brickTrackText = nil
+                        _G.BrickTrackerText = nil
+                    end
+                end
+                task.wait(1)
+            end
+        end)
+
+
+
+
+
+
+
+
+
+
+
+    --[[    -- End game bar
         local battleScreen = playerGui:WaitForChild("BattleScreen")
         local endGameBar = battleScreen:WaitForChild("EndGame"):WaitForChild("Bar")
 
@@ -1919,9 +2013,7 @@ SettingsTab:CreateToggle({
         brickTrackText.Parent = endGameBar.Parent
 
         _G.BrickTrackerText = brickTrackText
-        -- Custom offset for EndGameBar position
-        local BAR_OFFSET_X = -5
-        local BAR_OFFSET_Y = 25
+        
 
         -- Position it below EndGame.Bar
         local function updatePosition()
@@ -1936,12 +2028,12 @@ SettingsTab:CreateToggle({
 
             brickTrackText.AnchorPoint = Vector2.new(0.5, 0)
 
-            --[[brickTrackText.Position = UDim2.new(
+            brickTrackText.Position = UDim2.new(
                 barPosition.X.Scale + (barSize.X.Scale / 2),
                 barPosition.X.Offset + (barSize.X.Offset / 2),
                 barPosition.Y.Scale + barSize.Y.Scale,
                 barPosition.Y.Offset + barSize.Y.Offset + 5
-            )]]--
+            )
             brickTrackText.Position = UDim2.new(
                 barPosition.X.Scale + (barSize.X.Scale / 2),
                 barPosition.X.Offset + (barSize.X.Offset / 2) + BAR_OFFSET_X,
@@ -1976,7 +2068,7 @@ SettingsTab:CreateToggle({
 
             -- Keep it positioned below the EndGame bar
             updatePosition()
-        end)
+        end)]]--
     end,
 })
 
