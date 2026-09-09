@@ -1919,6 +1919,9 @@ SettingsTab:CreateToggle({
         brickTrackText.Parent = endGameBar.Parent
 
         _G.BrickTrackerText = brickTrackText
+        -- Custom offset for EndGameBar position
+        local BAR_OFFSET_X = -5
+        local BAR_OFFSET_Y = -5
 
         -- Position it below EndGame.Bar
         local function updatePosition()
@@ -1933,12 +1936,25 @@ SettingsTab:CreateToggle({
 
             brickTrackText.AnchorPoint = Vector2.new(0.5, 0)
 
-            brickTrackText.Position = UDim2.new(
+            --[[brickTrackText.Position = UDim2.new(
                 barPosition.X.Scale + (barSize.X.Scale / 2),
                 barPosition.X.Offset + (barSize.X.Offset / 2),
                 barPosition.Y.Scale + barSize.Y.Scale,
                 barPosition.Y.Offset + barSize.Y.Offset + 5
+            )]]--
+            brickTrackText.Position = UDim2.new(
+                barPosition.X.Scale + (barSize.X.Scale / 2),
+                barPosition.X.Offset + (barSize.X.Offset / 2) + BAR_OFFSET_X,
+                barPosition.Y.Scale + barSize.Y.Scale,
+                barPosition.Y.Offset + barSize.Y.Offset + BAR_OFFSET_Y
             )
+            brickTrackText.Size = UDim2.new(
+                barSize.X.Scale == 4,
+                barSize.X.Offset == 100,
+                barSize.Y.Scale == 1,
+                barSize.Y.Offset == 5
+            )
+            brickTrackText.TextXAlignment = Enum.TextXAlignment.Left
         end
 
         updatePosition()
