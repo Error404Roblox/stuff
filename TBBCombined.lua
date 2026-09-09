@@ -1497,11 +1497,52 @@ LQFTab:CreateToggle({
                 VULNERABLE_TEXTURE,
                 BREW_COLOR
             )
-            local slateskinStatus = createStatus(
+            --[[local slateskinStatus = createStatus(
                 "SLATE",
                 SHIELD_TEXTURE,
                 SLATE_COLOR
-            )
+            )]]--
+            -- ARMOR STATUS
+            local armorHolder = Instance.new("Frame")
+            armorHolder.Name = "ARMOR"
+            armorHolder.Size = UDim2.fromOffset( STATUS_HEIGHT, STATUS_HEIGHT + 12 )
+            armorHolder.BackgroundColor3 = STATUS_BG
+            armorHolder.BackgroundTransparency = 0
+            armorHolder.BorderSizePixel = 0
+            armorHolder.Visible = false
+            armorHolder.Parent = statusRow
+
+            local armorCorner = Instance.new("UICorner")
+            armorCorner.CornerRadius = UDim.new(0, 4)
+            armorCorner.Parent = armorHolder
+
+            local armorIcon = Instance.new("ImageLabel")
+            armorIcon.Name = "Icon"
+            armorIcon.Size = UDim2.new( 1, -2, 0, STATUS_HEIGHT )
+            armorIcon.Position = UDim2.fromOffset(1, 1)
+            armorIcon.BackgroundTransparency = 1
+            armorIcon.Image = SHIELD_TEXTURE
+            armorIcon.ImageColor3 = SLATE_COLOR
+            armorIcon.ImageTransparency = 0
+            armorIcon.ScaleType = Enum.ScaleType.Fit
+            armorIcon.ZIndex = 2
+            armorIcon.Parent = armorHolder
+
+            local armorText = Instance.new("TextLabel")
+            armorText.Name = "ArmorText"
+            armorText.Size = UDim2.new( 1, 0, 0, 11 )
+            armorText.Position = UDim2.new( 0, 0, 1, -11 )
+            armorText.BackgroundTransparency = 1
+            armorText.TextColor3 = Color3.fromRGB(255, 255, 255)
+            armorText.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+            armorText.TextStrokeTransparency = 0
+            armorText.Font = Enum.Font.GothamBold
+            armorText.TextScaled = true
+            armorText.Text = ""
+            armorText.ZIndex = 3
+            armorText.Parent = armorHolder
+
+            -- RESISTANCE
             local resistanceHolder = Instance.new("Frame")
             resistanceHolder.Name = "RESISTANCE"
             resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 12)
@@ -1574,8 +1615,25 @@ LQFTab:CreateToggle({
                     torso:FindFirstChild("Cold") ~= nil
                 brewStatus.Visible =
                     torso:FindFirstChild("Weaken") ~= nil
-                slateskinStatus.Visible =
-                    torso:FindFirstChild("Armor") ~= nil
+                --[[slateskinStatus.Visible =
+                    torso:FindFirstChild("Armor") ~= nil]]--
+                -- FIND ARMOR
+                local armor = model:GetAttribute("Armor")
+                local armorTime = model:GetAttribute("ArmorTime")
+
+                if typeof(armor) == "number" and armor ~= 0 then
+                    armorHolder.Visible = true
+
+                    if typeof(armorTime) == "number" then
+                        armorText.Text = tostring(armor) .. "; " .. tostring(armorTime) .. "s"
+                    else
+                        armorText.Text = tostring(armor)
+                    end
+                else
+                    armorHolder.Visible = false
+                    armorText.Text = ""
+                end
+                -- FIND RESISTANCE
                 local resistance = model:GetAttribute("Resistance")
 
                 if typeof(resistance) == "number" then
@@ -1616,6 +1674,21 @@ LQFTab:CreateToggle({
                 if not Value then return end
                 updateStatuses()
             end)
+            local armorConnection = model:GetAttributeChangedSignal("Armor"):Connect(function()
+                if not Value then
+                    return
+                end
+
+                updateStatuses()
+            end)
+
+            local armorTimeConnection = model:GetAttributeChangedSignal("ArmorTime"):Connect(function()
+                if not Value then
+                    return
+                end
+
+                updateStatuses()
+            end)
             
             -- tracking
             tracked[model] = {
@@ -1629,7 +1702,11 @@ LQFTab:CreateToggle({
                     childRemovedConnection,
 
                 resistanceConnection =
-                    resistanceConnection
+                    resistanceConnection,
+                armorConnection =
+                    armorConnection,
+                armorTimeConnection =
+                    armorTimeConnection
             }
 
             -- model cleanup
@@ -1657,6 +1734,12 @@ LQFTab:CreateToggle({
                             end
                             if info.resistanceConnection then
                                 info.resistanceConnection:Disconnect()
+                            end
+                            if info.armorConnection then
+                                info.armorConnection:Disconnect()
+                            end
+                            if info.armorTimeConnection then
+                                info.armorTimeConnection:Disconnect()
                             end
 
                             tracked[model] = nil
