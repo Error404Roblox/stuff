@@ -35,7 +35,7 @@ AnnouncementsTab:CreateParagraph({
 })
 AnnouncementsTab:CreateParagraph({
     Title = "Additional Information",
-    Content = "Hiii! Anon is writing it. So I decided to combine these two scripts, with addition of my own features, into one script! YAY!"
+    Content = "Hiii! Anon is writing it. So I decided to combine these two scripts, with addition of my own features, into one script! And it has to be op."
 })
 
 AnnouncementsTab:CreateSection("Changelog")
@@ -420,7 +420,7 @@ end
 
 -- DeleteProjectile but now they're neutral
 local NdeletionProjectilesList = {
-    "Teapot", "FireTeapot"
+    "Teapot", "FireTeapot", "Spam"
 }
 
 table.sort(NdeletionProjectilesList)
@@ -456,12 +456,13 @@ for _, dellName in ipairs(NdeletionProjectilesList) do
 end
 
 -- Anti Boss Tab
-AntiBossTab:CreateSection("CHRONOS")
+AntiBossTab:CreateSection("CHAPTER 4")
 AntiBossTab:CreateParagraph({
-    Title = "Projectiles",
+    Title = "Chronos; Projectiles",
     Content = "Teapot, FireTeapot, CesusBomb, Cesuspot"
 })
 -- Chronos
+--- Answer The Clock
 AntiBossTab:CreateButton({
     Name = "Answer Clock",
     Callback = function()
@@ -478,9 +479,9 @@ AntiBossTab:CreateKeybind({
     end,
 })
 
-AntiBossTab:CreateSection("FUNK1D")
+AntiBossTab:CreateSection("CHAPTER 5")
 AntiBossTab:CreateParagraph({
-    Title = "Projectiles",
+    Title = "FUNK1D; Projectiles",
     Content = "TBA"
 })
 _G.AutoShoot=false
@@ -488,6 +489,7 @@ _G.AutoShootK1d = false
 _G.AutoShootFunK1d = false
 
 --FUNK1D
+--- Auto shoot Target
 AntiBossTab:CreateToggle({
     Name = "Auto Shoot Target",
     CurrentValue = false,
@@ -508,6 +510,7 @@ AntiBossTab:CreateToggle({
         end
     end,
 })
+--- Auto Shoot Target K1D
 AntiBossTab:CreateToggle({
     Name = "Auto Shoot Target K1d",
     CurrentValue = false,
@@ -531,6 +534,7 @@ AntiBossTab:CreateToggle({
         end
     end,
 })
+--- Auto shoot FUNK1D
 AntiBossTab:CreateToggle({
     Name = "Auto Shoot FunK1d",
     CurrentValue = false,
@@ -555,9 +559,8 @@ AntiBossTab:CreateToggle({
     end,
 })
 
-AntiBossTab:CreateSection("GAMERK1D")
 AntiBossTab:CreateParagraph({
-    Title = "Projectiles",
+    Title = "GAMERK1D; Projectiles",
     Content = "Hyperlaser, Ghostwalker, BigGhostwalker, BloodStone, NeonEvilDuck (last doesnt works)"
 })
 -- GamerK1d
@@ -576,6 +579,7 @@ AntiBossTab:CreateKeybind({
     game:GetService("Players").LocalPlayer.PlayerGui.FunGui.SuccessEvent:FireServer(true)
     end,
 })
+--- Anti GameOver
 AntiBossTab:CreateToggle({
    Name = "Anti GameOver",
    CurrentValue = false,
@@ -597,14 +601,14 @@ AntiBossTab:CreateToggle({
    end,
 })
 
-AntiBossTab:CreateSection("Lichen")
 AntiBossTab:CreateParagraph({
-    Title = "Projectiles",
-    Content = "TBA"
+    Title = "Lichen; Projectiles",
+    Content = "Spam, ...(TBA)"
 })
 _G.AutoShootBush = false
 
 -- Lichen
+--- Auto Shoot TreeBush
 AntiBossTab:CreateToggle({
     Name = "Auto Shoot Tree Bush",
     CurrentValue = false,
@@ -630,9 +634,8 @@ AntiBossTab:CreateToggle({
     end,
 })
 
-AntiBossTab:CreateSection("MORTIS")
 AntiBossTab:CreateParagraph({
-    Title = "Information",
+    Title = "MORTIS; Information",
     Content = "Look. You'd better have 60 FPS to counter EVERY single projectiles of Mortis, because task.wait() depends on your FPS. Another thing: DO NOT 3* MORTIS. Otherwise everyone will think about you as exploiter. Just letting you know about common sense, but you can ignore this warning."
 })
 AntiBossTab:CreateParagraph({
@@ -645,6 +648,7 @@ _G.AutoCounterCores = false
 _G.AutoCounterMonitors = false
 
 -- Mortis
+--- Anti Sorcus Blades
 AntiBossTab:CreateToggle({
     Name = "Auto Counter Sorcus Blades",
     CurrentValue = false,
@@ -675,6 +679,7 @@ AntiBossTab:CreateToggle({
         end
     end,
 })
+--- Anti Star Balls
 AntiBossTab:CreateToggle({
     Name = "Auto Counter Star Balls (Big + Super)",
     CurrentValue = false,
@@ -704,8 +709,9 @@ AntiBossTab:CreateToggle({
         end
     end,
 })
+--- Counter Cores
 AntiBossTab:CreateToggle({
-    Name = "Auto Counter Cores",
+    Name = "Auto Counter Cores (doesnt works)",
     CurrentValue = false,
     Flag = "AutoCounterCoresFlag", 
     Callback = function(Value)
@@ -716,7 +722,7 @@ AntiBossTab:CreateToggle({
                 while _G.AutoCounterCores do
                     local shootable = workspace:FindFirstChild("Shootable")
                     if shootable then
-                        local core = shootable.Core:FindFirstChild("Core")
+                        local core = shootable.Core:FindFirstChild("CoreInside")
                         if core then
                             local shield = core:FindFirstChild("Shield")
                             if shield then
@@ -730,6 +736,7 @@ AntiBossTab:CreateToggle({
         end
     end,
 })
+--- Anti Monitors
 AntiBossTab:CreateToggle({
     Name = "Auto Counter Monitors",
     CurrentValue = false,
@@ -757,7 +764,7 @@ AntiBossTab:CreateToggle({
 
 
 LQFTab:CreateSection("Miscellaneous")
---_G.AutoBoostFPS=false;
+_G.AutoBoostFPS=false;
 _G.BlockRemoteOnly = false 
 _G.Healthbar=false
 _G.Status=false
@@ -839,6 +846,7 @@ local decorationConnection
 	end,
 })
 ]]--
+-- Auto BoostFPS
 LQFTab:CreateToggle({
     Name = "Auto BoostFPS (Removes Decorations)",
     CurrentValue = false,
@@ -855,15 +863,11 @@ LQFTab:CreateToggle({
             local map = workspace:WaitForChild("Map")
 
             while _G.AutoBoostFPS do
-
-                -- Check everything inside Map
                 for _, obj in ipairs(map:GetDescendants()) do
                     if obj.Name == "Decoration" and obj:IsA("Folder") then
                         obj:Destroy()
                     end
                 end
-
-                -- Wait 1 second before checking again
                 task.wait(1)
             end
         end)
@@ -891,6 +895,7 @@ if not oldNamecall then
         return oldNamecall(self, ...)
     end)
 end
+-- Anti Depriver
 LQFTab:CreateToggle({
     Name = "Anti Depriver (Block ChustUI RemoteEvent)",
     CurrentValue = false,
@@ -906,6 +911,7 @@ LQFTab:CreateToggle({
         })
     end,
 })
+-- Healthbar
 LQFTab:CreateToggle({
     Name = "Healthbar",
     CurrentValue = false,
@@ -1207,6 +1213,7 @@ LQFTab:CreateToggle({
         )
     end
 })
+-- Status Bar
 LQFTab:CreateToggle({
     Name = "Status Bar",
     CurrentValue = false,
@@ -1280,7 +1287,7 @@ LQFTab:CreateToggle({
         local STUN_TEXTURE = "rbxassetid://89657581729186"
         local BOUNTY_TEXTURE = "rbxassetid://12771100740"
 
-        local SLOWNESS_TEXTURE = "rbxassetid://17288802854"
+        local SLOWNESS_TEXTURE = "rbxassetid://13492313545"
         local VULNERABLE_TEXTURE = "rbxassetid://90784857801052"
         local SHIELD_TEXTURE = "rbxassetid://11322093465"
 
@@ -1505,7 +1512,7 @@ LQFTab:CreateToggle({
             -- ARMOR STATUS
             local armorHolder = Instance.new("Frame")
             armorHolder.Name = "ARMOR"
-            armorHolder.Size = UDim2.fromOffset( STATUS_HEIGHT, STATUS_HEIGHT + 12 )
+            armorHolder.Size = UDim2.fromOffset( STATUS_HEIGHT, STATUS_HEIGHT + 15 )
             armorHolder.BackgroundColor3 = STATUS_BG
             armorHolder.BackgroundTransparency = 0
             armorHolder.BorderSizePixel = 0
@@ -1545,7 +1552,7 @@ LQFTab:CreateToggle({
             -- RESISTANCE
             local resistanceHolder = Instance.new("Frame")
             resistanceHolder.Name = "RESISTANCE"
-            resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 12)
+            resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 15)
             resistanceHolder.BackgroundColor3 = STATUS_BG
             resistanceHolder.BorderSizePixel = 0
             resistanceHolder.Visible = false
@@ -1831,6 +1838,7 @@ LQFTab:CreateToggle({
         )
     end
 })
+-- Delete Gloom
 LQFTab:CreateButton({
 	Name = "Delete Gloom hazard",
 	Callback = function()
