@@ -1216,6 +1216,8 @@ LQFTab:CreateToggle({
         --local STATUS_TEXT = Color3.fromRGB(255, 255, 255)
 
         -- Colors
+        local RESISTANCE_COLOR = Color3.fromRGB(171, 255, 35)
+
         local FIRERATE_COLOR = Color3.fromRGB(255, 220, 0)
         local DAMAGE_COLOR = Color3.fromRGB(255, 60, 60)
         local RANGE_COLOR = Color3.fromRGB(0, 255, 255)
@@ -1229,7 +1231,7 @@ LQFTab:CreateToggle({
         local COLAs_COLOR = Color3.fromRGB(176, 101, 9)
         local ICEs_COLOR = Color3.fromRGB(55, 172, 250)
         local BREW_COLOR = Color3.fromRGB(34, 150, 1)
-        local SLATE_COLOR = Color3.fromRGB(255, 255, 255)
+        local SLATE_COLOR = Color3.fromRGB(156, 82, 0)
 
         -- Textures
         local FIRERATE_TEXTURE = "rbxassetid://483225199"
@@ -1244,7 +1246,7 @@ LQFTab:CreateToggle({
 
         local SLOWNESS_TEXTURE = "rbxassetid://17288802854"
         local VULNERABLE_TEXTURE = "rbxassetid://90784857801052"
-        local SLATE_TEXTURE = "rbxassetid://11322093465"
+        local SHIELD_TEXTURE = "rbxassetid://11322093465"
 
         -- cleaning
         local function cleanup()
@@ -1394,6 +1396,40 @@ LQFTab:CreateToggle({
 
                 return holder
             end
+            -- Creation of Resistance
+            local resistanceHolder = Instance.new("Frame")
+            resistanceHolder.Name = "RESISTANCE"
+            resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 12)
+            resistanceHolder.BackgroundColor3 = STATUS_BG
+            resistanceHolder.BorderSizePixel = 0
+            resistanceHolder.Visible = false
+            resistanceHolder.Parent = statusRow
+
+            local corner = Instance.new("UICorner")
+            corner.CornerRadius = UDim.new(0, 4)
+            corner.Parent = resistanceHolder
+
+            local resistanceIcon = Instance.new("ImageLabel")
+            resistanceIcon.Name = "Icon"
+            resistanceIcon.Size = UDim2.new(1, -4, 0, STATUS_HEIGHT)
+            resistanceIcon.Position = UDim2.fromOffset(2, 2)
+            resistanceIcon.BackgroundTransparency = 1
+            resistanceIcon.Image = RESISTANCE_TEXTURE
+            resistanceIcon.ImageColor3 = RESISTANCE_COLOR
+            resistanceIcon.ScaleType = Enum.ScaleType.Fit
+            resistanceIcon.Parent = resistanceHolder
+
+            local resistanceText = Instance.new("TextLabel")
+            resistanceText.Name = "Percentage"
+            resistanceText.Size = UDim2.new(1, 0, 0, 12)
+            resistanceText.Position = UDim2.new(0, 0, 1, -12)
+            resistanceText.BackgroundTransparency = 1
+            resistanceText.TextColor3 = Color3.fromRGB(255, 255, 255)
+            resistanceText.TextStrokeTransparency = 0
+            resistanceText.TextScaled = true
+            resistanceText.Font = Enum.Font.GothamBold
+            resistanceText.Text = "0%"
+            resistanceText.Parent = resistanceHolder
 
             -- Statuses
             local fireRateStatus = createStatus(
@@ -1460,7 +1496,7 @@ LQFTab:CreateToggle({
             )
             local slateskinStatus = createStatus(
                 "SLATE",
-                SLATE_TEXTURE,
+                SHIELD_TEXTURE,
                 SLATE_COLOR
             )
 
@@ -1504,6 +1540,14 @@ LQFTab:CreateToggle({
                     torso:FindFirstChild("Weaken") ~= nil
                 slateskinStatus.Visible =
                     torso:FindFirstChild("Armor") ~= nil
+                local resistance = model:GetAttribute("Resistance")
+
+                if typeof(resistance) == "number" then
+                    resistanceHolder.Visible = resistance ~= 0
+                    resistanceText.Text = tostring(resistance) .. "%"
+                else
+                    resistanceHolder.Visible = false
+                end
             end
 
 
@@ -1531,7 +1575,11 @@ LQFTab:CreateToggle({
 
                     updateStatuses()
                 end)
-
+            
+            local resistanceConnection = model:GetAttributeChangedSignal("Resistance"):Connect(function()
+                if not Value then return end
+                updateStatuses()
+            end)
             
             -- tracking
             tracked[model] = {
@@ -1542,7 +1590,10 @@ LQFTab:CreateToggle({
                     childAddedConnection,
 
                 childRemovedConnection =
-                    childRemovedConnection
+                    childRemovedConnection,
+
+                resistanceConnection =
+                    resistanceConnection
             }
 
             -- model cleanup
@@ -1567,6 +1618,9 @@ LQFTab:CreateToggle({
 
                             if info.childRemovedConnection then
                                 info.childRemovedConnection:Disconnect()
+                            end
+                            if info.resistanceConnection then
+                                info.resistanceConnection:Disconnect()
                             end
 
                             tracked[model] = nil
