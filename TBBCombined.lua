@@ -1585,9 +1585,9 @@ LQFTab:CreateToggle({
                     return
                 end
 
-                if not torso or not torso.Parent then
+                --[[if not torso or not torso.Parent then
                     return
-                end
+                end]]--
                 
                 -- Status Naming part
                 fireRateStatus.Visible =
