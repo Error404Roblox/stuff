@@ -1921,7 +1921,7 @@ SettingsTab:CreateToggle({
         _G.BrickTrackerText = brickTrackText
         -- Custom offset for EndGameBar position
         local BAR_OFFSET_X = -5
-        local BAR_OFFSET_Y = 5
+        local BAR_OFFSET_Y = 25
 
         -- Position it below EndGame.Bar
         local function updatePosition()
