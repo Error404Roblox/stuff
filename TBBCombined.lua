@@ -308,30 +308,6 @@ RunService.Heartbeat:Connect(function(dt)
             end
         end
     end
-    --[[task.spawn(function()
-        while autoBankEnabled do
-
-            local base = BaseFolder:FindFirstChild("Blue Base")
-
-            if base then
-                local timerValue = base:GetAttribute("Timer")
-
-                if timerValue ~= nil and timerValue == 0 then
-                    pcall(function()
-                        local playerSpawnEvent =
-                            ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
-
-                        playerSpawnEvent:InvokeServer("Bank")
-                        timerValue = 60
-                    end)
-
-                    task.wait(0.5)
-                end
-            end
-
-            task.wait(0.25)
-        end
-    end)]]--
     -- Auto Delete EnemyProjectiles
     for p, _ in pairs(deletionProjectiles) do
         if p and p.Parent then
@@ -809,81 +785,6 @@ _G.UnitCounter=false
 
 local decorationConnection
 
---[[LQFTab:CreateButton({
-    Name = "Boost FPS",
-    Callback = function()
-        -- Remove previous connection
-		if decorationConnection then
-			decorationConnection:Disconnect()
-			decorationConnection = nil
-		end
-
-		if not Value then
-			return
-		end
-
-		local map = workspace:WaitForChild("Map")
-
-		local function checkObject(obj)
-			if obj.Name == "Decoration" and obj:IsA("Folder") then
-				obj:Destroy()
-			end
-		end
-
-		-- Remove existing Decorations
-		for _, obj in ipairs(map:GetDescendants()) do
-			checkObject(obj)
-		end
-
-		-- Remove Decorations added later
-		decorationConnection = map.DescendantAdded:Connect(checkObject)
-    end,
-})]]--
-
---[[LQFTab:CreateToggle({
-	Name = "Auto BoostFPS (Removes Decorations)",
-	CurrentValue = false,
-	Flag = "AutoBoostFPSFlag",
-
-	Callback = function(Value)
-		_G.AutoBoostFPS = Value
-
-		-- Remove previous connection
-		if decorationConnection then
-			decorationConnection:Disconnect()
-			decorationConnection = nil
-		end
-
-		if not Value then
-			return
-		end
-
-		local map = workspace:WaitForChild("Map")
-
-		local function checkObject(obj)
-			if obj.Name == "Decoration" and obj:IsA("Folder") then
-				obj:Destroy()
-			end
-		end
-
-		-- Remove existing Decorations
-		for _, obj in ipairs(map:GetDescendants()) do
-			checkObject(obj)
-		end
-
-		-- Remove Decorations added later
-		decorationConnection = map.DescendantAdded:Connect(checkObject)
-        taskSpawn(function()
-            while _G.AutoBoostFPS do
-                for _, obj in ipairs(map:GetDescendants()) do
-                    checkObject(obj)
-                end
-                task.wait(1) -- Check every second
-            end
-        end)
-	end,
-})
-]]--
 -- Auto BoostFPS
 LQFTab:CreateToggle({
     Name = "Auto BoostFPS (Removes Decorations)",
@@ -1912,7 +1813,7 @@ LQFTab:CreateToggle({
 
         local player = Players.LocalPlayer
 
-        --// References
+        -- References
         local PlayerData = player:WaitForChild("PlayerData")
 
         local currentLoadout = PlayerData
@@ -1928,16 +1829,8 @@ LQFTab:CreateToggle({
 
         local Bar = MobileSpawnMenu:WaitForChild("Bar")
 
-
-        --==================================================
         -- CONFIGURATION
-        --==================================================
 
-        -- Text displayed by amountUnitText.
-        -- Examples:
-        -- "2"
-        -- "x2"
-        -- "2 Units"
         local SHOW_X = true
 
         -- Position offset relative to CostText.
@@ -2673,24 +2566,5 @@ Context:
 - slot<[1; 2.. 8]> = loadout<n>.Slots:WaitForChild("Slot<[1; 2.. 8]>")
 - slot<n> is an int holder, which represents Value as ID for the certain unit with coresponding ID.
 - costText = game:GetService("Players").LocalPlayer.PlayerGui.BattleScreen.MobileSpawnMenu.Bar[1; 2].Slot[1; 2.. 4].CostText
-
-
-
-
-THE BEST DISCOVER YET:
-
-
-
-currentLoadout = game:GetService("Players").LocalPlayer.PlayerData.Settings.LoadoutSelection
-
-<there can be only 6 preset loadouts>; <loadout<n>=number ranging from 1 to 6) = game:GetService("Players").LocalPlayer.PlayerData.Loadout:WaitForChild(<n>)
-
-
-
-It immensively shorts the hours of suffering. And best fact: each model of unit has IT'S own ID, andi t's shared with normal and alt forms.
-
-
-
-slot<nn=[1; 8]> = loadout<n>.<[1; 6]>:WaitForChild("Slot<nn>")
 
 ]]--
