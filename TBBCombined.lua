@@ -1976,7 +1976,7 @@ LQFTab:CreateToggle({
             local slotFolder = bar:WaitForChild("Slot")
 
             for slotIndex = 1, 4 do
-                local slot = slotFolder:WaitForChild(tostring(slotIndex))
+                local slot = slotFolder:WaitForChild("Slot"..tostring(slotIndex))
                 local costText = slot:WaitForChild("CostText")
 
                 -- Create amountUnitText if it doesn't already exist
