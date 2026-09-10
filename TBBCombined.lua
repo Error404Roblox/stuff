@@ -1865,7 +1865,7 @@ LQFTab:CreateToggle({
         local UISlots = {}
 
         for barIndex = 1, 2 do
-            local bar = MobileSpawnMenu:WaitForChild("Bar" .. barIndex)
+            local bar = MobileSpawnMenu:WaitForChild("Bar" .. tostring(barIndex))
 
             for slotIndex = 1, 4 do
                 local slot = bar:WaitForChild("Slot"..tostring(slotIndex))
