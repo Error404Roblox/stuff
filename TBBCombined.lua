@@ -1836,8 +1836,8 @@ LQFTab:CreateToggle({
         -- Position offset relative to CostText.
         -- Change these values however you want.
         local AMOUNT_OFFSET = UDim2.new(
-            0, 0, -- X scale / X offset
-            0, 20 -- Y scale / Y offset
+            0, 0,
+            0, 20
         )
 
         -- Size of amountUnitText
@@ -1866,10 +1866,9 @@ LQFTab:CreateToggle({
 
         for barIndex = 1, 2 do
             local bar = MobileSpawnMenu:WaitForChild("Bar" .. barIndex)
-            local slotFolder = bar:WaitForChild("Slot")
 
             for slotIndex = 1, 4 do
-                local slot = slotFolder:WaitForChild("Slot"..tostring(slotIndex))
+                local slot = bar:WaitForChild("Slot"..tostring(slotIndex))
                 local costText = slot:WaitForChild("CostText")
 
                 -- Create amountUnitText if it doesn't already exist
