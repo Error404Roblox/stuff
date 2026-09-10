@@ -2078,14 +2078,6 @@ LQFTab:CreateToggle({
         local LoadoutFolder =
             PlayerData:WaitForChild("Loadout")
 
-        ----------------------------------------------------
-        -- IMPORTANT:
-        -- CHANGE THIS TO YOUR ACTUAL FRIENDLY FOLDER.
-        ----------------------------------------------------
-
-        local FriendlyFolder =
-            workspace:WaitForChild("Friendly")
-
         --==================================================
         -- CONFIGURATION
         --==================================================
