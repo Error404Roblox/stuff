@@ -805,6 +805,7 @@ _G.AutoBoostFPS=false;
 _G.BlockRemoteOnly = false 
 _G.Healthbar=false
 _G.Status=false
+_G.UnitCounter=false
 
 local decorationConnection
 
@@ -1893,6 +1894,264 @@ LQFTab:CreateToggle({
         )
     end
 })
+LQFTab:CreateToggle({
+    Name = "Unit Counter",
+    CurrentValue = false,
+    Flag = "UnitCounterFlag",
+
+    Callback = function(Value)
+        _G.UnitCounter = Value
+
+        Rayfield:Notify({
+            Title = Value and "Enabled" or "Disabled",
+            Content = "Unit Counter has been " .. (Value and "enabled" or "disabled") .. ".",
+            Duration = 5,
+            Image = 10850711054
+        })
+        local Players = game:GetService("Players")
+
+        local player = Players.LocalPlayer
+
+        --// References
+        local PlayerData = player:WaitForChild("PlayerData")
+
+        local currentLoadout = PlayerData
+            :WaitForChild("Settings")
+            :WaitForChild("LoadoutSelection")
+
+        local LoadoutFolder = PlayerData
+            :WaitForChild("Loadout")
+
+        local MobileSpawnMenu = player.PlayerGui
+            :WaitForChild("BattleScreen")
+            :WaitForChild("MobileSpawnMenu")
+
+        local Bar = MobileSpawnMenu:WaitForChild("Bar")
+
+
+        --==================================================
+        -- CONFIGURATION
+        --==================================================
+
+        -- Text displayed by amountUnitText.
+        -- Examples:
+        -- "2"
+        -- "x2"
+        -- "2 Units"
+        local SHOW_X = true
+
+        -- Position offset relative to CostText.
+        -- Change these values however you want.
+        local AMOUNT_OFFSET = UDim2.new(
+            0, 0, -- X scale / X offset
+            0, 20 -- Y scale / Y offset
+        )
+
+        -- Size of amountUnitText
+        local AMOUNT_SIZE = UDim2.new(
+            1, 0,
+            0, 20
+        )
+
+        -- Text properties
+        local AMOUNT_TEXT_SIZE = 14
+        local AMOUNT_TEXT_COLOR = Color3.fromRGB(255, 255, 255)
+
+        -- Whether to show the counter when there are 0 units.
+        local SHOW_ZERO = true
+
+
+        --==================================================
+        -- UI
+        --==================================================
+
+        -- The 8 UI slots are:
+        -- Bar 1 -> Slot 1,2,3,4
+        -- Bar 2 -> Slot 1,2,3,4
+
+        local UISlots = {}
+
+        for barIndex = 1, 2 do
+            local bar = MobileSpawnMenu:WaitForChild("Bar" .. barIndex)
+            local slotFolder = bar:WaitForChild("Slot")
+
+            for slotIndex = 1, 4 do
+                local slot = slotFolder:WaitForChild(tostring(slotIndex))
+                local costText = slot:WaitForChild("CostText")
+
+                -- Create amountUnitText if it doesn't already exist
+                local amountUnitText = costText:FindFirstChild("amountUnitText")
+
+                if not amountUnitText then
+                    amountUnitText = Instance.new("TextLabel")
+                    amountUnitText.Name = "amountUnitText"
+                    amountUnitText.BackgroundTransparency = 1
+                    amountUnitText.BorderSizePixel = 0
+                    amountUnitText.Parent = costText
+                end
+
+                -- Customization
+                amountUnitText.Position = AMOUNT_OFFSET
+                amountUnitText.Size = AMOUNT_SIZE
+                amountUnitText.TextSize = AMOUNT_TEXT_SIZE
+                amountUnitText.TextColor3 = AMOUNT_TEXT_COLOR
+                amountUnitText.TextXAlignment = Enum.TextXAlignment.Center
+                amountUnitText.TextYAlignment = Enum.TextYAlignment.Center
+
+                -- Optional: make sure it renders above other text
+                amountUnitText.ZIndex = costText.ZIndex + 1
+
+                table.insert(UISlots, {
+                    BarIndex = barIndex,
+                    SlotIndex = slotIndex,
+                    CostText = costText,
+                    AmountText = amountUnitText,
+                })
+            end
+        end
+
+
+        --==================================================
+        -- LOADOUT
+        --==================================================
+
+        local function getCurrentLoadout()
+            local loadoutNumber = currentLoadout.Value
+
+            return LoadoutFolder:WaitForChild(tostring(loadoutNumber))
+        end
+
+
+        --==================================================
+        -- COUNT UNITS
+        --==================================================
+
+        local function getUnitCount(unitID)
+            if unitID == nil then
+                return 0
+            end
+
+            local count = 0
+
+            for _, unit in ipairs(FriendlyFolder:GetChildren()) do
+                if unit:IsA("Model") then
+                    local id = unit:GetAttribute("ID")
+
+                    if id == unitID then
+                        count += 1
+                    end
+                end
+            end
+
+            return count
+        end
+
+
+        --==================================================
+        -- UPDATE ONE SLOT
+        --==================================================
+
+        local function updateSlot(uiSlot)
+            local loadout = getCurrentLoadout()
+            local slotsFolder = loadout:WaitForChild("Slots")
+
+            local slot = slotsFolder:WaitForChild(
+                "Slot" .. uiSlot.SlotIndex + ((uiSlot.BarIndex - 1) * 4)
+            )
+
+            local unitID = slot.Value
+
+            local amount = getUnitCount(unitID)
+
+            if not SHOW_ZERO and amount <= 0 then
+                uiSlot.AmountText.Visible = false
+                return
+            end
+
+            uiSlot.AmountText.Visible = true
+
+            if SHOW_X then
+                uiSlot.AmountText.Text = "x" .. tostring(amount)
+            else
+                uiSlot.AmountText.Text = tostring(amount)
+            end
+        end
+
+
+        --==================================================
+        -- UPDATE EVERYTHING
+        --==================================================
+
+        local function updateAllSlots()
+            for _, uiSlot in ipairs(UISlots) do
+                updateSlot(uiSlot)
+            end
+        end
+
+
+        --==================================================
+        -- FRIENDLY FOLDER CHANGES
+        --==================================================
+
+        local function watchUnit(unit)
+            if not unit:IsA("Model") then
+                return
+            end
+
+            -- If the ID itself changes, update the counters.
+            unit:GetAttributeChangedSignal("ID"):Connect(function()
+                updateAllSlots()
+            end)
+        end
+
+
+        for _, unit in ipairs(FriendlyFolder:GetChildren()) do
+            watchUnit(unit)
+        end
+
+        FriendlyFolder.ChildAdded:Connect(function(unit)
+            watchUnit(unit)
+            updateAllSlots()
+        end)
+
+        FriendlyFolder.ChildRemoved:Connect(function()
+            updateAllSlots()
+        end)
+
+
+        --==================================================
+        -- LOADOUT CHANGES
+        --==================================================
+
+        -- If the player changes the selected loadout
+        currentLoadout.Changed:Connect(function()
+            updateAllSlots()
+        end)
+
+
+        -- Watch all six loadouts and their 8 slots.
+        for loadoutIndex = 1, 6 do
+            local loadout = LoadoutFolder:WaitForChild(tostring(loadoutIndex))
+            local slotsFolder = loadout:WaitForChild("Slots")
+
+            for slotIndex = 1, 8 do
+                local slot = slotsFolder:WaitForChild("Slot" .. slotIndex)
+
+                slot.Changed:Connect(function()
+                    updateAllSlots()
+                end)
+            end
+        end
+
+
+        --==================================================
+        -- INITIAL UPDATE
+        --==================================================
+
+        updateAllSlots()
+
+    end
+})
 -- Delete Gloom
 LQFTab:CreateButton({
 	Name = "Delete Gloom hazard",
@@ -1909,8 +2168,10 @@ LQFTab:CreateButton({
 })
 
 --SETTINGS
+
 _G.BrickTracker=true
 _G.StatsTracker=false
+
 --- Brick Tracker
 SettingsTab:CreateToggle({
     Name = "Brick Tracker",
@@ -2047,6 +2308,7 @@ SettingsTab:CreateToggle({
 
     end,
 })
+--- Currency Tracker
 SettingsTab:CreateToggle({
     Name = "Battle Currency Display",
     CurrentValue = false,
@@ -2066,18 +2328,18 @@ SettingsTab:CreateToggle({
         -- Position of the currency display INSIDE Info.
         -- Change these values to move it.
         local CURRENCY_POSITION = UDim2.new(
-            0, 0,
-            0, 5
+            0, 25,
+            1, 5
         )
 
         -- Size of the whole currency display
         local CURRENCY_SIZE = UDim2.fromOffset(
-            300,
-            35
+            100,
+            75
         )
 
         -- Space between currencies
-        local CURRENCY_GAP = 10
+        local CURRENCY_GAP = -7
 
         -- Size of each currency item
         local ITEM_WIDTH = 90
@@ -2394,7 +2656,41 @@ SettingsTab:CreateToggle({
 --[[ ideas:
 - try to finally utilize WEAKEST enemy
 - do every list of final bosses with their projectile naming
-- add a feature for Auto Bank of upgrading a Detonator, so it would upgrade when timer hits 0:00; solution: workspace.NPCFolders.BaseFolder["Blue Base"]:GetAttribute("Timer"); --* ADDED
-- make a text next to unit slot so it was tracking the amount of npcs you've got; each slot has only image, and not attribute, which makes things harder
+- make a text next to unit slot so it was tracking the amount of npcs you've got; each slot has only image, and not attribute, which makes things harder. path for slot: game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("BattleScreen"):WaitForChild("MobileSpawnMenu"):WaitForChild("Bar1/2"):WaitForChild("Slot1"); costText = slot:WaitForChild("CostText") --! In proccess
 - show up the XPToken, Bricks and Experience during the battle; path: game:GetService("Players").LocalPlayer.PlayerData.Currency    game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("BattleScreen"):WaitForChild("Info") --! In proccess
+]]--
+
+--[[
+Here's idea: make a amountUnitText above the costText of individual slot and be inside of costText as if costText is parent to amountUnitText, and amountUnitText will track how much there's certain units are inside of FriendlyFolder. And amountUnitText must include offset customization
+Context:
+- FriendlyFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("FriendlyFolder")
+- In FriendlyFolder, there's all NPCs that have been sent by Player. All Units are Models. There can be upto 8 unique units on the battle.
+- Each Model/Unit has it's own ID, which is shared with normal and alt forms. So, if you have 2 units of same type, they will have same ID. path: id = FriendlyFolder:WaitForChild(<model/unit>).GetAttribute.ID
+- currentLoadout = game:GetService("Players").LocalPlayer.PlayerData.Settings.LoadoutSelection
+- LoadoutSelection is a number ranging from 1 to 6, which is the current loadout that Player has selected. Each loadout has it's own slots, and each slot has it's own unit.
+- loadout<[1; 2.. 6]> = game:GetService("Players").LocalPlayer.PlayerData.Loadout:WaitForChild(<[1; 2.. 6]>)
+- loadout<n> is a preset of 8 slots of unique units, and there can be only 6 presets.
+- slot<[1; 2.. 8]> = loadout<n>.Slots:WaitForChild("Slot<[1; 2.. 8]>")
+- slot<n> is an int holder, which represents Value as ID for the certain unit with coresponding ID.
+- costText = game:GetService("Players").LocalPlayer.PlayerGui.BattleScreen.MobileSpawnMenu.Bar[1; 2].Slot[1; 2.. 4].CostText
+
+
+
+
+THE BEST DISCOVER YET:
+
+
+
+currentLoadout = game:GetService("Players").LocalPlayer.PlayerData.Settings.LoadoutSelection
+
+<there can be only 6 preset loadouts>; <loadout<n>=number ranging from 1 to 6) = game:GetService("Players").LocalPlayer.PlayerData.Loadout:WaitForChild(<n>)
+
+
+
+It immensively shorts the hours of suffering. And best fact: each model of unit has IT'S own ID, andi t's shared with normal and alt forms.
+
+
+
+slot<nn=[1; 8]> = loadout<n>.<[1; 6]>:WaitForChild("Slot<nn>")
+
 ]]--
