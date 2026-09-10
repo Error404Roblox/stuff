@@ -288,8 +288,8 @@ RunService.Heartbeat:Connect(function(dt)
         end)
     end
     -- Auto Bank
-    
-    --[[if base then
+    local base = BaseFolder:FindFirstChild("Blue Base")
+    if base then
         local timerValue = base:GetAttribute("Timer")
         local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
 
@@ -307,8 +307,8 @@ RunService.Heartbeat:Connect(function(dt)
                 end)
             end
         end
-    end]]--
-    task.spawn(function()
+    end
+    --[[task.spawn(function()
         while autoBankEnabled do
 
             local base = BaseFolder:FindFirstChild("Blue Base")
@@ -316,7 +316,7 @@ RunService.Heartbeat:Connect(function(dt)
             if base then
                 local timerValue = base:GetAttribute("Timer")
 
-                if timerValue == 0 then
+                if timerValue ~= nil and timerValue == 0 then
                     pcall(function()
                         local playerSpawnEvent =
                             ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
@@ -327,20 +327,11 @@ RunService.Heartbeat:Connect(function(dt)
 
                     task.wait(0.5)
                 end
-                elseif timerValue == nil then
-                    pcall(function()
-                        local playerSpawnEvent =
-                            ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
-
-                        playerSpawnEvent:InvokeServer("Bank")
-                    end)
-
-                    task.wait(0.5)
             end
 
             task.wait(0.25)
         end
-    end)
+    end)]]--
     -- Auto Delete EnemyProjectiles
     for p, _ in pairs(deletionProjectiles) do
         if p and p.Parent then
@@ -2057,36 +2048,346 @@ SettingsTab:CreateToggle({
     end,
 })
 SettingsTab:CreateToggle({
-    Name = "Stats Tracker",
+    Name = "Battle Currency Display",
     CurrentValue = false,
-    Flag = "StatsTrackerFlag",
+    Flag = "BattleCurrencyDisplayFlag",
 
     Callback = function(Value)
-        _G.StatsTracker = Value
+        _G.BattleCurrencyDisplay = Value
 
-        print(
-            _G.StatsTracker
-                and "🟢 Stats Tracker Enabled"
-                or "🚫 Stats Tracker Disabled"
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local playerGui = player:WaitForChild("PlayerGui")
+
+        --==================================================
+        -- SETTINGS
+        --==================================================
+
+        -- Position of the currency display INSIDE Info.
+        -- Change these values to move it.
+        local CURRENCY_POSITION = UDim2.new(
+            0, 0,
+            0, 5
         )
 
-        Rayfield:Notify({
-            Title = Value and "Enabled" or "Disabled",
-            Content = "Stats Tracker has been " .. (Value and "enabled" or "disabled") .. ".",
-            Duration = 2,
-            Image = "toy-brick"
-        })
-        -- Stop previous loop 
-        if _G.StatsTrackerConnection then
-            _G.StatsTrackerConnection:Disconnect()
-            _G.StatsTrackerConnection = nil
+        -- Size of the whole currency display
+        local CURRENCY_SIZE = UDim2.fromOffset(
+            300,
+            35
+        )
+
+        -- Space between currencies
+        local CURRENCY_GAP = 10
+
+        -- Size of each currency item
+        local ITEM_WIDTH = 90
+        local ITEM_HEIGHT = 30
+
+        --==================================================
+        -- CURRENCY ICONS
+        -- Replace these with your actual texture IDs
+        --==================================================
+
+        local XP_TOKEN_TEXTURE =
+            "rbxassetid://73868791805288"
+
+        local BRICKS_TEXTURE =
+            "rbxassetid://11372168849"
+
+        local EXPERIENCE_TEXTURE =
+            "rbxassetid://11372168370"
+
+        --==================================================
+        -- CLEANUP
+        --==================================================
+
+        if _G.BattleCurrencyDisplayGui then
+            _G.BattleCurrencyDisplayGui:Destroy()
+            _G.BattleCurrencyDisplayGui = nil
         end
-        if _G.StatsTrackerText then
-            _G.StatsTrackerText:Destroy() 
-            _G.StatsTrackerText = nil
+
+        if _G.BattleCurrencyDisplayConnections then
+            for _, connection in ipairs(_G.BattleCurrencyDisplayConnections) do
+                if connection then
+                    connection:Disconnect()
+                end
+            end
+
+            table.clear(_G.BattleCurrencyDisplayConnections)
+        else
+            _G.BattleCurrencyDisplayConnections = {}
         end
-        if not Value then return end
-    end
+
+        if not Value then
+            return
+        end
+
+        local connections =
+            _G.BattleCurrencyDisplayConnections
+
+        --==================================================
+        -- CURRENCY DATA
+        --==================================================
+
+        local currencyFolder =
+            player:WaitForChild("PlayerData"):WaitForChild("Currency")
+
+        --==================================================
+        -- CREATE CURRENCY ITEM
+        --==================================================
+
+        local function createCurrencyItem(
+            parent,
+            name,
+            texture
+        )
+
+            local item = Instance.new("Frame")
+            item.Name = name
+            item.Size = UDim2.fromOffset(
+                ITEM_WIDTH,
+                ITEM_HEIGHT
+            )
+            item.BackgroundTransparency = 1
+            item.BorderSizePixel = 0
+            item.Parent = parent
+
+            -- Amount
+            local amount = Instance.new("TextLabel")
+            amount.Name = "Amount"
+            amount.Size = UDim2.new(
+                1,
+                -32,
+                1,
+                0
+            )
+            amount.Position = UDim2.fromOffset(
+                0,
+                0
+            )
+            amount.BackgroundTransparency = 1
+            amount.Text = "0"
+            amount.TextColor3 =
+                Color3.fromRGB(255, 255, 255)
+            amount.TextStrokeColor3 =
+                Color3.fromRGB(0, 0, 0)
+            amount.TextStrokeTransparency = 0
+            amount.Font = Enum.Font.GothamBold
+            amount.TextScaled = true
+            amount.TextXAlignment =
+                Enum.TextXAlignment.Right
+            amount.Parent = item
+
+            -- Icon
+            local icon = Instance.new("ImageLabel")
+            icon.Name = "Icon"
+            icon.Size = UDim2.fromOffset(
+                26,
+                26
+            )
+            icon.Position = UDim2.new(
+                1,
+                -26,
+                0.5,
+                -13
+            )
+            icon.BackgroundTransparency = 1
+            icon.Image = texture
+            icon.ScaleType = Enum.ScaleType.Fit
+            icon.Parent = item
+
+            return item, amount
+        end
+
+        --==================================================
+        -- UPDATE CURRENCY
+        --==================================================
+
+        local function getCurrencyValue(name)
+
+            local value =
+                currencyFolder:FindFirstChild(name)
+
+            if not value then
+                return 0
+            end
+
+            if value:IsA("IntValue")
+                or value:IsA("NumberValue") then
+
+                return value.Value
+            end
+
+            return 0
+        end
+
+        local function formatNumber(number)
+
+            return tostring(number)
+        end
+
+        --==================================================
+        -- CREATE DISPLAY
+        --==================================================
+
+        local function createDisplay(info)
+
+            -- Remove previous display
+            if _G.BattleCurrencyDisplayGui then
+                _G.BattleCurrencyDisplayGui:Destroy()
+                _G.BattleCurrencyDisplayGui = nil
+            end
+
+            local display = Instance.new("Frame")
+            display.Name = "CurrencyDisplay"
+            display.Size = CURRENCY_SIZE
+            display.Position = CURRENCY_POSITION
+            display.BackgroundTransparency = 1
+            display.BorderSizePixel = 0
+            display.Parent = info
+
+            _G.BattleCurrencyDisplayGui = display
+
+            -- Horizontal layout
+            local layout =
+                Instance.new("UIListLayout")
+
+            layout.FillDirection =
+                Enum.FillDirection.Horizontal
+
+            layout.HorizontalAlignment =
+                Enum.HorizontalAlignment.Center
+
+            layout.VerticalAlignment =
+                Enum.VerticalAlignment.Center
+
+            layout.Padding =
+                UDim.new(0, CURRENCY_GAP)
+
+            layout.Parent = display
+
+            -- Create currencies
+            local xpItem, xpAmount =
+                createCurrencyItem(
+                    display,
+                    "XPToken",
+                    XP_TOKEN_TEXTURE
+                )
+
+            local brickItem, brickAmount =
+                createCurrencyItem(
+                    display,
+                    "Bricks",
+                    BRICKS_TEXTURE
+                )
+
+            local experienceItem, experienceAmount =
+                createCurrencyItem(
+                    display,
+                    "Experience",
+                    EXPERIENCE_TEXTURE
+                )
+
+            --==================================================
+            -- UPDATE
+            --==================================================
+
+            local function update()
+
+                if not Value then
+                    return
+                end
+
+                if not display.Parent then
+                    return
+                end
+
+                xpAmount.Text =
+                    formatNumber(
+                        getCurrencyValue("XPToken")
+                    )
+
+                brickAmount.Text =
+                    formatNumber(
+                        getCurrencyValue("Bricks")
+                    )
+
+                experienceAmount.Text =
+                    formatNumber(
+                        getCurrencyValue("Experience")
+                    )
+            end
+
+            update()
+
+            -- Listen for currency changes
+            for _, currencyName in ipairs({
+                "XPToken",
+                "Bricks",
+                "Experience"
+            }) do
+
+                local currency =
+                    currencyFolder:FindFirstChild(currencyName)
+
+                if currency then
+
+                    table.insert(
+                        connections,
+
+                        currency:GetPropertyChangedSignal(
+                            "Value"
+                        ):Connect(update)
+                    )
+                end
+            end
+        end
+
+        --==================================================
+        -- FIND BATTLESCREEN / INFO
+        --==================================================
+
+        task.spawn(function()
+
+            local currentInfo = nil
+
+            while _G.BattleCurrencyDisplay do
+
+                local battleScreen =
+                    playerGui:FindFirstChild(
+                        "BattleScreen"
+                    )
+
+                local info = nil
+
+                if battleScreen then
+                    info = battleScreen:FindFirstChild(
+                        "Info"
+                    )
+                end
+
+                -- New BattleScreen / Info appeared
+                if info and info ~= currentInfo then
+
+                    currentInfo = info
+
+                    createDisplay(info)
+
+                -- BattleScreen disappeared
+                elseif not info then
+
+                    currentInfo = nil
+
+                    if _G.BattleCurrencyDisplayGui then
+                        _G.BattleCurrencyDisplayGui:Destroy()
+                        _G.BattleCurrencyDisplayGui = nil
+                    end
+                end
+
+                task.wait(0.25)
+            end
+        end)
+    end,
 })
 
 
