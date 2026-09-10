@@ -91,6 +91,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local FriendlyFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("FriendlyFolder")
 local EnemyFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("EnemyFolder")
 local ProjectileFolder = Workspace:WaitForChild("Projectile")
+local BaseFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("BaseFolder")
 
 local trackedProjectiles, deletionProjectiles, neutralProjectiles = {}, {}, {}
 local activeProjectileToggles = {}
@@ -128,7 +129,7 @@ AutomationTab:CreateToggle({
 })
 
 AutomationTab:CreateToggle({
-    Name = "Auto Bank",
+    Name = "Auto Bank (+ Smart Detonator)",
     CurrentValue = false,
     Callback = function(state)
         autoBankEnabled = state
@@ -287,13 +288,27 @@ RunService.Heartbeat:Connect(function(dt)
         end)
     end
     -- Auto Bank
-    if autoBankEnabled then
-        pcall(function()
-            local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
-            task.spawn(function()
-                playerSpawnEvent:InvokeServer("Bank")
+    local base = BaseFolder:FindFirstChild("Blue Base")
+    if base then
+        local baseName = base:GetAttribute("BaseName")
+        if autoBankEnabled and baseName ~= "Detonator" then
+            pcall(function()
+                local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
+                task.spawn(function()
+                    playerSpawnEvent:InvokeServer("Bank")
+                end)
             end)
-        end)
+        elseif autoBankEnabled and baseName == "Detonator" then
+            local timerValue = base:GetAttribute("Timer")
+            if timerValue == 0 then
+                pcall(function()
+                    local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
+                    task.spawn(function()
+                        playerSpawnEvent:InvokeServer("Bank")
+                    end)
+                end)
+            end
+        end
     end
     -- Auto Delete EnemyProjectiles
     for p, _ in pairs(deletionProjectiles) do
@@ -383,7 +398,7 @@ end
 
 -- Populate Toggles inside DeletEneProj Tab (Sorted A to Z)
 local deletionProjectilesList = {
-    "Arrow", "BloodStone", "BloodCrystal", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "Rock", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "ZetaRocket", "ZombieBomb"
+    "Arrow", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "Rock", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "ZetaRocket", "ZombieBomb"
 }
 
 table.sort(deletionProjectilesList)
@@ -420,7 +435,7 @@ end
 
 -- DeleteProjectile but now they're neutral
 local NdeletionProjectilesList = {
-    "Teapot", "FireTeapot", "Spam", "TrollPie"
+    "BloodStone", "BloodCrystal", "Teapot", "FireTeapot", "Spam", "TrollPie"
 }
 
 table.sort(NdeletionProjectilesList)
@@ -1873,6 +1888,7 @@ LQFTab:CreateButton({
 
 --SETTINGS
 _G.BrickTracker=true
+_G.StatsTracker=false
 --- Brick Tracker
 SettingsTab:CreateToggle({
     Name = "Brick Tracker",
@@ -2007,92 +2023,46 @@ SettingsTab:CreateToggle({
             end
         end)
 
-
-
-
-
-
-
-
-
-
-
-    --[[    -- End game bar
-        local battleScreen = playerGui:WaitForChild("BattleScreen")
-        local endGameBar = battleScreen:WaitForChild("EndGame"):WaitForChild("Bar")
-
-        -- Clone the original timer so it keeps its styling
-        local brickTrackText = originalTimeText:Clone()
-        brickTrackText.Name = "BrickTrackText"
-
-        -- Red-ish color
-        brickTrackText.TextColor3 = Color3.fromRGB(255, 80, 80)
-
-        -- Put it in the same parent as EndGame.Bar
-        brickTrackText.Parent = endGameBar.Parent
-
-        _G.BrickTrackerText = brickTrackText
-        
-
-        -- Position it below EndGame.Bar
-        local function updatePosition()
-            if not brickTrackText.Parent or not endGameBar.Parent then
-                return
-            end
-
-            local parent = endGameBar.Parent
-
-            local barPosition = endGameBar.Position
-            local barSize = endGameBar.Size
-
-            brickTrackText.AnchorPoint = Vector2.new(0.5, 0)
-
-            brickTrackText.Position = UDim2.new(
-                barPosition.X.Scale + (barSize.X.Scale / 2),
-                barPosition.X.Offset + (barSize.X.Offset / 2),
-                barPosition.Y.Scale + barSize.Y.Scale,
-                barPosition.Y.Offset + barSize.Y.Offset + 5
-            )
-            brickTrackText.Position = UDim2.new(
-                barPosition.X.Scale + (barSize.X.Scale / 2),
-                barPosition.X.Offset + (barSize.X.Offset / 2) + BAR_OFFSET_X,
-                barPosition.Y.Scale + barSize.Y.Scale,
-                barPosition.Y.Offset + barSize.Y.Offset + BAR_OFFSET_Y
-            )
-            brickTrackText.Size = UDim2.new(
-                4, 100, -- Scale, Offscale of X
-                1, 5 -- Scale, Offscale of Y
-            )
-            brickTrackText.TextXAlignment = Enum.TextXAlignment.Left
-        end
-
-        updatePosition()
-
-        -- Copy timer text from the original Time label
-        _G.BrickTrackerConnection = RunService.RenderStepped:Connect(function()
-            if not _G.BrickTracker then
-                return
-            end
-
-            if not originalTimeText.Parent then
-                return
-            end
-
-            if not brickTrackText.Parent then
-                return
-            end
-
-            -- Copy the text
-            brickTrackText.Text = originalTimeText.Text .. " left to claim Bricks."
-
-            -- Keep it positioned below the EndGame bar
-            updatePosition()
-        end)]]--
     end,
+})
+SettingsTab:CreateToggle({
+    Name = "Stats Tracker",
+    CurrentValue = false,
+    Flag = "StatsTrackerFlag",
+
+    Callback = function(Value)
+        _G.StatsTracker = Value
+
+        print(
+            _G.StatsTracker
+                and "🟢 Stats Tracker Enabled"
+                or "🚫 Stats Tracker Disabled"
+        )
+
+        Rayfield:Notify({
+            Title = Value and "Enabled" or "Disabled",
+            Content = "Stats Tracker has been " .. (Value and "enabled" or "disabled") .. ".",
+            Duration = 2,
+            Image = "toy-brick"
+        })
+        -- Stop previous loop 
+        if _G.StatsTrackerConnection then
+            _G.StatsTrackerConnection:Disconnect()
+            _G.StatsTrackerConnection = nil
+        end
+        if _G.StatsTrackerText then
+            _G.StatsTrackerText:Destroy() 
+            _G.StatsTrackerText = nil
+        end
+        if not Value then return end
+    end
 })
 
 
 --[[ ideas:
 - try to finally utilize WEAKEST enemy
 - do every list of final bosses with their projectile naming
+- add a feature for Auto Bank of upgrading a Detonator, so it would upgrade when timer hits 0:00; solution: workspace.NPCFolders.BaseFolder["Blue Base"]:GetAttribute("Timer"); --* ADDED
+- make a text next to unit slot so it was tracking the amount of npcs you've got; each slot has only image, and not attribute, which makes things harder
+- show up the XPToken, Bricks and Experience during the battle; path: game:GetService("Players").LocalPlayer.PlayerData.Currency    game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("BattleScreen"):WaitForChild("Info") --! In proccess
 ]]--
