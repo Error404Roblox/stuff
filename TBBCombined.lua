@@ -292,7 +292,7 @@ RunService.Heartbeat:Connect(function(dt)
     if base then
         local timerValue = base:GetAttribute("Timer")
         local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
-        
+
         if autoBankEnabled and timerValue == nil then
             pcall(function()
                 task.spawn(function()
@@ -303,6 +303,7 @@ RunService.Heartbeat:Connect(function(dt)
             if timerValue == 0 then
                 pcall(function()
                     playerSpawnEvent:InvokeServer("Bank")
+                    timerValue = 60
                 end)
             end
         end
