@@ -291,21 +291,18 @@ RunService.Heartbeat:Connect(function(dt)
     local base = BaseFolder:FindFirstChild("Blue Base")
     if base then
         local timerValue = base:GetAttribute("Timer")
+        local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
+        
         if autoBankEnabled and timerValue == nil then
             pcall(function()
-                local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
                 task.spawn(function()
                     playerSpawnEvent:InvokeServer("Bank")
                 end)
             end)
         elseif autoBankEnabled and timerValue then
-            
             if timerValue == 0 then
                 pcall(function()
-                    local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
-                    task.spawn(function()
-                        playerSpawnEvent:InvokeServer("Bank")
-                    end)
+                    playerSpawnEvent:InvokeServer("Bank")
                 end)
             end
         end
