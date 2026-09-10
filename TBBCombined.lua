@@ -1972,19 +1972,19 @@ LQFTab:CreateToggle({
         local UISlots = {}
 
         for barIndex = 1, 2 do
-            local bar = MobileSpawnMenu:WaitForChild("Bar" .. barIndex)
+            local bar = MobileSpawnMenu:WaitForChild("Bar" .. tostring(barIndex))
             local slotFolder = bar:WaitForChild("Slot")
 
-            for slotIndex = 1, 4 do
+            for slotIndex = 1, 2, 3, 4 do
                 local slot = slotFolder:WaitForChild("Slot"..tostring(slotIndex))
                 local costText = slot:WaitForChild("CostText")
 
                 -- Create amountUnitText if it doesn't already exist
-                local amountUnitText = costText:FindFirstChild("amountUnitText")
+                local amountUnitText = costText:FindFirstChild("AmountUnitText")
 
                 if not amountUnitText then
                     amountUnitText = Instance.new("TextLabel")
-                    amountUnitText.Name = "amountUnitText"
+                    amountUnitText.Name = "AmountUnitText"
                     amountUnitText.BackgroundTransparency = 1
                     amountUnitText.BorderSizePixel = 0
                     amountUnitText.Parent = costText
