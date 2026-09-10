@@ -1795,7 +1795,7 @@ LQFTab:CreateToggle({
         )
     end
 })
-LQFTab:CreateToggle({
+--[[LQFTab:CreateToggle({
     Name = "Unit Counter",
     CurrentValue = false,
     Flag = "UnitCounterFlag",
@@ -1826,8 +1826,6 @@ LQFTab:CreateToggle({
         local MobileSpawnMenu = player.PlayerGui
             :WaitForChild("BattleScreen")
             :WaitForChild("MobileSpawnMenu")
-
-        local Bar = MobileSpawnMenu:WaitForChild("Bar")
 
         -- CONFIGURATION
 
@@ -2043,7 +2041,527 @@ LQFTab:CreateToggle({
         updateAllSlots()
 
     end
+})]]--
+LQFTab:CreateToggle({
+    Name = "Unit Counter",
+    CurrentValue = false,
+    Flag = "UnitCounterFlag",
+
+    Callback = function(Value)
+
+        _G.UnitCounter = Value
+
+        Rayfield:Notify({
+            Title = Value and "Enabled" or "Disabled",
+            Content = "Unit Counter has been "
+                .. (Value and "enabled" or "disabled") .. ".",
+            Duration = 5,
+            Image = 10850711054
+        })
+
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local playerGui = player:WaitForChild("PlayerGui")
+
+        --==================================================
+        -- REFERENCES
+        --==================================================
+
+        local PlayerData =
+            player:WaitForChild("PlayerData")
+
+        local currentLoadout =
+            PlayerData
+                :WaitForChild("Settings")
+                :WaitForChild("LoadoutSelection")
+
+        local LoadoutFolder =
+            PlayerData:WaitForChild("Loadout")
+
+        ----------------------------------------------------
+        -- IMPORTANT:
+        -- CHANGE THIS TO YOUR ACTUAL FRIENDLY FOLDER.
+        ----------------------------------------------------
+
+        local FriendlyFolder =
+            workspace:WaitForChild("Friendly")
+
+        --==================================================
+        -- CONFIGURATION
+        --==================================================
+
+        local SHOW_X = true
+
+        -- Position relative to CostText
+        local AMOUNT_OFFSET = UDim2.new(
+            0, 0,
+            0, 20
+        )
+
+        local AMOUNT_SIZE = UDim2.new(
+            1, 0,
+            0, 20
+        )
+
+        local AMOUNT_TEXT_SIZE = 14
+
+        local AMOUNT_TEXT_COLOR =
+            Color3.fromRGB(255, 255, 255)
+
+        local SHOW_ZERO = true
+
+        --==================================================
+        -- CLEANUP OLD CONNECTIONS
+        --==================================================
+
+        if _G.UnitCounterConnections then
+            for _, connection in ipairs(
+                _G.UnitCounterConnections
+            ) do
+                if connection then
+                    connection:Disconnect()
+                end
+            end
+        end
+
+        _G.UnitCounterConnections = {}
+
+        local connections =
+            _G.UnitCounterConnections
+
+        if not Value then
+            return
+        end
+
+        --==================================================
+        -- UI SLOTS
+        --==================================================
+
+        local UISlots = {}
+
+        local function setupUISlots()
+
+            table.clear(UISlots)
+
+            local battleScreen =
+                playerGui:FindFirstChild("BattleScreen")
+
+            if not battleScreen then
+                return
+            end
+
+            local mobileSpawnMenu =
+                battleScreen:FindFirstChild(
+                    "MobileSpawnMenu"
+                )
+
+            if not mobileSpawnMenu then
+                return
+            end
+
+            for barIndex = 1, 2 do
+
+                local bar =
+                    mobileSpawnMenu:FindFirstChild(
+                        "Bar" .. barIndex
+                    )
+
+                if bar then
+
+                    for slotIndex = 1, 4 do
+
+                        local slot =
+                            bar:FindFirstChild(
+                                "Slot" .. slotIndex
+                            )
+
+                        if slot then
+
+                            local costText =
+                                slot:FindFirstChild(
+                                    "CostText"
+                                )
+
+                            if costText then
+
+                                local amountUnitText =
+                                    costText:FindFirstChild(
+                                        "AmountUnitText"
+                                    )
+
+                                if not amountUnitText then
+
+                                    amountUnitText =
+                                        Instance.new(
+                                            "TextLabel"
+                                        )
+
+                                    amountUnitText.Name =
+                                        "AmountUnitText"
+
+                                    amountUnitText.BackgroundTransparency =
+                                        1
+
+                                    amountUnitText.BorderSizePixel =
+                                        0
+
+                                    amountUnitText.Parent =
+                                        costText
+                                end
+
+                                -- Position
+                                amountUnitText.Position =
+                                    AMOUNT_OFFSET
+
+                                amountUnitText.Size =
+                                    AMOUNT_SIZE
+
+                                amountUnitText.TextSize =
+                                    AMOUNT_TEXT_SIZE
+
+                                amountUnitText.TextColor3 =
+                                    AMOUNT_TEXT_COLOR
+
+                                amountUnitText.TextXAlignment =
+                                    Enum.TextXAlignment.Center
+
+                                amountUnitText.TextYAlignment =
+                                    Enum.TextYAlignment.Center
+
+                                amountUnitText.ZIndex =
+                                    costText.ZIndex + 1
+
+                                table.insert(
+                                    UISlots,
+                                    {
+                                        BarIndex = barIndex,
+                                        SlotIndex = slotIndex,
+                                        CostText = costText,
+                                        AmountText = amountUnitText
+                                    }
+                                )
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        --==================================================
+        -- CURRENT LOADOUT
+        --==================================================
+
+        local function getCurrentLoadout()
+
+            local loadoutNumber =
+                tonumber(currentLoadout.Value)
+
+            if not loadoutNumber then
+                return nil
+            end
+
+            if loadoutNumber < 1
+                or loadoutNumber > 6 then
+                return nil
+            end
+
+            return LoadoutFolder:FindFirstChild(
+                tostring(loadoutNumber)
+            )
+        end
+
+        --==================================================
+        -- GET UNIT ID
+        --==================================================
+
+        local function getUnitID(
+            barIndex,
+            slotIndex
+        )
+
+            local loadout =
+                getCurrentLoadout()
+
+            if not loadout then
+                return nil
+            end
+
+            local actualSlotNumber =
+                slotIndex
+                + ((barIndex - 1) * 4)
+
+            local slot =
+                loadout:FindFirstChild(
+                    "Slot" .. actualSlotNumber
+                )
+
+            if not slot then
+                return nil
+            end
+
+            if not slot:IsA("IntValue") then
+                return nil
+            end
+
+            return slot.Value
+        end
+
+        --==================================================
+        -- COUNT UNITS
+        --==================================================
+
+        local function getUnitCount(unitID)
+
+            if unitID == nil then
+                return 0
+            end
+
+            local count = 0
+
+            for _, unit in ipairs(
+                FriendlyFolder:GetChildren()
+            ) do
+
+                if unit:IsA("Model") then
+
+                    local id =
+                        unit:GetAttribute("ID")
+
+                    if id == unitID then
+                        count += 1
+                    end
+                end
+            end
+
+            return count
+        end
+
+        --==================================================
+        -- UPDATE ONE SLOT
+        --==================================================
+
+        local function updateSlot(uiSlot)
+
+            if not Value then
+                return
+            end
+
+            local unitID =
+                getUnitID(
+                    uiSlot.BarIndex,
+                    uiSlot.SlotIndex
+                )
+
+            if unitID == nil then
+
+                uiSlot.AmountText.Visible = false
+                return
+            end
+
+            local amount =
+                getUnitCount(unitID)
+
+            if not SHOW_ZERO
+                and amount <= 0 then
+
+                uiSlot.AmountText.Visible = false
+                return
+            end
+
+            uiSlot.AmountText.Visible = true
+
+            if SHOW_X then
+                uiSlot.AmountText.Text =
+                    "x" .. tostring(amount)
+            else
+                uiSlot.AmountText.Text =
+                    tostring(amount)
+            end
+        end
+
+        --==================================================
+        -- UPDATE EVERYTHING
+        --==================================================
+
+        local function updateAllSlots()
+
+            if not Value then
+                return
+            end
+
+            setupUISlots()
+
+            for _, uiSlot in ipairs(UISlots) do
+                updateSlot(uiSlot)
+            end
+        end
+
+        --==================================================
+        -- FRIENDLY FOLDER CHANGES
+        --==================================================
+
+        local function watchUnit(unit)
+
+            if not unit:IsA("Model") then
+                return
+            end
+
+            table.insert(
+                connections,
+
+                unit:GetAttributeChangedSignal(
+                    "ID"
+                ):Connect(function()
+
+                    if Value then
+                        updateAllSlots()
+                    end
+                end)
+            )
+        end
+
+        for _, unit in ipairs(
+            FriendlyFolder:GetChildren()
+        ) do
+            watchUnit(unit)
+        end
+
+        table.insert(
+            connections,
+
+            FriendlyFolder.ChildAdded:Connect(
+                function(unit)
+
+                    if not Value then
+                        return
+                    end
+
+                    watchUnit(unit)
+                    updateAllSlots()
+                end
+            )
+        )
+
+        table.insert(
+            connections,
+
+            FriendlyFolder.ChildRemoved:Connect(
+                function()
+
+                    if not Value then
+                        return
+                    end
+
+                    updateAllSlots()
+                end
+            )
+        )
+
+        --==================================================
+        -- LOADOUT SELECTION CHANGED
+        --==================================================
+
+        table.insert(
+            connections,
+
+            currentLoadout:GetPropertyChangedSignal(
+                "Value"
+            ):Connect(function()
+
+                if Value then
+                    updateAllSlots()
+                end
+            end)
+        )
+
+        --==================================================
+        -- WATCH ALL LOADOUT SLOTS
+        --==================================================
+
+        for loadoutIndex = 1, 6 do
+
+            local loadout =
+                LoadoutFolder:FindFirstChild(
+                    tostring(loadoutIndex)
+                )
+
+            if loadout then
+
+                for slotIndex = 1, 8 do
+
+                    local slot =
+                        loadout:FindFirstChild(
+                            "Slot" .. slotIndex
+                        )
+
+                    if slot
+                        and slot:IsA("IntValue") then
+
+                        table.insert(
+                            connections,
+
+                            slot:GetPropertyChangedSignal(
+                                "Value"
+                            ):Connect(function()
+
+                                if Value then
+                                    updateAllSlots()
+                                end
+
+                            end)
+                        )
+                    end
+                end
+            end
+        end
+
+        --==================================================
+        -- BATTLESCREEN RECREATION
+        --==================================================
+
+        task.spawn(function()
+
+            local previousBattleScreen = nil
+
+            while _G.UnitCounter do
+
+                local battleScreen =
+                    playerGui:FindFirstChild(
+                        "BattleScreen"
+                    )
+
+                if battleScreen
+                    ~= previousBattleScreen then
+
+                    previousBattleScreen =
+                        battleScreen
+
+                    if battleScreen then
+
+                        task.wait(0.1)
+
+                        if Value then
+                            updateAllSlots()
+                        end
+                    end
+
+                elseif not battleScreen then
+
+                    previousBattleScreen = nil
+                end
+
+                task.wait(0.25)
+            end
+        end)
+
+        --==================================================
+        -- INITIAL UPDATE
+        --==================================================
+
+        updateAllSlots()
+    end
 })
+
 -- Delete Gloom
 LQFTab:CreateButton({
 	Name = "Delete Gloom hazard",
