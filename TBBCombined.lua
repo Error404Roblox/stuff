@@ -288,8 +288,8 @@ RunService.Heartbeat:Connect(function(dt)
         end)
     end
     -- Auto Bank
-    local base = BaseFolder:FindFirstChild("Blue Base")
-    if base then
+    
+    --[[if base then
         local timerValue = base:GetAttribute("Timer")
         local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
 
@@ -307,7 +307,40 @@ RunService.Heartbeat:Connect(function(dt)
                 end)
             end
         end
-    end
+    end]]--
+    task.spawn(function()
+        while autoBankEnabled do
+
+            local base = BaseFolder:FindFirstChild("Blue Base")
+
+            if base then
+                local timerValue = base:GetAttribute("Timer")
+
+                if timerValue == 0 then
+                    pcall(function()
+                        local playerSpawnEvent =
+                            ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
+
+                        playerSpawnEvent:InvokeServer("Bank")
+                        timerValue = 60
+                    end)
+
+                    task.wait(0.5)
+                end
+                elseif timerValue == nil then
+                    pcall(function()
+                        local playerSpawnEvent =
+                            ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
+
+                        playerSpawnEvent:InvokeServer("Bank")
+                    end)
+
+                    task.wait(0.5)
+            end
+
+            task.wait(0.25)
+        end
+    end)
     -- Auto Delete EnemyProjectiles
     for p, _ in pairs(deletionProjectiles) do
         if p and p.Parent then
