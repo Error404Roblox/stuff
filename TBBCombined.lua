@@ -2681,9 +2681,10 @@ LQFTab:CreateToggle({
 
                     amountUnitText.Visible = true
 
-                    table.insert(
-                        UISlots,
+                    local actualSlotNumber = slotIndex + ((barIndex - 1) * 4)
+                    table.insert(UISlots,
                         {
+                            SlotNumber = actualSlotNumber,
                             BarIndex = barIndex,
                             SlotIndex = slotIndex,
                             CostText = costText,
@@ -2727,7 +2728,7 @@ LQFTab:CreateToggle({
         -- GET UNIT ID
         --==================================================
 
-        local function getUnitID(barIndex, slotIndex)
+        --[[local function getUnitID(barIndex, slotIndex)
 
             local loadout =
                 getCurrentLoadout()
@@ -2785,13 +2786,31 @@ LQFTab:CreateToggle({
             )
 
             return unitID
+        end]]--
+        local function getUnitID(slotNumber)
+
+            local loadout = getCurrentLoadout()
+
+            if not loadout then
+                return nil
+            end
+
+            local slot = loadout:FindFirstChild(
+                "Slot" .. slotNumber
+            )
+
+            if not slot or not slot:IsA("IntValue") then
+                return nil
+            end
+
+            return slot.Value
         end
 
         --==================================================
         -- COUNT UNITS
         --==================================================
 
-        local function getUnitCount(unitID)
+        --[[local function getUnitCount(unitID)
 
             if unitID == nil then
                 return 0
@@ -2813,6 +2832,35 @@ LQFTab:CreateToggle({
             end
 
             return count
+        end]]--
+        local function updateSlot(uiSlot)
+
+            if not Value then
+                return
+            end
+
+            if not uiSlot.AmountText
+                or not uiSlot.AmountText.Parent then
+                return
+            end
+
+            local unitID = getUnitID(uiSlot.SlotNumber)
+
+            if unitID == nil then
+                uiSlot.AmountText.Text = "?"
+                uiSlot.AmountText.Visible = true
+                return
+            end
+
+            local amount = getUnitCount(unitID)
+
+            uiSlot.AmountText.Visible = true
+
+            if SHOW_X then
+                uiSlot.AmountText.Text = "x" .. tostring(amount)
+            else
+                uiSlot.AmountText.Text = tostring(amount)
+            end
         end
 
         --==================================================
