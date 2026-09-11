@@ -2632,7 +2632,7 @@ LQFTab:CreateToggle({
                         amountUnitText = Instance.new("TextLabel")
                         amountUnitText.Name = "AmountUnitText"
                         amountUnitText.BackgroundTransparency = 1
-                        amoutUnitText.TextStrokeTransparency = 0
+                        amountUnitText.TextStrokeTransparency = 0
                         amountUnitText.BorderSizePixel = 0
                         amountUnitText.Parent = slot
                     end
