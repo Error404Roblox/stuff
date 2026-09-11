@@ -2810,7 +2810,7 @@ LQFTab:CreateToggle({
         -- COUNT UNITS
         --==================================================
 
-        --[[local function getUnitCount(unitID)
+        local function getUnitCount(unitID)
 
             if unitID == nil then
                 return 0
@@ -2832,8 +2832,50 @@ LQFTab:CreateToggle({
             end
 
             return count
+        end
+
+
+        --==================================================
+        -- UPDATE SLOT
+        --==================================================
+
+        --[[local function updateSlot(uiSlot)
+
+            if not Value then
+                return
+            end
+
+            -- Make absolutely sure the label exists
+            if not uiSlot.AmountText or not uiSlot.AmountText.Parent then
+                return
+            end
+
+            local unitID = getUnitID(uiSlot.BarIndex, uiSlot.SlotIndex)
+
+            if unitID == nil then
+
+                uiSlot.AmountText.Text = "?"
+                uiSlot.AmountText.Visible = true
+                warn("unitID is nil w/ SHOW_ZERO.")
+                return
+            end --! Currently this is the part where the script stops working
+
+            local amount = getUnitCount(unitID)
+            if not SHOW_ZERO and amount <= 0 then
+                uiSlot.AmountText.Visible = true
+                warn("unitID is nil without SHOW_ZERO.")
+                return
+            end --! Or here.
+
+            uiSlot.AmountText.Visible = true
+
+            if SHOW_X then
+                uiSlot.AmountText.Text = "x" .. tostring(amount)
+            else
+                uiSlot.AmountText.Text = tostring(amount)
+            end
         end]]--
-        local function updateSlot(uiSlot)
+                local function updateSlot(uiSlot)
 
             if not Value then
                 return
@@ -2849,61 +2891,19 @@ LQFTab:CreateToggle({
             if unitID == nil then
                 uiSlot.AmountText.Text = "?"
                 uiSlot.AmountText.Visible = true
+                warn("unitID is nil w/ SHOW_ZERO.")
                 return
             end
 
             local amount = getUnitCount(unitID)
 
             uiSlot.AmountText.Visible = true
-
             if SHOW_X then
                 uiSlot.AmountText.Text = "x" .. tostring(amount)
             else
                 uiSlot.AmountText.Text = tostring(amount)
             end
         end
-
-        --==================================================
-        -- UPDATE SLOT
-        --==================================================
-
-        local function updateSlot(uiSlot)
-
-            if not Value then
-                return
-            end
-
-            -- Make absolutely sure the label exists
-            if not uiSlot.AmountText or not uiSlot.AmountText.Parent then
-                return
-            end
-
-            local unitID = getUnitID(uiSlot.BarIndex, uiSlot.SlotIndex)
-
-            if unitID == nil then
-
-                uiSlot.AmountText.Text = ""
-
-                uiSlot.AmountText.Visible = false
-
-                return
-            end --! Currently this is the part where the script stops working
-
-            local amount = getUnitCount(unitID)
-            if not SHOW_ZERO and amount <= 0 then
-                uiSlot.AmountText.Visible = false
-                return
-            end --! Or here.
-
-            uiSlot.AmountText.Visible = true
-
-            if SHOW_X then
-                uiSlot.AmountText.Text = "x" .. tostring(amount)
-            else
-                uiSlot.AmountText.Text = tostring(amount)
-            end
-        end
-
         --==================================================
         -- UPDATE EVERYTHING
         --==================================================
