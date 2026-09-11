@@ -2588,15 +2588,12 @@ LQFTab:CreateToggle({
         local function setupUISlots()
 
             table.clear(UISlots)
-
             local battleScreen = playerGui:FindFirstChild("BattleScreen")
-
             if not battleScreen then
                 return
             end
 
             local mobileSpawnMenu = battleScreen:FindFirstChild("MobileSpawnMenu")
-
             if not mobileSpawnMenu then
                 return
             end
@@ -2743,19 +2740,27 @@ LQFTab:CreateToggle({
 
             return unitID
         end]]--
-        local function getUnitID(slotNumber)
+        local function getUnitID(uiSlot)
 
             local loadout = getCurrentLoadout()
-
             if not loadout then
                 return nil
             end
 
-            local slot = loadout:FindFirstChild(
-                "Slot" .. slotNumber
-            )
+            local slot = loadout:FindFirstChild("Slot" .. uiSlot.SlotNumber)
+            if not slot then
+                warn(
+                     "[Unit Counter] Missing:",
+                     "Slot" .. uiSlot.SlotNumber
+                    )
+                return nil
+            end
 
-            if not slot or not slot:IsA("IntValue") then
+            if not slot:IsA("IntValue") then
+                warn(
+                     "[Unit Counter] Expected IntValue, got:",
+                     slot.ClassName
+                    )
                 return nil
             end
 
@@ -2831,8 +2836,7 @@ LQFTab:CreateToggle({
                 uiSlot.AmountText.Text = tostring(amount)
             end
         end]]--
-                local function updateSlot(uiSlot)
-
+        local function updateSlot(uiSlot)
             if not Value then
                 return
             end
@@ -2842,12 +2846,12 @@ LQFTab:CreateToggle({
                 return
             end
 
-            local unitID = getUnitID(uiSlot.SlotNumber)
+            local unitID = getUnitID(uiSlot)
 
             if unitID == nil then
                 uiSlot.AmountText.Text = "?"
                 uiSlot.AmountText.Visible = true
-                warn("unitID is nil w/ SHOW_ZERO.")
+                warn("unitID is nil w/ SHOW_ZERO.") --! Current issue
                 return
             end
 
@@ -2865,7 +2869,6 @@ LQFTab:CreateToggle({
         --==================================================
 
         local function updateAllSlots()
-
             if not Value then
                 return
             end
