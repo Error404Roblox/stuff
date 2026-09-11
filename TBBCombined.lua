@@ -2546,7 +2546,7 @@ LQFTab:CreateToggle({
 
         local AMOUNT_POSITION = UDim2.new(
             0, 0,
-            0, -20
+            0, 10
         )
 
         local AMOUNT_SIZE = UDim2.new(
@@ -2647,6 +2647,8 @@ LQFTab:CreateToggle({
                         amountUnitText = Instance.new("TextLabel")
                         amountUnitText.Name = "AmountUnitText"
                         amountUnitText.BackgroundTransparency = 1
+                        amountUnitText.TextStrokeTransparency = 0
+                        amountUnitText.TextScaled = true
                         amountUnitText.BorderSizePixel = 0
                         amountUnitText.Parent = slot
                         print("[Unit Counter] Created:", amountUnitText:GetFullName())
@@ -2705,9 +2707,7 @@ LQFTab:CreateToggle({
                 return nil
             end
 
-            if loadoutNumber < 1
-                or loadoutNumber > 6 then
-
+            if loadoutNumber < 1 or loadoutNumber > 6 then
                 return nil
             end
 
@@ -2727,10 +2727,7 @@ LQFTab:CreateToggle({
         -- GET UNIT ID
         --==================================================
 
-        local function getUnitID(
-            barIndex,
-            slotIndex
-        )
+        local function getUnitID(barIndex, slotIndex)
 
             local loadout =
                 getCurrentLoadout()
@@ -2751,14 +2748,8 @@ LQFTab:CreateToggle({
             -- Slot3 -> Loadout Slot7
             -- Slot4 -> Loadout Slot8
 
-            local actualSlotNumber =
-                slotIndex
-                + ((barIndex - 1) * 4)
-
-            local loadoutSlot =
-                loadout:FindFirstChild(
-                    "Slot" .. actualSlotNumber
-                )
+            local actualSlotNumber = slotIndex + ((barIndex - 1) * 4)
+            local loadoutSlot = loadout:FindFirstChild("Slot" .. actualSlotNumber)
 
             if not loadoutSlot then
 
@@ -2783,8 +2774,7 @@ LQFTab:CreateToggle({
                 return nil
             end
 
-            local unitID =
-                tonumber(loadoutSlot.Value)
+            local unitID = tonumber(loadoutSlot.Value)
 
             print(
                 "[Unit Counter]",
@@ -2815,11 +2805,7 @@ LQFTab:CreateToggle({
 
                 if unit:IsA("Model") then
 
-                    local id =
-                        tonumber(
-                            unit:GetAttribute("ID")
-                        )
-
+                    local id = tonumber(unit:GetAttribute("ID"))
                     if id == unitID then
                         count += 1
                     end
@@ -2840,17 +2826,11 @@ LQFTab:CreateToggle({
             end
 
             -- Make absolutely sure the label exists
-            if not uiSlot.AmountText
-                or not uiSlot.AmountText.Parent then
-
+            if not uiSlot.AmountText or not uiSlot.AmountText.Parent then
                 return
             end
 
-            local unitID =
-                getUnitID(
-                    uiSlot.BarIndex,
-                    uiSlot.SlotIndex
-                )
+            local unitID = getUnitID(uiSlot.BarIndex, uiSlot.SlotIndex)
 
             if unitID == nil then
 
@@ -2859,27 +2839,20 @@ LQFTab:CreateToggle({
                 uiSlot.AmountText.Visible = false
 
                 return
-            end
+            end --! Currently this is the part where the script stops working
 
-            local amount =
-                getUnitCount(unitID)
-
-            if not SHOW_ZERO
-                and amount <= 0 then
-
+            local amount = getUnitCount(unitID)
+            if not SHOW_ZERO and amount <= 0 then
                 uiSlot.AmountText.Visible = false
-
                 return
-            end
+            end --! Or here.
 
             uiSlot.AmountText.Visible = true
 
             if SHOW_X then
-                uiSlot.AmountText.Text =
-                    "x" .. tostring(amount)
+                uiSlot.AmountText.Text = "x" .. tostring(amount)
             else
-                uiSlot.AmountText.Text =
-                    tostring(amount)
+                uiSlot.AmountText.Text = tostring(amount)
             end
         end
 
@@ -2912,11 +2885,7 @@ LQFTab:CreateToggle({
 
             table.insert(
                 connections,
-
-                unit:GetAttributeChangedSignal(
-                    "ID"
-                ):Connect(function()
-
+                unit:GetAttributeChangedSignal("ID"):Connect(function()
                     if Value then
                         updateAllSlots()
                     end
@@ -2924,18 +2893,13 @@ LQFTab:CreateToggle({
             )
         end
 
-        for _, unit in ipairs(
-            FriendlyFolder:GetChildren()
-        ) do
+        for _, unit in ipairs(FriendlyFolder:GetChildren()) do
             watchUnit(unit)
         end
 
         table.insert(
             connections,
-
-            FriendlyFolder.ChildAdded:Connect(
-                function(unit)
-
+            FriendlyFolder.ChildAdded:Connect(function(unit)
                     if not Value then
                         return
                     end
@@ -2948,10 +2912,7 @@ LQFTab:CreateToggle({
 
         table.insert(
             connections,
-
-            FriendlyFolder.ChildRemoved:Connect(
-                function()
-
+            FriendlyFolder.ChildRemoved:Connect(function()
                     if Value then
                         updateAllSlots()
                     end
@@ -2965,11 +2926,7 @@ LQFTab:CreateToggle({
 
         table.insert(
             connections,
-
-            currentLoadout:GetPropertyChangedSignal(
-                "Value"
-            ):Connect(function()
-
+            currentLoadout:GetPropertyChangedSignal("Value"):Connect(function()
                 if Value then
                     updateAllSlots()
                 end
@@ -3018,9 +2975,7 @@ LQFTab:CreateToggle({
             end
         end
 
-        --==================================================
         -- BATTLESCREEN RECREATION
-        --==================================================
 
         task.spawn(function()
 
@@ -3028,10 +2983,7 @@ LQFTab:CreateToggle({
 
             while _G.UnitCounter do
 
-                local battleScreen =
-                    playerGui:FindFirstChild(
-                        "BattleScreen"
-                    )
+                local battleScreen =playerGui:FindFirstChild("BattleScreen")
 
                 if battleScreen
                     ~= previousBattleScreen then
@@ -3053,10 +3005,6 @@ LQFTab:CreateToggle({
             end
 
         end)
-
-        --==================================================
-        -- INITIAL
-        --==================================================
 
         updateAllSlots()
 
