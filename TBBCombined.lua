@@ -2821,11 +2821,11 @@ LQFTab:CreateToggle({
                     "[Unit Counter] Found slot, but it isn't an Value:",
                     slot:GetFullName(),
                     slot.ClassName
-                ) --! Current Error
+                )
                 return nil
             end
-            --[[if slot == 0 then
-                amountText
+            --[[if value == 0 then
+                amountUnitText
             end]]-- --! Try to implement so that when ID is 0, the amountUnitText was hidden
             print(
                 "[Unit Counter] Found:",
@@ -2921,8 +2921,12 @@ LQFTab:CreateToggle({
             if unitID == nil then
                 uiSlot.AmountText.Text = "?"
                 uiSlot.AmountText.Visible = true
-                warn("unitID is nil w/ SHOW_ZERO.") --! Current issue
+                warn("unitID is nil w/ SHOW_ZERO.")
                 return
+            end
+            if unitID == 0 then
+                uiSlot.AmountText.Text = ""
+                uiSlot.AmountText.Visible = false
             end
 
             local amount = getUnitCount(unitID)
@@ -2942,8 +2946,6 @@ LQFTab:CreateToggle({
             if not Value then
                 return
             end
-
-            setupUISlots()
 
             for _, uiSlot in ipairs(UISlots) do
                 updateSlot(uiSlot)
@@ -2996,11 +2998,7 @@ LQFTab:CreateToggle({
                 end
             )
         )
-
-        --==================================================
-        -- LOADOUT SELECTION
-        --==================================================
-
+        -- Track on current selected loadout
         table.insert(
             connections,
             currentLoadout:GetPropertyChangedSignal("Value"):Connect(function()
@@ -3010,11 +3008,7 @@ LQFTab:CreateToggle({
 
             end)
         )
-
-        --==================================================
-        -- WATCH LOADOUT SLOTS
-        --==================================================
-
+        -- Track on all loadouts
         for loadoutIndex = 1, 6 do
 
             local loadout =
@@ -3057,32 +3051,27 @@ LQFTab:CreateToggle({
         task.spawn(function()
 
             local previousBattleScreen = nil
-
             while _G.UnitCounter do
+                local battleScreen = playerGui:FindFirstChild("BattleScreen")
+                if battleScreen ~= previousBattleScreen then
+                    previousBattleScreen = battleScreen
 
-                local battleScreen =playerGui:FindFirstChild("BattleScreen")
-
-                if battleScreen
-                    ~= previousBattleScreen then
-
-                    previousBattleScreen =
-                        battleScreen
+                    -- Clear old UI references
+                    table.clear(UISlots)
 
                     if battleScreen then
-
                         task.wait(0.1)
-
                         if _G.UnitCounter then
+                            setupUISlots()
                             updateAllSlots()
                         end
                     end
                 end
-
                 task.wait(0.25)
             end
-
         end)
 
+        setupUISlots()
         updateAllSlots()
 
     end
@@ -3591,22 +3580,4 @@ SettingsTab:CreateToggle({
 --[[ ideas:
 - try to finally utilize WEAKEST enemy
 - do every list of final bosses with their projectile naming
-- make a text next to unit slot so it was tracking the amount of npcs you've got; each slot has only image, and not attribute, which makes things harder. path for slot: game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("BattleScreen"):WaitForChild("MobileSpawnMenu"):WaitForChild("Bar1/2"):WaitForChild("Slot1"); costText = slot:WaitForChild("CostText") --! In proccess
-- show up the XPToken, Bricks and Experience during the battle; path: game:GetService("Players").LocalPlayer.PlayerData.Currency    game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("BattleScreen"):WaitForChild("Info") --! In proccess
-]]--
-
---[[
-Here's idea: make a amountUnitText above the costText of individual slot and be inside of costText as if costText is parent to amountUnitText, and amountUnitText will track how much there's certain units are inside of FriendlyFolder. And amountUnitText must include offset customization
-Context:
-- FriendlyFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("FriendlyFolder")
-- In FriendlyFolder, there's all NPCs that have been sent by Player. All Units are Models. There can be upto 8 unique units on the battle.
-- Each Model/Unit has it's own ID, which is shared with normal and alt forms. So, if you have 2 units of same type, they will have same ID. path: id = FriendlyFolder:WaitForChild(<model/unit>).GetAttribute.ID
-- currentLoadout = game:GetService("Players").LocalPlayer.PlayerData.Settings.LoadoutSelection
-- LoadoutSelection is a number ranging from 1 to 6, which is the current loadout that Player has selected. Each loadout has it's own slots, and each slot has it's own unit.
-- loadout<[1; 2.. 6]> = game:GetService("Players").LocalPlayer.PlayerData.Loadout:WaitForChild(<[1; 2.. 6]>)
-- loadout<n> is a preset of 8 slots of unique units, and there can be only 6 presets.
-- slot<[1; 2.. 8]> = loadout<n>.Slots:WaitForChild("Slot<[1; 2.. 8]>")
-- slot<n> is an int holder, which represents Value as ID for the certain unit with coresponding ID.
-- costText = game:GetService("Players").LocalPlayer.PlayerGui.BattleScreen.MobileSpawnMenu.Bar[1; 2].Slot[1; 2.. 4].CostText
-
 ]]--
