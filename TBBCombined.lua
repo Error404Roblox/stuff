@@ -2740,7 +2740,7 @@ LQFTab:CreateToggle({
 
             return unitID
         end]]--
-        local function getUnitID(uiSlot)
+        --[[local function getUnitID(uiSlot)
 
             local loadout = getCurrentLoadout()
             if not loadout then
@@ -2764,6 +2764,71 @@ LQFTab:CreateToggle({
                     )
                 return nil
             end
+
+            return slot.Value
+        end]]--
+        local function getUnitID(uiSlot)
+
+            local loadout = getCurrentLoadout()
+
+            if not loadout then
+                warn(
+                    "[Unit Counter] CurrentLoadout could not be found."
+                )
+                return nil
+            end
+
+            print(
+                "[Unit Counter] Current loadout:",
+                loadout:GetFullName()
+            )
+
+            print("[Unit Counter] Children of loadout:")
+
+            for _, child in ipairs(loadout:GetChildren()) do
+                print(
+                    "  ->",
+                    child.Name,
+                    child.ClassName,
+                    child:IsA("IntValue") and child.Value or ""
+                )
+            end
+
+            local slotNumber = uiSlot.SlotNumber
+
+            print(
+                "[Unit Counter] Looking for:",
+                "Slot" .. tostring(slotNumber)
+            )
+
+            local slot =
+                loadout:FindFirstChild(
+                    "Slot" .. tostring(slotNumber)
+                )
+
+            if not slot then
+                warn(
+                    "[Unit Counter] Missing:",
+                    "Slot" .. tostring(slotNumber)
+                )
+                return nil
+            end
+
+            if not slot:IsA("IntValue") then
+                warn(
+                    "[Unit Counter] Found slot, but it isn't an IntValue:",
+                    slot:GetFullName(),
+                    slot.ClassName
+                )
+                return nil
+            end
+
+            print(
+                "[Unit Counter] Found:",
+                slot:GetFullName(),
+                "ID:",
+                slot.Value
+            )
 
             return slot.Value
         end
