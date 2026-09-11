@@ -3194,10 +3194,7 @@ SettingsTab:CreateToggle({
         -- CREATE CURRENCY ITEM
         --==================================================
 
-        local function createCurrencyItem(
-            parent,
-            name,
-            texture
+        local function createCurrencyItem(parent, name,texture
         )
 
             local item = Instance.new("Frame")
@@ -3214,10 +3211,8 @@ SettingsTab:CreateToggle({
             local amount = Instance.new("TextLabel")
             amount.Name = "Amount"
             amount.Size = UDim2.new(
-                1,
-                -32,
-                1,
-                0
+                1, -32,
+                1, 0
             )
             amount.Position = UDim2.fromOffset(
                 0,
@@ -3225,15 +3220,12 @@ SettingsTab:CreateToggle({
             )
             amount.BackgroundTransparency = 1
             amount.Text = "0"
-            amount.TextColor3 =
-                Color3.fromRGB(255, 255, 255)
-            amount.TextStrokeColor3 =
-                Color3.fromRGB(0, 0, 0)
+            amount.Font = Enum.GothamBold
+            amount.TextColor3 = Color3.fromRGB(255, 255, 255)
+            amount.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
             amount.TextStrokeTransparency = 0
-            amount.Font = Enum.Font.GothamBold
             amount.TextScaled = true
-            amount.TextXAlignment =
-                Enum.TextXAlignment.Right
+            amount.TextXAlignment = Enum.TextXAlignment.Right
             amount.Parent = item
 
             -- Icon
@@ -3263,8 +3255,7 @@ SettingsTab:CreateToggle({
 
         local function getCurrencyValue(name)
 
-            local value =
-                currencyFolder:FindFirstChild(name)
+            local value = currencyFolder:FindFirstChild(name)
 
             if not value then
                 return 0
@@ -3306,22 +3297,12 @@ SettingsTab:CreateToggle({
 
             _G.BattleCurrencyDisplayGui = display
 
-            -- Horizontal layout
-            local layout =
-                Instance.new("UIListLayout")
-
-            layout.FillDirection =
-                Enum.FillDirection.Horizontal
-
-            layout.HorizontalAlignment =
-                Enum.HorizontalAlignment.Center
-
-            layout.VerticalAlignment =
-                Enum.VerticalAlignment.Center
-
-            layout.Padding =
-                UDim.new(0, CURRENCY_GAP)
-
+            -- Layout Settings
+            local layout = Instance.new("UIListLayout")
+            layout.FillDirection = Enum.FillDirection.Vertical
+            layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+            layout.VerticalAlignment = Enum.VerticalAlignment.Center
+            layout.Padding = UDim.new(0, CURRENCY_GAP)
             layout.Parent = display
 
             -- Create currencies
@@ -3385,17 +3366,14 @@ SettingsTab:CreateToggle({
                 "Experience"
             }) do
 
-                local currency =
-                    currencyFolder:FindFirstChild(currencyName)
+                local currency = currencyFolder:FindFirstChild(currencyName)
 
                 if currency then
 
                     table.insert(
                         connections,
 
-                        currency:GetPropertyChangedSignal(
-                            "Value"
-                        ):Connect(update)
+                        currency:GetPropertyChangedSignal("Value"):Connect(update)
                     )
                 end
             end
@@ -3411,17 +3389,11 @@ SettingsTab:CreateToggle({
 
             while _G.BattleCurrencyDisplay do
 
-                local battleScreen =
-                    playerGui:FindFirstChild(
-                        "BattleScreen"
-                    )
-
+                local battleScreen = playerGui:FindFirstChild("BattleScreen")
                 local info = nil
 
                 if battleScreen then
-                    info = battleScreen:FindFirstChild(
-                        "Info"
-                    )
+                    info = battleScreen:FindFirstChild("Info")
                 end
 
                 -- New BattleScreen / Info appeared
