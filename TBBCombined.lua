@@ -2639,31 +2639,17 @@ LQFTab:CreateToggle({
 
                     -- Create our label
                     local amountUnitText =
-                        costText:FindFirstChild(
+                        slot:FindFirstChild(
                             "AmountUnitText"
                         )
 
                     if not amountUnitText then
-
-                        amountUnitText =
-                            Instance.new("TextLabel")
-
-                        amountUnitText.Name =
-                            "AmountUnitText"
-
-                        amountUnitText.BackgroundTransparency =
-                            1
-
-                        amountUnitText.BorderSizePixel =
-                            0
-
-                        amountUnitText.Parent =
-                            costText
-
-                        print(
-                            "[Unit Counter] Created:",
-                            amountUnitText:GetFullName()
-                        )
+                        amountUnitText = Instance.new("TextLabel")
+                        amountUnitText.Name = "AmountUnitText"
+                        amountUnitText.BackgroundTransparency = 1
+                        amountUnitText.BorderSizePixel = 0
+                        amountUnitText.Parent = slot
+                        print("[Unit Counter] Created:", amountUnitText:GetFullName())
                     end
 
                     -- Configure
@@ -2683,7 +2669,7 @@ LQFTab:CreateToggle({
                         costText.Font
 
                     amountUnitText.TextXAlignment =
-                        Enum.TextXAlignment.Center
+                        Enum.TextXAlignment.Left
 
                     amountUnitText.TextYAlignment =
                         Enum.TextYAlignment.Center
