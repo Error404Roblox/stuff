@@ -2744,6 +2744,7 @@ LQFTab:CreateToggle({
 
             local loadout = getCurrentLoadout()
             if not loadout then
+                warn("For some reason, didn't managed to load CurrentLoadout.")
                 return nil
             end
 
@@ -2753,7 +2754,7 @@ LQFTab:CreateToggle({
                      "[Unit Counter] Missing:",
                      "Slot" .. uiSlot.SlotNumber
                     )
-                return nil
+                return nil --! Current error
             end
 
             if not slot:IsA("IntValue") then
