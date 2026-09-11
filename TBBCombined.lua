@@ -2778,11 +2778,7 @@ LQFTab:CreateToggle({
                 return nil
             end
 
-            print(
-                "[Unit Counter] Current loadout:",
-                loadout:GetFullName()
-            )
-
+            --print("[Unit Counter] Current loadout:", loadout:GetFullName())
             print("[Unit Counter] Children of loadout:")
 
             for _, child in ipairs(loadout:GetChildren()) do
@@ -2794,6 +2790,14 @@ LQFTab:CreateToggle({
                 )
             end
 
+            local slotsFolder = loadout:FindFirstChild("Slots")
+            if not slotsFolder then
+                warn(
+                     "[Unit Counter] Slots folder missing from:",
+                     loadout:GetFullName()
+                    )
+                return nil
+            end
             local slotNumber = uiSlot.SlotNumber
 
             print(
@@ -2801,16 +2805,14 @@ LQFTab:CreateToggle({
                 "Slot" .. tostring(slotNumber)
             )
 
-            local slot =
-                loadout:FindFirstChild(
-                    "Slot" .. tostring(slotNumber)
-                )
-
+            local slot = slotsFolder:FindFirstChild("Slot" .. tostring(slotNumber))
             if not slot then
                 warn(
-                    "[Unit Counter] Missing:",
-                    "Slot" .. tostring(slotNumber)
-                )
+                     "[Unit Counter] Missing:",
+                     "Slot" .. tostring(uiSlot.SlotNumber),
+                     "inside",
+                     slotsFolder:GetFullName()
+                    )
                 return nil
             end
 
@@ -2822,7 +2824,9 @@ LQFTab:CreateToggle({
                 )
                 return nil
             end
-
+            --[[if slot == 0 then
+                amountText
+            end]]-- --! Try to implement so that when ID is 0, the amountUnitText was hidden
             print(
                 "[Unit Counter] Found:",
                 slot:GetFullName(),
