@@ -2677,96 +2677,7 @@ LQFTab:CreateToggle({
             return loadout
         end
 
-        --==================================================
-        -- GET UNIT ID
-        --==================================================
-
-        --[[local function getUnitID(barIndex, slotIndex)
-
-            local loadout =
-                getCurrentLoadout()
-
-            if not loadout then
-                return nil
-            end
-
-            -- Bar1:
-            -- Slot1 -> Loadout Slot1
-            -- Slot2 -> Loadout Slot2
-            -- Slot3 -> Loadout Slot3
-            -- Slot4 -> Loadout Slot4
-            --
-            -- Bar2:
-            -- Slot1 -> Loadout Slot5
-            -- Slot2 -> Loadout Slot6
-            -- Slot3 -> Loadout Slot7
-            -- Slot4 -> Loadout Slot8
-
-            local actualSlotNumber = slotIndex + ((barIndex - 1) * 4)
-            local loadoutSlot = loadout:FindFirstChild("Slot" .. actualSlotNumber)
-
-            if not loadoutSlot then
-
-                warn(
-                    "[Unit Counter] Missing loadout slot:",
-                    "Slot" .. actualSlotNumber
-                )
-
-                return nil
-            end
-
-            -- VERY IMPORTANT:
-            -- This is the actual unit ID.
-            if not loadoutSlot:IsA("IntValue") then
-
-                warn(
-                    "[Unit Counter] Loadout slot is not IntValue:",
-                    loadoutSlot:GetFullName(),
-                    loadoutSlot.ClassName
-                )
-
-                return nil
-            end
-
-            local unitID = tonumber(loadoutSlot.Value)
-
-            print(
-                "[Unit Counter]",
-                "Bar" .. barIndex,
-                "Slot" .. slotIndex,
-                "-> Unit ID:",
-                unitID
-            )
-
-            return unitID
-        end]]--
-        --[[local function getUnitID(uiSlot)
-
-            local loadout = getCurrentLoadout()
-            if not loadout then
-                warn("For some reason, didn't managed to load CurrentLoadout.")
-                return nil
-            end
-
-            local slot = loadout:FindFirstChild("Slot" .. uiSlot.SlotNumber)
-            if not slot then
-                warn(
-                     "[Unit Counter] Missing:",
-                     "Slot" .. uiSlot.SlotNumber
-                    )
-                return nil --! Current error
-            end
-
-            if not slot:IsA("IntValue") then
-                warn(
-                     "[Unit Counter] Expected IntValue, got:",
-                     slot.ClassName
-                    )
-                return nil
-            end
-
-            return slot.Value
-        end]]--
+        -- Get Unit ID
         local function getUnitID(uiSlot)
 
             local loadout = getCurrentLoadout()
@@ -2824,9 +2735,6 @@ LQFTab:CreateToggle({
                 )
                 return nil
             end
-            --[[if value == 0 then
-                amountUnitText
-            end]]-- --! Try to implement so that when ID is 0, the amountUnitText was hidden
             print(
                 "[Unit Counter] Found:",
                 slot:GetFullName(),
@@ -2837,10 +2745,7 @@ LQFTab:CreateToggle({
             return tonumber(value)
         end
 
-        --==================================================
-        -- COUNT UNITS
-        --==================================================
-
+        -- Count units
         local function getUnitCount(unitID)
 
             if unitID == nil then
@@ -2865,47 +2770,7 @@ LQFTab:CreateToggle({
             return count
         end
 
-
-        --==================================================
-        -- UPDATE SLOT
-        --==================================================
-
-        --[[local function updateSlot(uiSlot)
-
-            if not Value then
-                return
-            end
-
-            -- Make absolutely sure the label exists
-            if not uiSlot.AmountText or not uiSlot.AmountText.Parent then
-                return
-            end
-
-            local unitID = getUnitID(uiSlot.BarIndex, uiSlot.SlotIndex)
-
-            if unitID == nil then
-
-                uiSlot.AmountText.Text = "?"
-                uiSlot.AmountText.Visible = true
-                warn("unitID is nil w/ SHOW_ZERO.")
-                return
-            end --! Currently this is the part where the script stops working
-
-            local amount = getUnitCount(unitID)
-            if not SHOW_ZERO and amount <= 0 then
-                uiSlot.AmountText.Visible = true
-                warn("unitID is nil without SHOW_ZERO.")
-                return
-            end --! Or here.
-
-            uiSlot.AmountText.Visible = true
-
-            if SHOW_X then
-                uiSlot.AmountText.Text = "x" .. tostring(amount)
-            else
-                uiSlot.AmountText.Text = tostring(amount)
-            end
-        end]]--
+        -- Update Slot
         local function updateSlot(uiSlot)
             if not Value then
                 return
@@ -2918,7 +2783,7 @@ LQFTab:CreateToggle({
 
             local unitID = getUnitID(uiSlot)
 
-            if unitID == nil then
+            --[[if unitID == nil then
                 uiSlot.AmountText.Text = "?"
                 uiSlot.AmountText.Visible = true
                 warn("unitID is nil w/ SHOW_ZERO.")
@@ -2926,6 +2791,13 @@ LQFTab:CreateToggle({
             elseif unitID == 0 then
                 uiSlot.AmountText.Text = ""
                 uiSlot.AmountText.Visible = false
+                print("Hiddened slot because its ID is 0.")
+                return
+            end]]--
+            if unitID == nil or unitID == 0 then
+                uiSlot.AmountText.Text = "?"
+                uiSlot.AmountText.Visible = true
+                print("Hiddend text because either it has nil or 0 ID.")
                 return
             end
 
