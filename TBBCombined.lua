@@ -2582,110 +2582,77 @@ LQFTab:CreateToggle({
             return
         end
 
-        --==================================================
         -- UI SLOTS
-        --==================================================
 
         local UISlots = {}
-
         local function setupUISlots()
 
             table.clear(UISlots)
 
-            local battleScreen =
-                playerGui:FindFirstChild("BattleScreen")
+            local battleScreen = playerGui:FindFirstChild("BattleScreen")
 
             if not battleScreen then
                 return
             end
 
-            local mobileSpawnMenu =
-                battleScreen:FindFirstChild(
-                    "MobileSpawnMenu"
-                )
+            local mobileSpawnMenu = battleScreen:FindFirstChild("MobileSpawnMenu")
 
             if not mobileSpawnMenu then
                 return
             end
 
             for barIndex = 1, 2 do
-
-                local bar =
-                    mobileSpawnMenu:FindFirstChild(
-                        "Bar" .. barIndex
-                    )
-
+                local bar = mobileSpawnMenu:FindFirstChild("Bar" .. barIndex)
                 if not bar then
                     continue
                 end
 
-                for slotIndex = 1, 4 do
+                -- Bar1 starts at Slot1
+                -- Bar2 starts at Slot5
+                local firstSlotNumber = ((barIndex - 1) * 4) + 1 -- Slot1 and Slot5 are only avaiable
 
-                    local slot =
-                        bar:FindFirstChild(
-                            "Slot" .. slotIndex
-                        )
+                for slotIndex = 1, 4 do
+                    local actualSlotNumber = firstSlotNumber + (slotIndex - 1)
+                    local slot = bar:FindFirstChild("Slot" .. actualSlotNumber)
 
                     if not slot then
                         continue
                     end
 
-                    local costText =
-                        slot:FindFirstChild("CostText")
+                    local costText = slot:FindFirstChild("CostText")
 
                     if not costText then
                         continue
                     end
 
-                    -- Create our label
-                    local amountUnitText =
-                        slot:FindFirstChild(
-                            "AmountUnitText"
-                        )
+                    -- Create AmountUnitText
+                    local amountUnitText = costText:FindFirstChild("AmountUnitText")
 
                     if not amountUnitText then
                         amountUnitText = Instance.new("TextLabel")
                         amountUnitText.Name = "AmountUnitText"
                         amountUnitText.BackgroundTransparency = 1
-                        amountUnitText.TextStrokeTransparency = 0
-                        amountUnitText.TextScaled = true
+                        amoutUnitText.TextStrokeTransparency = 0
                         amountUnitText.BorderSizePixel = 0
                         amountUnitText.Parent = slot
-                        print("[Unit Counter] Created:", amountUnitText:GetFullName())
                     end
-
-                    -- Configure
-                    amountUnitText.Position =
-                        AMOUNT_POSITION
-
-                    amountUnitText.Size =
-                        AMOUNT_SIZE
-
-                    amountUnitText.TextSize =
-                        AMOUNT_TEXT_SIZE
-
-                    amountUnitText.TextColor3 =
-                        AMOUNT_TEXT_COLOR
-
-                    amountUnitText.Font =
-                        costText.Font
-
-                    amountUnitText.TextXAlignment =
-                        Enum.TextXAlignment.Left
-
-                    amountUnitText.TextYAlignment =
-                        Enum.TextYAlignment.Center
-
-                    amountUnitText.ZIndex =
-                        costText.ZIndex + 1
-
+                    -- Settings
+                    amountUnitText.Position = AMOUNT_POSITION
+                    amountUnitText.Size = AMOUNT_SIZE
+                    amountUnitText.TextSize = AMOUNT_TEXT_SIZE
+                    amountUnitText.TextColor3 = AMOUNT_TEXT_COLOR
+                    amountUnitText.Font = costText.Font
+                    amountUnitText.TextXAlignment = Enum.TextXAlignment.Left
+                    amountUnitText.TextYAlignment = Enum.TextYAlignment.Center
+                    amountUnitText.ZIndex = costText.ZIndex + 1
                     amountUnitText.Visible = true
 
-                    local actualSlotNumber = slotIndex + ((barIndex - 1) * 4)
-                    table.insert(UISlots,
+                    -- Store slot
+                    table.insert(
+                        UISlots,
                         {
-                            SlotNumber = actualSlotNumber,
                             BarIndex = barIndex,
+                            SlotNumber = actualSlotNumber,
                             SlotIndex = slotIndex,
                             CostText = costText,
                             AmountText = amountUnitText
@@ -2694,29 +2661,18 @@ LQFTab:CreateToggle({
                 end
             end
         end
-
-        --==================================================
-        -- GET CURRENT LOADOUT
-        --==================================================
-
+        -- check for current loadout
         local function getCurrentLoadout()
 
-            local loadoutNumber =
-                tonumber(currentLoadout.Value)
-
+            local loadoutNumber = tonumber(currentLoadout.Value)
             if not loadoutNumber then
                 return nil
             end
-
             if loadoutNumber < 1 or loadoutNumber > 6 then
                 return nil
             end
 
-            local loadout =
-                LoadoutFolder:FindFirstChild(
-                    tostring(loadoutNumber)
-                )
-
+            local loadout = LoadoutFolder:FindFirstChild(tostring(loadoutNumber))
             if not loadout then
                 return nil
             end
