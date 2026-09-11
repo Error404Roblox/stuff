@@ -2815,13 +2815,13 @@ LQFTab:CreateToggle({
                     )
                 return nil
             end
-
-            if not slot:IsA("IntValue") then
+            local value = slot.Value
+            if value == nil then
                 warn(
-                    "[Unit Counter] Found slot, but it isn't an IntValue:",
+                    "[Unit Counter] Found slot, but it isn't an Value:",
                     slot:GetFullName(),
                     slot.ClassName
-                )
+                ) --! Current Error
                 return nil
             end
             --[[if slot == 0 then
@@ -2834,7 +2834,7 @@ LQFTab:CreateToggle({
                 slot.Value
             )
 
-            return slot.Value
+            return tonumber(value)
         end
 
         --==================================================
