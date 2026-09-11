@@ -2923,10 +2923,10 @@ LQFTab:CreateToggle({
                 uiSlot.AmountText.Visible = true
                 warn("unitID is nil w/ SHOW_ZERO.")
                 return
-            end
-            if unitID == 0 then
+            elseif unitID == 0 then
                 uiSlot.AmountText.Text = ""
                 uiSlot.AmountText.Visible = false
+                return
             end
 
             local amount = getUnitCount(unitID)
