@@ -1451,7 +1451,6 @@ LQFTab:CreateToggle({
             local armorHolder = Instance.new("Frame")
             armorHolder.Name = "ARMOR"
             armorHolder.Size = UDim2.fromOffset( STATUS_HEIGHT, STATUS_HEIGHT + 15 )
-            armorHolder.Position =+ UDim2.new(0, 0, 0 -5)
             armorHolder.BackgroundColor3 = STATUS_BG
             armorHolder.BackgroundTransparency = 0
             armorHolder.BorderSizePixel = 0
@@ -1492,7 +1491,6 @@ LQFTab:CreateToggle({
             local resistanceHolder = Instance.new("Frame")
             resistanceHolder.Name = "RESISTANCE"
             resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 15)
-            resistanceHolder.Position =+ UDim2.new(0, 0, 0 -5)
             resistanceHolder.BackgroundColor3 = STATUS_BG
             resistanceHolder.BorderSizePixel = 0
             resistanceHolder.Visible = false
