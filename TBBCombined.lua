@@ -357,7 +357,7 @@ end)
 
 -- Populate Toggles inside Main Projectiles Tab (Sorted A to Z)
 local projectileNamesList = {
-    "Bacon", "Basketball", "Beer", "Bigfireball", "BigFireball", "BigIceball", "BigRocket", "BigStunpellet", "Brew", "CesusBomb", "Cesuspot", "Cola", "CrimsonBall", "Duck", "ElectricFist", "ElectricRock", "EvilDuck", "Fireball", "Goala", "Goobab", "Grenade", "Iceball", "Kunai", "LabTable", "LilCesuspot", "MagicBall", "Molotov", "NeonEvilDuck", "Noir", "NoirBiograft", "Paintball", "Pellet", "Puck", "Rocket", "Shuriken", "Soccerball", "SorcusBlade", "SorcusEgg", "Stunpellet", "Superball", "SuperSorcusBlade", "TumorePellet", "Volleyball", "WoodArrow"
+    "Bacon", "Basketball", "Beer", "Bigfireball", "BigFireball", "BigIceball", "BigRocket", "BigStunpellet", "Brew", "CesusBomb", "Cesuspot", "Cola", "CrimsonBall", "Duck", "ElectricFist", "ElectricRock", "EvilDuck", "Fireball", "Goala", "Goobab", "Grenade", "Iceball", "Kunai", "LabTable", "LilCesuspot", "MagicBall", "Molotov", "NeonEvilDuck", "Noir", "NoirBiograft", "Paintball", "Pellet", "Puck", "Rocket", "Rock", "Shuriken", "Soccerball", "SorcusBlade", "SorcusEgg", "Stunpellet", "Superball", "SuperSorcusBlade", "TumorePellet", "Volleyball", "WoodArrow"
 }
 
 table.sort(projectileNamesList)
@@ -396,7 +396,7 @@ end
 
 -- Populate Toggles inside DeletEneProj Tab (Sorted A to Z)
 local deletionProjectilesList = {
-    "Arrow", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "Rock", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "ZetaRocket", "ZombieBomb"
+    "Arrow", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "ZetaRocket", "ZombieBomb"
 }
 
 table.sort(deletionProjectilesList)
@@ -774,7 +774,14 @@ AntiBossTab:CreateToggle({
         end
     end,
 })
-
+--[[Tips of beating 3 star Mortis:
+IONIZER: 1st is by little right of 4th lamp away from Server
+         2nd is by 2nd lamp away from Server, by middle inbetween of lamps; or when fance bends into 180 degree
+         3rd is by 1.5 lamp away from Server, or directly on the fish creator
+         4th is by 1.2 lamp away from Server, or directly on Newell
+General tips for Server:
+    start the sequence of spawning certain units at ~01:52.45
+]]--
 
 LQFTab:CreateSection("Miscellaneous")
 _G.AutoBoostFPS=false;
@@ -1443,7 +1450,8 @@ LQFTab:CreateToggle({
             -- ARMOR STATUS
             local armorHolder = Instance.new("Frame")
             armorHolder.Name = "ARMOR"
-            armorHolder.Size = UDim2.fromOffset( STATUS_HEIGHT, STATUS_HEIGHT + 25 )
+            armorHolder.Size = UDim2.fromOffset( STATUS_HEIGHT, STATUS_HEIGHT + 15 )
+            armorHolder.Position =+ UDim2.new(0, 0, 0 -5)
             armorHolder.BackgroundColor3 = STATUS_BG
             armorHolder.BackgroundTransparency = 0
             armorHolder.BorderSizePixel = 0
@@ -1483,7 +1491,8 @@ LQFTab:CreateToggle({
             -- RESISTANCE
             local resistanceHolder = Instance.new("Frame")
             resistanceHolder.Name = "RESISTANCE"
-            resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 25)
+            resistanceHolder.Size = UDim2.fromOffset(STATUS_HEIGHT, STATUS_HEIGHT + 15)
+            resistanceHolder.Position =+ UDim2.new(0, 0, 0 -5)
             resistanceHolder.BackgroundColor3 = STATUS_BG
             resistanceHolder.BorderSizePixel = 0
             resistanceHolder.Visible = false
