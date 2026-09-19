@@ -1192,12 +1192,8 @@ LQFTab:CreateToggle({
         local STATUS_HEIGHT = 18
         local STATUS_BAR_HEIGHT = 32
 
-        -- This is the important part:
-        -- Healthbar has its own BillboardGui.
-        -- Statusbar gets its own BillboardGui.
-        --
         -- A larger Y offset puts Statusbar ABOVE Healthbar.
-        local STATUS_Y_OFFSET = 3.4
+        local STATUS_Y_OFFSET = 5.4 -- 3.4
         local STATUS_GAP = 3
 
         local STATUS_BG = Color3.fromRGB(15, 15, 20)
@@ -1205,6 +1201,7 @@ LQFTab:CreateToggle({
         -- Colors
         local RESISTANCE_COLOR = Color3.fromRGB(171, 255, 35)
         local ARMOR_COLOR = Color3.fromRGB(255, 255, 255)
+        local HALO_COLOR = Color3.fromRGB(255, 255, 200)
 
         local FIRERATE_COLOR = Color3.fromRGB(255, 220, 0)
         local DAMAGE_COLOR = Color3.fromRGB(255, 60, 60)
@@ -1223,6 +1220,7 @@ LQFTab:CreateToggle({
 
         -- Textures
         local SHIELD_TEXTURE = "rbxassetid://11322093465"
+        local HALO_TEXTURE = "rbxassetid://7203948132"
 
         local FIRERATE_TEXTURE = "rbxassetid://483225199"
         local DAMAGE_TEXTURE = "rbxassetid://8897806060"
@@ -1373,6 +1371,11 @@ LQFTab:CreateToggle({
             end
 
             -- Statuses
+            local angelStatus = createStatus(
+                "ANGEL",
+                HALO_TEXTURE,
+                HALO_COLOR
+            )
             local fireRateStatus = createStatus(
                 "FIRERATE",
                 FIRERATE_TEXTURE,
@@ -1537,6 +1540,8 @@ LQFTab:CreateToggle({
                 end
 
                 -- Status Naming part
+                angelStatus.Visible =
+                    model:FindFirstChild("Halo") ~= nil
                 fireRateStatus.Visible =
                     torso:FindFirstChild("Speed") ~= nil
                 damageStatus.Visible =
@@ -1619,6 +1624,11 @@ LQFTab:CreateToggle({
 
                     updateStatuses()
                 end)
+
+            local haloConnection = model.ChildAdded:Connect(function(child)
+                if not Value then return end
+                updateStatuses()
+            end)
             
             local resistanceConnection = model:GetAttributeChangedSignal("Resistance"):Connect(function()
                 if not Value then return end
@@ -1679,6 +1689,8 @@ LQFTab:CreateToggle({
                             if info.childRemovedConnection then
                                 info.childRemovedConnection:Disconnect()
                             end
+                            if info.haloConnection then
+                                info.haloConnection:Disconnect()
                             if info.resistanceConnection then
                                 info.resistanceConnection:Disconnect()
                             end
@@ -1703,6 +1715,7 @@ LQFTab:CreateToggle({
                 torso = torso,
                 childAddedConnection = childAddedConnection,
                 childRemovedConnection = childRemovedConnection,
+                haloConnection = haloConnection,
                 resistanceConnection = resistanceConnection,
                 armorConnection = armorConnection,
                 armorTimeConnection = armorTimeConnection,
