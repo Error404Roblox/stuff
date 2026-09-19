@@ -1193,7 +1193,7 @@ LQFTab:CreateToggle({
         local STATUS_BAR_HEIGHT = 32
 
         -- A larger Y offset puts Statusbar ABOVE Healthbar.
-        local STATUS_Y_OFFSET = 5.4 -- 3.4
+        local STATUS_Y_OFFSET = 3.7 -- 3.4
         local STATUS_GAP = 3
 
         local STATUS_BG = Color3.fromRGB(15, 15, 20)
