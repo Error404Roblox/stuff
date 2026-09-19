@@ -433,7 +433,7 @@ end
 
 -- DeleteProjectile but now they're neutral
 local NdeletionProjectilesList = {
-    "BloodStone", "BloodCrystal", "Teapot", "FireTeapot", "Spam", "TrollPie"
+    "BloodStone", "BloodCrystal", "Teapot", "FireTeapot", "Spam", "TrollPie", "Iceball"
 }
 
 table.sort(NdeletionProjectilesList)
@@ -1625,7 +1625,11 @@ LQFTab:CreateToggle({
                     updateStatuses()
                 end)
 
-            local haloConnection = model.ChildAdded:Connect(function(child)
+            local haloAConnection = model.ChildAdded:Connect(function(child)
+                if not Value then return end
+                updateStatuses()
+            end)
+            local haloRConnection = model.ChildRemoved:Connect(function(child)
                 if not Value then return end
                 updateStatuses()
             end)
@@ -1689,8 +1693,11 @@ LQFTab:CreateToggle({
                                 info.childRemovedConnection:Disconnect()
                             end
 
-                            if info.haloConnection then
-                                info.haloConnection:Disconnect()
+                            if info.haloAConnection then
+                                info.haloAConnection:Disconnect()
+                            end
+                            if info.haloRConnection then
+                                info.haloRConnection:Disconnect()
                             end
                             if info.resistanceConnection then
                                 info.resistanceConnection:Disconnect()
@@ -1716,7 +1723,8 @@ LQFTab:CreateToggle({
                 torso = torso,
                 childAddedConnection = childAddedConnection,
                 childRemovedConnection = childRemovedConnection,
-                haloConnection = haloConnection,
+                haloAConnection = haloAConnection,
+                haloRConnection = haloRConnection,
                 resistanceConnection = resistanceConnection,
                 armorConnection = armorConnection,
                 armorTimeConnection = armorTimeConnection,
