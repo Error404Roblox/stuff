@@ -1685,12 +1685,13 @@ LQFTab:CreateToggle({
                             if info.childAddedConnection then
                                 info.childAddedConnection:Disconnect()
                             end
-
                             if info.childRemovedConnection then
                                 info.childRemovedConnection:Disconnect()
                             end
+
                             if info.haloConnection then
                                 info.haloConnection:Disconnect()
+                            end
                             if info.resistanceConnection then
                                 info.resistanceConnection:Disconnect()
                             end
