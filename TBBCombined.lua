@@ -233,7 +233,7 @@ local function GetWeakestTarget()
 end
 
 local function IsTracked(p)
-    return activeStrongestProjectileToggles[p.Name] or false
+    return activeStrongestProjectileToggles[p.Name] and activeWeakestProjectileToggles[p.Name] or false
 end
 
 local function checkDeletion(p)
@@ -368,7 +368,7 @@ RunService.Heartbeat:Connect(function(dt)
         if not obj or not obj.Parent then 
             weakestTrackedProjectiles[obj] = nil
         else
-            if not activeStrongestProjectileToggles[obj.Name] then
+            if not activeWeakestProjectileToggles[obj.Name] then
                 weakestTrackedProjectiles[obj] = nil
             else
                 local target = GetWeakestTarget()
