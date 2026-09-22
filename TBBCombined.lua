@@ -17,7 +17,7 @@ local Window = Rayfield:CreateWindow({
     Name = "The Battle Bricks Combined",
     LoadingTitle = ".......",
     LoadingSubtitle = "by Anon",
-    ConfigurationSaving = { Enabled = false }
+    ConfigurationSaving = { Enabled = true }
 })
 
 
@@ -49,8 +49,10 @@ AnnouncementsTab:CreateParagraph({
 })
 
 -- New Tab for Main Projectiles
-local MainProjectilesTab = Window:CreateTab("Main projectiles", 4483362458)
+local MainProjectilesTab = Window:CreateTab("Strongest Targetting", 4483362458)
 MainProjectilesTab:CreateSection("Projectile Auras")
+local WeakestProjectilesTab = Window:CreateTab("Weakest Targetting", 4483362458)
+WeakestProjectilesTab:CreateSection("Projectile Auras")
 
 -- New Tab for Deleting Enemy Projectiles
 local DeletEneProjTab = Window:CreateTab("DeleteEnemyProjectile", 4483362458)
@@ -93,8 +95,9 @@ local EnemyFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("EnemyFold
 local ProjectileFolder = Workspace:WaitForChild("Projectile")
 local BaseFolder = Workspace:WaitForChild("NPCFolders"):WaitForChild("BaseFolder")
 
-local trackedProjectiles, deletionProjectiles, neutralProjectiles = {}, {}, {}
-local activeProjectileToggles = {}
+local strongestTrackedProjectiles, weakestTrackedProjectiles, deletionProjectiles, neutralProjectiles = {}, {}, {}, {}
+local activeStrongestProjectileToggles = {}
+local activeWeakestProjectileToggles = {}
 local activeDeletionToggles = {}
 local activeNeutralToggles = {}
 local block, timerRemaining, isActive = nil, 0, false
@@ -212,7 +215,7 @@ local function GetWeakestEnemy()
     return weakestEnemy or list[1]
 end
 -- Target on specific enemy if enabled, otherwise target strongest enemy
-local function GetMainTarget()
+local function GetStrongestTarget()
     if Config.IHATEYOUSOMUCH.Enabled then
         for _, e in ipairs(EnemyFolder:GetChildren()) do
             if Config.IHATEYOUSOMUCH[e.Name] and e:FindFirstChild("Humanoid") and e.Humanoid.Health > 0 then return e end
@@ -220,9 +223,17 @@ local function GetMainTarget()
     end
     return GetStrongestEnemy()
 end
+local function GetWeakestTarget()
+    if Config.IHATEYOUSOMUCH.Enabled then
+        for _, e in ipairs(EnemyFolder:GetChildren()) do
+            if Config.IHATEYOUSOMUCH[e.Name] and e:FindFirstChild("Humanoid") and e.Humanoid.Health > 0 then return e end
+        end
+    end
+    return GetWeakestEnemy()
+end
 
 local function IsTracked(p)
-    return activeProjectileToggles[p.Name] or false
+    return activeStrongestProjectileToggles[p.Name] or false
 end
 
 local function checkDeletion(p)
@@ -250,16 +261,16 @@ ProjectileFolder.ChildAdded:Connect(function(c)
         timerRemaining, isActive = 0.8, true
     elseif IsTracked(c) then 
         Setup(c)
-        trackedProjectiles[c] = true 
+        strongestTrackedProjectiles[c], weakestTrackedProjectiles[c] = true, true
     end
 end)
--- Populate trackedProjectiles and deletionProjectiles on script load
+-- Populate strongestTrackedProjectiles and deletionProjectiles on script load
 for _, v in ipairs(ProjectileFolder:GetChildren()) do 
     if v:IsA("BasePart") then 
         checkDeletion(v)
         if IsTracked(v) then 
             Setup(v)
-            trackedProjectiles[v] = true 
+            strongestTrackedProjectiles[v], weakestTrackedProjectiles[v] = true, true
         end 
     end 
 end
@@ -339,14 +350,28 @@ RunService.Heartbeat:Connect(function(dt)
     
     if isActive then timerRemaining -= dt; isActive = timerRemaining > 0 end
     -- Unit Projectiles tp to Enemy
-    for obj, _ in pairs(trackedProjectiles) do
+    for obj, _ in pairs(strongestTrackedProjectiles) do
         if not obj or not obj.Parent then 
-            trackedProjectiles[obj] = nil
+            strongestTrackedProjectiles[obj] = nil
         else
-            if not activeProjectileToggles[obj.Name] then
-                trackedProjectiles[obj] = nil
+            if not activeStrongestProjectileToggles[obj.Name] then
+                strongestTrackedProjectiles[obj] = nil
             else
-                local target = GetMainTarget()
+                local target = GetStrongestTarget()
+                if target and target:FindFirstChild("HumanoidRootPart") then 
+                    obj.CFrame = target.HumanoidRootPart.CFrame 
+                end
+            end
+        end
+    end
+    for obj, _ in pairs(weakestTrackedProjectiles) do
+        if not obj or not obj.Parent then 
+            weakestTrackedProjectiles[obj] = nil
+        else
+            if not activeStrongestProjectileToggles[obj.Name] then
+                weakestTrackedProjectiles[obj] = nil
+            else
+                local target = GetWeakestTarget()
                 if target and target:FindFirstChild("HumanoidRootPart") then 
                     obj.CFrame = target.HumanoidRootPart.CFrame 
                 end
@@ -363,23 +388,50 @@ local projectileNamesList = {
 table.sort(projectileNamesList)
 
 for _, projName in ipairs(projectileNamesList) do
-    activeProjectileToggles[projName] = true
+    activeStrongestProjectileToggles[projName] = true
+    activeWeakestProjectileToggles[projName] = true
     Config.RandomizedProjectiles.List[projName] = true
     
     MainProjectilesTab:CreateToggle({
         Name = projName,
         CurrentValue = true,
         Callback = function(state)
-            activeProjectileToggles[projName] = state
+            activeStrongestProjectileToggles[projName] = state
             Config.RandomizedProjectiles.List[projName] = state
             
             for _, v in ipairs(ProjectileFolder:GetChildren()) do
                 if v:IsA("BasePart") and v.Name == projName then
                     if state then
                         Setup(v)
-                        trackedProjectiles[v] = true
+                        strongestTrackedProjectiles[v] = true
                     else
-                        trackedProjectiles[v] = nil
+                        strongestTrackedProjectiles[v] = nil
+                    end
+                end
+            end
+            
+            Rayfield:Notify({
+                Title = state and "Projectile Enabled" or "Projectile Disabled",
+                Content = projName .. " tracking is now " .. (state and "ON" or "OFF"),
+                Duration = 2,
+                Image = 14030922776
+            })
+        end
+    })
+    WeakestProjectilesTab:CreateToggle({
+        Name = projName,
+        CurrentValue = true,
+        Callback = function(state)
+            activeWeakestProjectileToggles[projName] = state
+            Config.RandomizedProjectiles.List[projName] = state
+            
+            for _, v in ipairs(ProjectileFolder:GetChildren()) do
+                if v:IsA("BasePart") and v.Name == projName then
+                    if state then
+                        Setup(v)
+                        weakestTrackedProjectiles[v] = true
+                    else
+                        weakestTrackedProjectiles[v] = nil
                     end
                 end
             end
@@ -396,7 +448,7 @@ end
 
 -- Populate Toggles inside DeletEneProj Tab (Sorted A to Z)
 local deletionProjectilesList = {
-    "Arrow", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "RainbowBomb", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "ZetaRocket", "ZombieBomb"
+    "Arrow", "BigGhostwalker", "BigHellBall", "BigHellball", "Biggerrocket", "BiggerRocket", "EpicKatana", "EpicKunai", "Execnade", "ExplodeCannonBall", "Flashbang", "FreedomRocket", "Ghostwalker", "GlowBoxingGlove", "GrandPiano", "Hand", "HellHand", "Hellhand", "HellRocket", "Hellball", "Hellrocket", "HyperBomb", "Hyperlaser", "Ipecac", "LabTable", "Landmine", "LightBomb", "MisterSkull", "Paintnade", "Piano", "PirateJuice", "Pancake", "RainbowBomb", "RottenEgg", "SmallStar", "SuperExplodeCannonBall", "SuperStar", "SuperSpam", "ThrowingAxe", "TinyBomb", "TNT", "ZetaRocket", "ZombieBomb"
 }
 
 table.sort(deletionProjectilesList)
