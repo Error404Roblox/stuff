@@ -232,8 +232,11 @@ local function GetWeakestTarget()
     return GetWeakestEnemy()
 end
 
-local function IsTracked(p)
-    return activeStrongestProjectileToggles[p.Name] and activeWeakestProjectileToggles[p.Name] or false
+local function IsStrongestTracked(p)
+    return activeStrongestProjectileToggles[p.Name] or false
+end
+local function IsWeakestTracked(p)
+    return activeWeakestProjectileToggles[p.Name] or false
 end
 
 local function checkDeletion(p)
@@ -259,18 +262,26 @@ ProjectileFolder.ChildAdded:Connect(function(c)
     if c.Name == "StoneFist" or c.Name == "Teapot" or c.Name == "FireTeapot" then
         if not block then block = Instance.new("Part", Workspace); block.Anchored, block.Transparency, block.Size, block.CFrame = true, 1, Vector3.new(6,6,6), CFrame.new(0, -0.25, 1.23) end
         timerRemaining, isActive = 0.8, true
-    elseif IsTracked(c) then 
+    elseif IsStrongestTracked(c) then 
         Setup(c)
-        strongestTrackedProjectiles[c], weakestTrackedProjectiles[c] = true, true
+        strongestTrackedProjectiles[c] = true
+    elseif IsWeakestTracked(c) then
+        Setup(c)
+        weakestTrackedProjectiles[c] = true
     end
+
 end)
 -- Populate strongestTrackedProjectiles and deletionProjectiles on script load
 for _, v in ipairs(ProjectileFolder:GetChildren()) do 
     if v:IsA("BasePart") then 
         checkDeletion(v)
-        if IsTracked(v) then 
+        if IsStrongestTracked(v) then 
             Setup(v)
-            strongestTrackedProjectiles[v], weakestTrackedProjectiles[v] = true, true
+            strongestTrackedProjectiles[v] = true
+        end
+        if IsWeakestTracked(v) then
+            Setup(v)
+            weakestTrackedProjectiles[v] = true
         end 
     end 
 end
