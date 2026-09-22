@@ -404,8 +404,8 @@ local projectileNamesList = {
 table.sort(projectileNamesList)
 
 for _, projName in ipairs(projectileNamesList) do
-    activeStrongestProjectileToggles[projName] = false
-    activeWeakestProjectileToggles[projName] = false
+    activeStrongestProjectileToggles[projName] = true
+    activeWeakestProjectileToggles[projName] = true
     Config.RandomizedProjectiles.List[projName] = true
     
     MainProjectilesTab:CreateToggle({
