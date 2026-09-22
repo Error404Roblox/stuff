@@ -309,27 +309,6 @@ RunService.Heartbeat:Connect(function(dt)
             end
         end)
     end
-    -- Auto Bank
-    local base = BaseFolder:FindFirstChild("Blue Base")
-    if base then
-        local timerValue = base:GetAttribute("Timer")
-        local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
-
-        if autoBankEnabled and timerValue == nil then
-            pcall(function()
-                task.spawn(function()
-                    playerSpawnEvent:InvokeServer("Bank")
-                end)
-            end)
-        elseif autoBankEnabled and timerValue then
-            if timerValue == 0 then
-                pcall(function()
-                    playerSpawnEvent:InvokeServer("Bank")
-                    timerValue = 60
-                end)
-            end
-        end
-    end
     -- Auto Delete EnemyProjectiles
     for p, _ in pairs(deletionProjectiles) do
         if p and p.Parent then
@@ -390,7 +369,32 @@ RunService.Heartbeat:Connect(function(dt)
         end
     end
 end)
+-- Auto Bank
+task.spawn(function()
+    while true do
+        local base = BaseFolder:FindFirstChild("Blue Base")
+        if base then
+            local timerValue = base:GetAttribute("Timer")
+            local playerSpawnEvent = ReplicatedStorage.Events.RemoteFunction.PlayerSpawn
 
+            if autoBankEnabled and timerValue == nil then
+                pcall(function()
+                    task.spawn(function()
+                        playerSpawnEvent:InvokeServer("Bank")
+                    end)
+                end)
+            elseif autoBankEnabled and timerValue then
+                if timerValue == 0 then
+                    pcall(function()
+                        playerSpawnEvent:InvokeServer("Bank")
+                        timerValue = 60
+                    end)
+                end
+            end
+        end
+    task.wait(0.25)
+    end
+end)
 -- Populate Toggles inside Main Projectiles Tab (Sorted A to Z)
 local projectileNamesList = {
     "Bacon", "Basketball", "Beer", "Bigfireball", "BigFireball", "BigIceball", "BigRocket", "BigStunpellet", "Brew", "CesusBomb", "Cesuspot", "Cola", "CrimsonBall", "Duck", "ElectricFist", "ElectricRock", "EvilDuck", "Fireball", "Goala", "Goobab", "Grenade", "Iceball", "Kunai", "LabTable", "LilCesuspot", "MagicBall", "Molotov", "NeonEvilDuck", "Noir", "NoirBiograft", "Paintball", "Pellet", "Puck", "Rocket", "Rock", "Shuriken", "Soccerball", "SorcusBlade", "SorcusEgg", "Stunpellet", "Superball", "SuperSorcusBlade", "TumorePellet", "Volleyball", "WoodArrow"
@@ -2794,6 +2798,5 @@ SettingsTab:CreateToggle({
 
 
 --[[ ideas:
-- try to finally utilize WEAKEST enemy
 - do every list of final bosses with their projectile naming
 ]]--
