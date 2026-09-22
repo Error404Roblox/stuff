@@ -17,9 +17,10 @@ local Window = Rayfield:CreateWindow({
     Name = "The Battle Bricks Combined",
     LoadingTitle = ".......",
     LoadingSubtitle = "by Anon",
-    ConfigurationSaving = { Enabled = true }
+    ConfigurationSaving =  {
+                             Enabled = true,
+                             FileName = "TBBConfigs"}
 })
-
 
 
 
@@ -392,7 +393,7 @@ task.spawn(function()
                 end
             end
         end
-    task.wait(0.25)
+    task.wait(0.1)
     end
 end)
 -- Populate Toggles inside Main Projectiles Tab (Sorted A to Z)
@@ -2796,6 +2797,7 @@ SettingsTab:CreateToggle({
     end,
 })
 
+Rayfield:LoadConfiguration()
 
 --[[ ideas:
 - do every list of final bosses with their projectile naming
