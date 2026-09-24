@@ -5,10 +5,9 @@ if game.PlaceId ~= 138884751515999 then return end
 local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 
 local Window = Rayfield:CreateWindow({
-    name = "Drone Defense 2",
-    subtitle = "by Anon",
-    sidebarLayout = true,
-    theme = "cobalt",
+    Name = "Drone Defense 2",
+    LoadingTitle = ".......",
+    LoadingSubtitle = "by Anon",
     ConfigurationSaving =  {
                              Enabled = true,
                              FileName = "DD2Configs"}
