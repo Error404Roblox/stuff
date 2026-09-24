@@ -23,7 +23,7 @@ _G.AutoUseSD = false
 _G.SDinput = nil
 
 -- Content itself; Announcement tab
-local AnnouncementsTab = Window:CreateTab(name = "Announcements", icon = 4483362458)
+local AnnouncementsTab = Window:CreateTab("Announcements", 4483362458)
 AnnouncementsTab:CreateSection("Project Information")
 AnnouncementsTab:CreateParagraph({
     Title = "General Information",
@@ -31,10 +31,7 @@ AnnouncementsTab:CreateParagraph({
 })
 
 -- Main Tab
-local MainTab = Window:CreateTab({
-    Name = "Main Functions",
-    Icon = 4483362458
-})
+local MainTab = Window:CreateTab({"Main Functions", 4483362458})
 
 MainTab:CreateSection("Main Features")
 
@@ -100,10 +97,7 @@ MainTab:CreateToggle({
 })
 
 -- Settings Tab
-local SettingsTab = Window:CreateTab({
-    Name = "Settings",
-    Icon = 4483362458
-})
+local SettingsTab = Window:CreateTab({"Settings", 4483362458})
 
 SettingsTab:CreateButton({
     Name = "Dex++",
