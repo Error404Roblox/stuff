@@ -1,16 +1,16 @@
-if game.PlaceId ~= 138884751515999 then return end
+--if game.PlaceId ~= 138884751515999 then return end
 
 -- Rayfield UI Setup (Moved to top so windows/tabs exist before listeners register)
 local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 
 local Window = Rayfield:CreateWindow({
-    name = "Codename: Script",
+    name = "Drone Defense 2",
     subtitle = "by Anon",
     sidebarLayout = true,
     theme = "cobalt",
     ConfigurationSaving =  {
                              Enabled = true,
-                             FileName = "TBBConfigs"}
+                             FileName = "DD2Configs"}
 })
 _G.AutoUseSD = false
 
