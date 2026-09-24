@@ -16,12 +16,12 @@ local Window = Rayfield:CreateWindow({
 -- Folders
 local Workspace, RunService = game:GetService("Workspace"), game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
-local Functions = RS:WaitForChild("Functions")
-local Events = RS:WaitForChild("Events")
+local Functions = RS:FindFirstChild("Functions")
+local Events = RS:FindFirstChild("Events")
 
 --Flags
 _G.AutoUseSD = false
-_G.SDinput = nil
+_G.SDinput = 150
 
 -- Content itself; Announcement tab
 local AnnouncementsTab = Window:CreateTab("Announcements", 4483362458)
@@ -37,7 +37,7 @@ local MainTab = Window:CreateTab({"Main Functions", 4483362458})
 MainTab:CreateSection("Main Features")
 
 -- Supply Drop delay input
---[[MainTab:CreateInput({
+MainTab:CreateInput({
     Name = "Use Supply Drop every...",
     CurrentValue = "150",
     PlaceholderText = "<x> second(s)",
@@ -48,10 +48,13 @@ MainTab:CreateSection("Main Features")
         local number = tonumber(Text)
 
         if number and number > 0 then
-            _G.SupplyDropDelay = number
+            _G.SDinput = number
+            print("Supply Drop delay set to:", number)
+        else
+            warn("Invalid Supply Drop delay:", Text)
         end
     end
-})]]--
+})
 
 -- Auto Supply Drop
 MainTab:CreateToggle({
@@ -61,49 +64,47 @@ MainTab:CreateToggle({
 
     Callback = function(Value)
         _G.AutoUseSD = Value
-        --_G.SupplyDropDelay = nil
 
-        MainTab:CreateInput({
-            Name = "Use Supply Drop every...",
-            CurrentValue = "150",
-            PlaceholderText = "<x> second(s)",
-            RemoveTextAfterFocusLost = false,
-            Flag = "SDinput",
-
-            Callback = function(Text)
-                local number = tonumber(Text)
-
-                if number and number > 0 then
-                    _G.SDinput = number
-                end
-            end,
-        })
         if not Value then
+            print("Auto Supply Drop disabled.")
             return
         end
 
+        print("Auto Supply Drop enabled.")
+
         task.spawn(function()
             while _G.AutoUseSD do
-                local Event = Functions:WaitForChild("UsePerk")
+                local Event = Functions:FindFirstChild("UsePerk")
 
-                pcall(function()
-                    Event:InvokeServer("Supply Drop")
-                    print("Supply Drop was used.")
-                end)
-                task.wait(_G.SDinput)
+                if Event then
+                    local success, err = pcall(function()
+                        Event:InvokeServer("Supply Drop")
+                    end)
+
+                    if success then
+                        print("Supply Drop was used.")
+                    else
+                        warn("Supply Drop error:", err)
+                    end
+                else
+                    warn("UsePerk RemoteFunction not found.")
+                end
+
+                task.wait(_G.SDinput or 150)
             end
+
+            print("Auto Supply Drop loop stopped.")
         end)
-        print("AutoUseSD is ready.")
     end,
 })
 
 -- Settings Tab
 local SettingsTab = Window:CreateTab({"Settings", 4483362458})
 
---[[SettingsTab:CreateButton({
+SettingsTab:CreateButton({
     Name = "Dex++",
     Callback = function()
         ---@diagnostic disable-next-line: deprecated
         loadstring(game:HttpGet("https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua"))()
     end,
-})]]--
+})
