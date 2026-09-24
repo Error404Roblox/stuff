@@ -1,4 +1,4 @@
---if game.PlaceId ~= 138884751515999 then return end
+if game.PlaceId ~= 138884751515999 then return end
 
 -- Rayfield UI Setup (Moved to top so windows/tabs exist before listeners register)
 local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
@@ -22,7 +22,7 @@ AnnouncementsTab:CreateParagraph({
     Content = "First time doing it..."
 })
 
-local MainTab=Windows:CreateTab(name = "Main Functions", icon = 4483362458)
+local MainTab=Window:CreateTab(name = "Main Functions", icon = 4483362458)
 MainTab:CreateSection("Main features")
 MainTab:CreateToggle({
     Name = "Auto Use Supply Drop",
@@ -31,7 +31,7 @@ MainTab:CreateToggle({
     Callback = function(Value)
         _G.AutoUseSD = Value 
        
-        local Input = Tab:CreateInput({
+        local Input = MainTab:CreateInput({
             Name = "Use Supply Drop in ...",
             CurrentValue = "150",
             PlaceholderText = "<x> second(s)",
