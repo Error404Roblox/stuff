@@ -13,6 +13,7 @@ local Window = Rayfield:CreateWindow({
 })
 -- Content itself; Announcement tab
 local AnnouncementsTab = Window:CreateTab("Announcements", 4483362458)
+local MainTab = Window:CreateTab("Main Functions", 4483362458)
 AnnouncementsTab:CreateSection("Project Information")
 AnnouncementsTab:CreateParagraph({
     Title = "General Information",
@@ -31,7 +32,6 @@ _G.SDinput = 150
 
 
 -- Main Tab
-local MainTab = Window:CreateTab({"Main Functions", 4483362458})
 
 MainTab:CreateSection("Main Features")
 
@@ -52,7 +52,7 @@ MainTab:CreateInput({
         else
             warn("Invalid Supply Drop delay:", Text)
         end
-    end
+    end,
 })
 
 -- Auto Supply Drop
