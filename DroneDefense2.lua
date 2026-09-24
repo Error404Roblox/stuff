@@ -1,4 +1,4 @@
---if game.PlaceId ~= 138884751515999 then return end
+if game.PlaceId ~= 138884751515999 then return end
 
 -- Rayfield UI Setup (Moved to top so windows/tabs exist before listeners register)
 local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
@@ -13,6 +13,7 @@ local Window = Rayfield:CreateWindow({
                              FileName = "DD2Configs"}
 })
 -- Folders
+local Workspace, RunService = game:GetService("Workspace"), game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
 local Functions = RS:WaitForChild("Functions")
 local Events = RS:WaitForChild("Events")
@@ -62,7 +63,7 @@ MainTab:CreateToggle({
 
     Callback = function(Value)
         _G.AutoUseSD = Value
-        _G.SupplyDropDelay = nil
+        --_G.SupplyDropDelay = nil
 
         MainTab:CreateInput({
             Name = "Use Supply Drop every...",
@@ -75,7 +76,7 @@ MainTab:CreateToggle({
                 local number = tonumber(Text)
 
                 if number and number > 0 then
-                    _G.SupplyDropDelay = number
+                    _G.SDinput = number
                 end
             end,
         })
@@ -89,10 +90,12 @@ MainTab:CreateToggle({
 
                 pcall(function()
                     Event:InvokeServer("Supply Drop")
+                    print("Supply Drop was used.")
                 end)
-                task.wait(_G.SupplyDropDelay)
+                task.wait(_G.SDinput)
             end
         end)
+        print("AutoUseSD is ready.")
     end,
 })
 
