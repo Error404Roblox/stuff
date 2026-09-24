@@ -12,6 +12,12 @@ local Window = Rayfield:CreateWindow({
                              Enabled = true,
                              FileName = "DD2Configs"}
 })
+-- Folders
+local RS = game:GetService("ReplicatedStorage")
+local Functions = RS:WaitForChild("Functions")
+local Events = RS:WaitForChild("Events")
+
+--Flags
 _G.AutoUseSD = false
 _G.SDinput = nil
 
@@ -63,9 +69,7 @@ MainTab:CreateToggle({
 
         task.spawn(function()
             while _G.AutoUseSD do
-                local Event = game:GetService("ReplicatedStorage")
-                    :WaitForChild("Functions")
-                    :WaitForChild("UsePerk")
+                local Event = Functions:WaitForChild("UsePerk")
 
                 pcall(function()
                     Event:InvokeServer("Supply Drop")
@@ -85,10 +89,7 @@ local SettingsTab = Window:CreateTab({
 
 SettingsTab:CreateButton({
     Name = "Dex++",
-
     Callback = function()
-        loadstring(game:HttpGet(
-            "https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua"
-        ))()
-    end
+        loadstring(game:HttpGet("https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua"))()
+    end,
 })
