@@ -1,17 +1,24 @@
 if game.PlaceId ~= 138884751515999 then return end
 
 -- Rayfield UI Setup (Moved to top so windows/tabs exist before listeners register)
----@diagnostic disable-next-line: deprecated
 local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 
 local Window = Rayfield:CreateWindow({
-    Name = "Drone Defense 2",
+    Name = "Drone Hack 2",
     LoadingTitle = ".......",
     LoadingSubtitle = "by Anon",
     ConfigurationSaving =  {
                              Enabled = true,
                              FileName = "DD2Configs"}
 })
+-- Content itself; Announcement tab
+local AnnouncementsTab = Window:CreateTab("Announcements", 4483362458)
+AnnouncementsTab:CreateSection("Project Information")
+AnnouncementsTab:CreateParagraph({
+    Title = "General Information",
+    Content = "First time doing it..."
+})
+
 -- Folders
 local Workspace, RunService = game:GetService("Workspace"), game:GetService("RunService")
 local RS = game:GetService("ReplicatedStorage")
@@ -22,13 +29,6 @@ local Events = RS:FindFirstChild("Events")
 _G.AutoUseSD = false
 _G.SDinput = 150
 
--- Content itself; Announcement tab
-local AnnouncementsTab = Window:CreateTab("Announcements", 4483362458)
-AnnouncementsTab:CreateSection("Project Information")
-AnnouncementsTab:CreateParagraph({
-    Title = "General Information",
-    Content = "First time doing it..."
-})
 
 -- Main Tab
 local MainTab = Window:CreateTab({"Main Functions", 4483362458})
@@ -103,7 +103,6 @@ local SettingsTab = Window:CreateTab({"Settings", 4483362458})
 SettingsTab:CreateButton({
     Name = "Dex++",
     Callback = function()
-        ---@diagnostic disable-next-line: deprecated
         loadstring(game:HttpGet("https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua"))()
     end,
 })
