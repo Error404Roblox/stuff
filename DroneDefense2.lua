@@ -38,7 +38,7 @@ local MainTab = Window:CreateTab({
 MainTab:CreateSection("Main Features")
 
 -- Supply Drop delay input
-MainTab:CreateInput({
+--[[MainTab:CreateInput({
     Name = "Use Supply Drop every...",
     CurrentValue = "150",
     PlaceholderText = "<x> second(s)",
@@ -52,7 +52,7 @@ MainTab:CreateInput({
             _G.SupplyDropDelay = number
         end
     end
-})
+})]]--
 
 -- Auto Supply Drop
 MainTab:CreateToggle({
@@ -62,7 +62,23 @@ MainTab:CreateToggle({
 
     Callback = function(Value)
         _G.AutoUseSD = Value
+        _G.SupplyDropDelay = nil
 
+        MainTab:CreateInput({
+            Name = "Use Supply Drop every...",
+            CurrentValue = "150",
+            PlaceholderText = "<x> second(s)",
+            RemoveTextAfterFocusLost = false,
+            Flag = "SDinput",
+
+            Callback = function(Text)
+                local number = tonumber(Text)
+
+                if number and number > 0 then
+                    _G.SupplyDropDelay = number
+                end
+            end,
+        })
         if not Value then
             return
         end
@@ -74,11 +90,10 @@ MainTab:CreateToggle({
                 pcall(function()
                     Event:InvokeServer("Supply Drop")
                 end)
-
                 task.wait(_G.SupplyDropDelay)
             end
         end)
-    end
+    end,
 })
 
 -- Settings Tab
