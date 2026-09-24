@@ -14,7 +14,7 @@ local Window = Rayfield:CreateWindow({
 --Flags
 _G.AutoUseSD = false
 _G.SDinput = 150
-_G.DropSpeed = 1
+_G.DropSpeed = "1"
 
 -- TABS
 local AnnouncementsTab = Window:CreateTab("Announcements", 4483362458)
@@ -107,10 +107,32 @@ MainTab:CreateDropdown({
     Callback = function(Options)
     -- The function that takes place when the selected option is changed
     -- The variable (Options) is a table of strings for the current selected options
-    local Event = Functions:FindFirstChild("ChangeGameSpeed")
-    pcall(function()
-        Event:InvokeServer(Options)
-    end)
+        local selectedSpeed = Options[1]
+
+        if not selectedSpeed then
+            warn("No game speed selected.")
+            return
+        end
+
+        _G.DropSpeed = selectedSpeed
+        local Event = Functions:FindFirstChild("ChangeGameSpeed")
+
+        if not Event then
+            warn("ChangeGameSpeed was not found.")
+            return
+        end
+
+        local speedNumber = tonumber(selectedSpeed)
+
+        local success, err = pcall(function()
+            Event:InvokeServer(speedNumber)
+        end)
+
+        if success then
+            print("Game speed was changed to " .. selectedSpeed)
+        else
+            warn("Game speed error:", err)
+        end
     end,
 })
 -- Settings Tab
