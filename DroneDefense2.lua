@@ -1,6 +1,7 @@
 if game.PlaceId ~= 138884751515999 then return end
 
 -- Rayfield UI Setup (Moved to top so windows/tabs exist before listeners register)
+---@diagnostic disable-next-line: deprecated
 local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
 
 local Window = Rayfield:CreateWindow({
@@ -99,9 +100,10 @@ MainTab:CreateToggle({
 -- Settings Tab
 local SettingsTab = Window:CreateTab({"Settings", 4483362458})
 
-SettingsTab:CreateButton({
+--[[SettingsTab:CreateButton({
     Name = "Dex++",
     Callback = function()
+        ---@diagnostic disable-next-line: deprecated
         loadstring(game:HttpGet("https://github.com/AZYsGithub/DexPlusPlus/releases/latest/download/out.lua"))()
     end,
-})
+})]]--
