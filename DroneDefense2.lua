@@ -14,6 +14,7 @@ local Window = Rayfield:CreateWindow({
 --Flags
 _G.AutoUseSD = false
 _G.SDinput = 150
+_G.DropSpeed = 1
 
 -- TABS
 local AnnouncementsTab = Window:CreateTab("Announcements", 4483362458)
@@ -97,10 +98,22 @@ MainTab:CreateToggle({
         end)
     end,
 })
-
+MainTab:CreateDropdown({
+    Name = "Speed Up Game (IT'S FREEEEE)",
+    Options = {"1", "1.5", "2"},
+    CurrentOption = {"1"},
+    MultipleOptions = false,
+    Flag = "DropSpeed", -- A flag is the identifier for the configuration file; make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Options)
+    -- The function that takes place when the selected option is changed
+    -- The variable (Options) is a table of strings for the current selected options
+    local Event = Functions:FindFirstChild("ChangeGameSpeed")
+    pcall(function()
+        Event:InvokeServer(Options)
+    end)
+    end,
+})
 -- Settings Tab
-
-
 SettingsTab:CreateButton({
     Name = "Dex++",
     Callback = function()
